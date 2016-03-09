@@ -1,0 +1,35 @@
+body {
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+#header {
+	background-color: #F36E21;
+	min-height: 75px;
+	padding-bottom: 0px;
+	position: relative;
+}
+
+#header h1 {
+	position: absolute;
+	vertical-align: bottom;
+	bottom: 0px;
+	color: white;
+	vertical-align: center;
+}
+
+#header h5 {
+	position: absolute;
+	vertical-align: bottom;
+	bottom: 0px;
+	left: 275px;
+	color: white;
+}
+
+#headLogo {
+	float: right;
+	padding-top: 1%;
+}
+
+#rightCol {
+	float: right;
+}

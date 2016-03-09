@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>IST Faculty Management Interface - Admin View</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="css/main.css">
+		<script type="text/javascript" src="js/main.js"></script>
+	</head>
+	<body>
+		<div id="header">
+			<img id="headLogo" src="media/rit_black_no_bar.gif" />
+			<h1 class="headerText">Faculty Directory</h1>
+			<h5 class="headerText">Admin Portal</h5>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading"></div>
+			<div class="panel-body">
+				<form class="form-horizontal">
+					<fieldset>
+						<legend>ADD A NEW PROFESSOR</legend>
+						<div class="col-lg-6" id="leftCol">
+							<div class="form-group">
+								<div class="col-lg-3">
+									<label for="image" class="control-label">Avatar (160 x 160)</label>
+									<br />
+									<br />
+									<input type="file" accept="image/*" onchange="loadFile(event)" value="Upload Image" style="width:95px; float: right">
+								</div>
+								<div class="col-lg-4">
+									<img id="output" src="media/no-preview.png" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="firstName" class="col-lg-3 control-label">First Name</label>
+								<div class="col-lg-4">
+									<input type="text" class="form-control" id="firstName">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastName" class="col-lg-3 control-label">Last Name</label>
+								<div class="col-lg-4">
+									<input type="text" class="form-control" id="lastName">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="email" class="col-lg-3 control-label">Email</label>
+								<div class="col-lg-4">
+									<input type="text" class="form-control" id="email">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="phone" class="col-lg-3 control-label">Phone Number</label>
+								<div class="col-lg-4">
+									<input type="text" class="form-control" id="phone">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="room" class="col-lg-3 control-label">Room Number</label>
+								<div class="col-lg-4">
+									<select class="form-control" id="room">
+										<option>GOL-2004</option>
+										<option>GOL-2005</option>
+										<option>GOL-2006</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="dept" class="col-lg-3 control-label">Department</label>
+								<div class="col-lg-4">
+									<select class="form-control" id="dept">
+										<option>Computing Security</option>
+										<option>Information Sciences &amp; Technology</option>
+										<option>Interactive Games &amp; Media</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-6" id="rightCol">
+							<span>Office Hours</span>
+							<div class="form-group">
+								<label for="monday" class="control-label col-lg-3">Monday:</label>
+								<div class="col-lg-3"><input type="text" class="form-control" id="mondayHoursAM"></div>
+								<span class="col-lg-1" style="text-align: center;"> - </span>
+								<div class="col-lg-3"><input type="text" class="form-control col-lg-3" id="mondayHoursPM"></div>
+							</div>
+							<div class="form-group">
+								<label for="tuesday" class="control-label col-lg-3">Tuesday:</label>
+								<div class="col-lg-3"><input type="text" class="form-control" id="tuesdayHoursAM"></div>
+								<span class="col-lg-1" style="text-align: center;"> - </span>
+								<div class="col-lg-3"><input type="text" class="form-control col-lg-3" id="tuesdayHoursPM"></div>
+							</div>
+							<div class="form-group">
+								<label for="wednesday" class="control-label col-lg-3">Wednesday:</label>
+								<div class="col-lg-3"><input type="text" class="form-control" id="wednesdayHoursAM"></div>
+								<span class="col-lg-1" style="text-align: center;"> - </span>
+								<div class="col-lg-3"><input type="text" class="form-control col-lg-3" id="wednesdayHoursPM"></div>
+							</div>
+							<div class="form-group">
+								<label for="thursday" class="control-label col-lg-3">Thursday:</label>
+								<div class="col-lg-3"><input type="text" class="form-control" id="thursdayHoursAM"></div>
+								<span class="col-lg-1" style="text-align: center;"> - </span>
+								<div class="col-lg-3"><input type="text" class="form-control col-lg-3" id="thursdayHoursPM"></div>
+							</div>
+							<div class="form-group">
+								<label for="friday" class="control-label col-lg-3">Friday:</label>
+								<div class="col-lg-3"><input type="text" class="form-control" id="fridayHoursAM"></div>
+								<span class="col-lg-1" style="text-align: center;"> - </span>
+								<div class="col-lg-3"><input type="text" class="form-control col-lg-3" id="fridayHoursPM"></div>
+							</div>
+
+							<div class="radios">
+								<div class="form-group col-lg-6">
+									<label class="col-lg-4 control-label">Active</label>
+									<div class="col-lg-8">
+										<div class="radio">
+	 										<label>
+												<input type="radio" name="actives" id="active1" value="activeYes" checked="">
+												Yes
+											</label>
+										</div>
+										<div class="radio">
+											<label>
+												<input type="radio" name="actives" id="active2" value="activeNo">
+												No
+											</label>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group col-lg-6">
+									<label class="col-lg-4 control-label">Faculty</label>
+									<div class="col-lg-8">
+										<div class="radio">
+	 										<label>
+												<input type="radio" name="faculties" id="faculty1" value="facYes" checked="">
+												Yes
+											</label>
+										</div>
+										<div class="radio">
+											<label>
+												<input type="radio" name="faculties" id="faculty2" value="facNo">
+												No
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="textArea" class="col-lg-2 control-label">About</label>
+								<div class="col-lg-10">
+									<textarea class="form-control" rows="3" id="textArea"></textarea>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="textArea" class="col-lg-2 control-label">Education</label>
+								<div class="col-lg-10">
+									<textarea class="form-control" rows="3" id="textArea"></textarea>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="textArea" class="col-lg-2 control-label">Highlights</label>
+								<div class="col-lg-10">
+									<textarea class="form-control" rows="3" id="textArea"></textarea>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
