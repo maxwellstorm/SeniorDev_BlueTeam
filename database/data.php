@@ -20,8 +20,7 @@ class data{
 			echo "Connected successfully <br/>"; 
 			$this->conn = $conn;
 			}
-		catch(PDOException $e)
-			{
+		catch(PDOException $e) {
 			echo "Connection failed: " . $e->getMessage();
 		}
 		
