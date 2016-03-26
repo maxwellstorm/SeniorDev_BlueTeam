@@ -60,7 +60,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `facultyDb`.`room` ;
 
 CREATE TABLE IF NOT EXISTS `facultyDb`.`room` (
-  `roomNumber` INT NOT NULL,
+  `roomNumber` varchar(25) NOT NULL,
   `roomMap` VARCHAR(50) NULL,
   `description` VARCHAR(250) NULL,
   PRIMARY KEY (`roomNumber`))
@@ -73,11 +73,11 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `facultyDb`.`Employees` ;
 
 CREATE TABLE IF NOT EXISTS `facultyDb`.`Employees` (
+   'title' varchar(100),
   `facultyId` INT NOT NULL,
   `fName` VARCHAR(50) NULL,
   `lName` VARCHAR(50) NULL,
   `email` VARCHAR(100) NULL,
-  `officeHours` VARCHAR(250) NULL,
   `isActive` TINYINT(1) NULL,
   `isFaculty` TINYINT(1) NULL,
   `phone` CHAR(14) NULL,
@@ -85,7 +85,8 @@ CREATE TABLE IF NOT EXISTS `facultyDb`.`Employees` (
   `education` VARCHAR(500) NULL,
   `highlights` VARCHAR(500) NULL,
   `departmentId` INT NOT NULL,
-  `roomNumber` INT NOT NULL,
+  'secondaryDepartmentID' int,
+  `roomNumber` varchar(25) NOT NULL,
   PRIMARY KEY (`facultyId`),
   INDEX `fk_Employees_department1_idx` (`departmentId` ASC),
   INDEX `fk_Employees_room1_idx` (`roomNumber` ASC),

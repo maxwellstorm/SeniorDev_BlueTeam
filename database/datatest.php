@@ -11,11 +11,11 @@ printExample($res);
 
 
 echo "<br/><br/><strong>select with where stmt example:</strong>";
-$res = $testDb->getData("select * from department where departmentId = :depId",array("depId"=>1));
+$res = $testDb->getData("select * from department where departmentId = :depId",array("depId"=>3));
 printExample($res);
 
 
-$testDept = new department($testDb,"1");
+$testDept = new department($testDb,"3");
 $testDept->fetch();
 echo $testDept->getDeptAbbr();
 $testDept->setDeptId("2");
