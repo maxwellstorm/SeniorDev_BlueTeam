@@ -21,6 +21,13 @@ echo $testDept->getDeptAbbr();
 $testDept->setDeptId("2");
 $testDept->fetch();
 echo $testDept->getDeptAbbr();
+echo "<br/><br/> insert test <br/><br/>";
+$testDb->setData("insert into department (departmentId,departmentName,departmentAbbr) values (:id,:name,:abbr)",array(
+	":id"=>"3",
+	":name"=>"insertTest",
+	":abbr"=>"te3"
+));
+
 
 
 function printExample($resultsArr){

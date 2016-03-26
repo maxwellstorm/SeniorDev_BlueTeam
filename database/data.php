@@ -30,7 +30,7 @@ class data{
 		$this->conn = null;
 	}
 	
-	//return back data used fpr select statments only
+	//return back data used for select statments only
 	function getData($sql,$params){
 		$stmt = $this->conn->prepare($sql);
 		$stmt->execute($params);
@@ -39,29 +39,27 @@ class data{
 	
 	
 	function setData($sql,$params){
-		
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute($params);
 	}
 	
 
 	
 	function validateLogin($userame,$pass){
-		
+		//implement this if no shibo
 	}
 	
 	function startTransaction(){
-		
-	}
-	
-	function endTransaction(){
-		
+		$this->conn->beginTransaction();
 	}
 	
 	function commit(){
-		
+		$this->conn->commit();
 	}
 	
 	function rollBack(){
-		
+		//this ends transactions as well
+		$this->conn->rollBack();
 	}
 	
 	

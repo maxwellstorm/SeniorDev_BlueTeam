@@ -40,18 +40,7 @@ public function fetch(){
 	}
 	
 }
-public function fetch($whereStmt,$input){
-	$resultsArr = $this->conn->getData("select * from department where".$whereStmt,$input);
-	try{
-		$results = $resultsArr[0];
-		$this->deptName = $results['departmentName'];
-		$this->deptAbbr = $results['departmentAbbr'];
-		return true;
-	}
-	catch(Exception $e){
-		return false;
-	}
-}
+
 
 
 public function put(){
