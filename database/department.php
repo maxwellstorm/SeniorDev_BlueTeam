@@ -7,17 +7,6 @@ private $deptName = "";
 private $deptAbbr = "";
 private $conn;
 
-
-
-public function getDeptAbbr(){
-	return $this->deptAbbr;
-}
-
-public function setDeptId($id){
-	$this->deptId = $id;
-}
-
-
 	function __construct($conn,$deptId){
 		$this->conn = $conn;
 		$this->deptId = $deptId;
@@ -25,7 +14,7 @@ public function setDeptId($id){
 	
 	
 public function fetch(){
-	$resultsArr = $this->conn->getData("select * from department where departmentID = :id",array(
+	$resultsArr = $this->conn->getData("SELECT * from department where departmentID = :id",array(
 		":id" => $this->deptId
 		)
 	);
@@ -41,44 +30,46 @@ public function fetch(){
 	
 }
 
+public function getDeptId(){
+	return $this->deptId;
+} 
 
+public function setDeptId($id){
+	$this->deptId = $id;
+}
+
+public function getDeptName(){
+	return $this->deptName;
+} 
+
+public function setDeptName($name){
+	$this->deptName = $name;
+}
+
+public function getDeptAbbr(){
+	return $this->deptAbbr;
+}
+
+public function setDeptAbbr($abbr){
+	$this->deptAbbr = $abbr;
+}
 
 public function put(){
 	//update
 }
 
-
-
-public function post(){
+public function post($id,$name,$abbr){
 	//insert
+	$this->$conn->setData("insert into department (departmentId,departmentName,departmentAbbr) values (:id,:name,:abbr)",array(
+	":id"=>$id,
+	":name"=>$name,
+	":abbr"=>$abbr
+	));
 }
 
 public function delete(){
 	//delete
 }
 
-
-
-
-/*public function insert($deptID. $deptName, $deptAbbr){
-	$database->query('INSERT INTO Department (departmentID, departmentName, departmentAbbr) values ($deptID, $deptName, $deptAbbr)');
-	$database->bind('$deptID', 999);
-	$database->bind('$deptName', 'Dept');
-	$database->bind('$deptAbbr','Abbr');
-
-	$database->execute();
-	echo $database->lastInsertId();//test successfully inserted
-}
-
-public function update($deptID. $deptName, $deptAbbr){
-	$database->query('UPDATE Department (departmentID, departmentName, departmentAbbr) values ($deptID, $deptName, $deptAbbr)');
-	$database->bind('$deptID', 999);
-	$database->bind('$deptName', 'Dept');
-	$database->bind('$deptAbbr','Abbr');
-
-	$database->execute();
-}
-
-*/
 }
 ?>

@@ -1,37 +1,121 @@
 <?php
-private $servername = "facultydb.cdh6zybsklle.us-east-1.rds.amazonaws.com"
-private $username = "test"
-private $password = "test"
-private $dbname = "facultydb"
 
-$database = new Database();
+class admin{
 
-public function insert($adminId, $fName, $lName, $user, $pass, $salt, $accessLevel, $deptID){
-	$database->query('INSERT INTO ADMIN (adminID,fName,lName,username,password,salt,accessLevel,departmentID) values ($adminId,$fName,$lName,$user,$pass,$salt,$accessLevel,$deptID)');
-	$database->bind('$adminId',999);
-	$database->bind('$fName','John');
-	$database->bind('$lName','Smith');
-	$database->bind('$user','jsmith');
-	$database->bind('$pass','test');
-	$database->bind('$salt','abc');
-	$database->bind('$accesslevel',999);
-	$database->bind('$deptid',999)
+private $adminId = "";
+private $fname = "";
+private $lname = "";
+private $user = "";
+private $pass = "";
+private $salt = "";
+private $accessLvl = "";
+private $deptId = "";
+private $conn;
 
-	$database->execute();
-	echo $database->lastInsertId();//test successfully inserted
+	function __construct($conn,$adminId){
+		$this->conn = $conn;
+		$this->adminId = $adminId;
+	}
+	
+	
+public function fetch(){
+	$resultsArr = $this->conn->getData("select * from Admin where adminId = :id",array(
+		":id" => $this->adminId
+		)
+	);
+	try{
+		$results = $resultsArr[0];
+		$this->adminId = $results['adminId'];
+		$this->fname = $results['fName'];
+		$this->lname = $results['lName'];
+		$this->user = $results['username'];
+		$this->pass = $results['password'];
+		$this->salt = $results['salt'];
+		$this->accessLvl = $results['accessLevel'];
+		$this->deptId = $results['departmentId'];
+		return true;
+	}
+	catch(Exception $e){
+		return false;
+	}
+	
 }
 
-public function update($adminId, $fName, $lName, $user, $pass, $salt, $accessLevel, $deptID){
-	$database->query('UPDATE ADMIN (adminID,fName,lName,username,password,salt,accessLevel,departmentID) values ($adminId,$fName,$lName,$user,$pass,$salt,$accessLevel,$deptID)');
-	$database->bind('$adminId',999);
-	$database->bind('$fName','John');
-	$database->bind('$lName','Smith');
-	$database->bind('$user','jsmith');
-	$database->bind('$pass','test');
-	$database->bind('$salt','abc');
-	$database->bind('$accesslevel',999);
-	$database->bind('$deptID',999)
-
-	$database->execute();
+public function getAdminId(){
+	return $this->adminId;
 }
->
+
+public function setAdminId($aId){
+	$this->adminId = $aId;
+}
+
+public function getAdminFName(){
+	return $this->fname;
+}
+
+public function setAdminFName($fname){
+	$this->fname = $fname;
+}
+
+public function getAdminLName(){
+	return $this->lname;
+}
+
+public function setAdminLName($lname){
+	$this->lname = $lname;
+}
+
+public function getUsername(){
+	return $this->user;
+}
+
+public function setUsername($user){
+	$this->user = $user;
+}
+
+public function getPassword(){
+	return $this->pass;
+}
+
+public function setPassword($pass){
+	$this->pass = $pass;
+}
+
+public function getSalt(){
+	return $this->salt;
+}
+
+public function setSalt($salt){
+	$this->salt = $salt;
+}
+
+public function getAccessLevel(){
+	return $this->accessLvl;
+}
+
+public function setAccessLevel($accessLvl){
+	$this->accessLvl = $accessLvl;
+}
+
+public function getDeptId(){
+	return $this->deptId;
+} 
+
+public function setDeptId($dId){
+	$this->deptId = $dId;
+}
+
+public function put(){
+	//update
+}
+
+public function post($change){
+	//insert
+}
+
+public function delete(){
+	//delete
+}
+
+}
+?>

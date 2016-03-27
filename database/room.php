@@ -1,27 +1,70 @@
 <?php
-private $servername = "facultydb.cdh6zybsklle.us-east-1.rds.amazonaws.com"
-private $username = "test"
-private $password = "test"
-private $dbname = "facultydb"
 
-$database = new Database();
+class room{
 
-public function insert($roomNum. $roomMap, $roomDesc){
-	$database->query('INSERT INTO Room (roomNumber, roomMap, description) values ($roomNum, $roomMap, $roomDesc)');
-	$database->bind('$roomNumber', 999);
-	$database->bind('$roomMap', 'Map');
-	$database->bind('$roomDesc','Descipion');
+private $roomNumber = "";
+private $roomMap = "";
+private $description = "";
+private $conn;
 
-	$database->execute();
-	echo $database->lastInsertId();//test successfully inserted
+	function __construct($conn,$deptId){
+		$this->conn = $conn;
+		$this->deptId = $deptId;
+	}
+	
+	
+public function fetch(){
+	$resultsArr = $this->conn->getData("select * from room where roomNumber = :number",array(
+		":number" => $this->roomNumber
+		)
+	);
+	try{
+		$results = $resultsArr[0];
+		$this->roomMap = $results['roomMap'];
+		$this->description = $results['description'];
+		return true;
+	}
+	catch(Exception $e){
+		return false;
+	}
+	
 }
 
-public function update($roomNum. $roomMap, $roomDesc){
-	$database->query('UPDATE Room (roomNumber, roomMap, description) values ($roomNum, $roomMap, $roomDesc)');
-	$database->bind('$roomNumber', 999);
-	$database->bind('$roomMap', 'Map');
-	$database->bind('$roomDesc','Descipion');
+public function getRoomNum(){
+	return $this->roomNumber;
+} 
 
-	$database->execute();
+public function setRoomNum($num){
+	$this->roomNumber = $num;
 }
->
+
+public function getRoomMap(){
+	return $this->roomMap;
+}
+
+public function setRoomMap($map){
+	$this->roomMap = $map;
+}
+
+public function getDescription(){
+	return $this->description;
+}
+
+public function setDescription($desc){
+	$this->description = $desc;
+}
+
+public function put(){
+	//update
+}
+
+public function post(){
+	//insert
+}
+
+public function delete(){
+	//delete
+}
+
+}
+?>
