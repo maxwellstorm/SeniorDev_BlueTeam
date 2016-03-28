@@ -54,13 +54,18 @@ public function setDeptAbbr($abbr){
 	$this->deptAbbr = $abbr;
 }
 
-public function put(){
+public function put($name,$abbr){
 	//update
+	$this->conn->setData("UPDATE department SET departmentName=:name, departmentAbbr=:abbr WHERE departmentId = :id",array(
+	":name"=>$name,
+	":abbr"=>$abbr,
+	":id"=> $this->deptId
+	));
 }
 
 public function post($id,$name,$abbr){
 	//insert
-	$this->$conn->setData("insert into department (departmentId,departmentName,departmentAbbr) values (:id,:name,:abbr)",array(
+	$this->conn->setData("INSERT into department (departmentId,departmentName,departmentAbbr) values (:id,:name,:abbr)",array(
 	":id"=>$id,
 	":name"=>$name,
 	":abbr"=>$abbr
@@ -69,6 +74,9 @@ public function post($id,$name,$abbr){
 
 public function delete(){
 	//delete
+	$this->conn->setData("DELETE from department where departmentId = :id",array(
+	":id"=> $this->deptId
+	));
 }
 
 }

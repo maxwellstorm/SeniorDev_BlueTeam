@@ -7,16 +7,12 @@ require("room.php");
 
 $testDb = new data; //connects to database in constructor/*
 
-echo "<br/><br/><strong>select without where stmt example:Department</strong>";
-$res = $testDb->getData("select * from department",array());
+echo "<br/><br/><strong>select without where stmt example:Admin</strong>";
+$res = $testDb->getData("select * from Admin",array());
 printExample($res);
 
-echo "Test Test Test";
-$testDept = new department($testDb,"3");
-$testDept->fetch();
-echo $testDept->getDeptAbbr();
-$testDb->post("1","Test","Test");
-
+$testDept = new Admin($testDb,"1");
+$testDept->post("1","Test","LTest","user","pass","salt","1","3");
 /*
 echo "<br/><br/><strong>select without where stmt example:Employee</strong>";
 $res = $testDb->getData("select * from Employees",array());

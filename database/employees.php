@@ -7,7 +7,6 @@ private $fname = "";
 private $lname = "";
 private $roomNumber = "";
 private $email = "";
-private $officeHours = "";
 private $departmentId = "";
 private $isActive = "";
 private $isFaculty = "";
@@ -15,6 +14,8 @@ private $phone = "";
 private $about = "";
 private $education = "";
 private $highlights = "";
+private $title = "";
+private $secDeptId = "";
 private $conn;
 
 	function __construct($conn,$facId){
@@ -33,7 +34,7 @@ public function fetch(){
 		$this->lname = $results['lName'];
 		$this->roomNumber = $results['roomNumber'];
 		$this->email = $results['email'];
-		$this->officeHours = $results['officeHours'];
+		//$this->officeHours = $results['officeHours'];
 		$this->departmentId = $result['departmentId'];
 		$this->isActive = $results['isActive'];
 		$this->isFaculty = $results['isFaculty'];
@@ -88,6 +89,7 @@ public function setEmail($email){
 	$this->email = $email;
 }
 
+/*
 public function getOfficeHours(){
 	return $this->officeHours;
 }
@@ -95,7 +97,7 @@ public function getOfficeHours(){
 public function setOfficeHous($officeHours){
 	$this->officeHours = $officeHours;
 }
-
+*/
 public function getDepartmentId(){
 	return $this->departmentId;
 }
@@ -152,16 +154,53 @@ public function setHighlights($highlights){
 	$this->highlights = $highlights;
 }
 
-public function put(){
+public function put($fname,$lname,$email,$active,$faculty,$phone,$about,$edu,$highlights,$deptId,$roomNum,$title,$secDeptId){
 	//update
+	$this->conn->setData("UPDATE Employees SET fName=:fname, lName=:lname, email=:email, isActive=:active, isFaculty=:faculty, phone=:phone, about=:about, education=:edu, highlights=:highlights, departmentId=:deptId, roomNumber=:roomNum, title=:title, secondaryDepartmentId=:secDeptId  WHERE departmentId = :id",array(
+	":fname"=>$fname,
+	":lname"=>$lname,
+	":email"=>$email,
+	":deptId"=>$deptId,
+	":active"=>$active,
+	":faculty"=>$faculty,
+	":phone"=>$phone,
+	":about"=>$about,
+	":edu"=>$edu,
+	":highlights"=>$highlights,
+	":id"=> $this->deptId,
+	":roomNum"=>$roomNum,
+	":title"=>$title,
+	":secDeptId"=>$secDeptId,
+	":id"=>$this->facultyId
+	));
 }
 
-public function post(){
+public function post($id,$fname,$lname,$email,$active,$faculty,$phone,$about,$edu,$highlights,$deptId,$roomNum,$title,$secDeptId){
 	//insert
+	$this->conn->setData("INSERT into Employees (facultyId,fName,lName,email,isActive,isFaculty,phone,about,education,highlights,departmentId,roomNumber,title,secondaryDepartmentId) values (:id,:fname,:lname,:email,:active,:faculty,:phone,:about,:edu,:highlights,:deptId,:roomNum,:title,:secDeptId)",array(
+	":id"=>$id,
+	":fname"=>$fname,
+	":lname"=>$lname,
+	":email"=>$email,
+	":deptId"=>$deptId,
+	":active"=>$active,
+	":faculty"=>$faculty,
+	":phone"=>$phone,
+	":about"=>$about,
+	":edu"=>$edu,
+	":highlights"=>$highlights,
+	":deptId"=> $deptId,
+	":roomNum"=>$roomNum,
+	":title"=>$title,
+	"secDeptId"=>$secDeptId
+	));
 }
 
 public function delete(){
 	//delete
+	$this->conn->setData("DELETE from Employees where facultyId = :id",array(
+	":id"=> $this->facultyId
+	));
 }
 
 }

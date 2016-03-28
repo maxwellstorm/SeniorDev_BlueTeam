@@ -7,9 +7,9 @@ private $roomMap = "";
 private $description = "";
 private $conn;
 
-	function __construct($conn,$deptId){
+	function __construct($conn,$roomNum){
 		$this->conn = $conn;
-		$this->deptId = $deptId;
+		$this->roomNumber = $roomNum;
 	}
 	
 	
@@ -54,16 +54,29 @@ public function setDescription($desc){
 	$this->description = $desc;
 }
 
-public function put(){
+public function put($map,$desc){
 	//update
+	$this->conn->setData("UPDATE room SET roomMap=:map, description=:roomDesc WHERE roomNumber = :num",array(
+	":map"=>$map,
+	":roomDesc"=>$desc,
+	":num"=> $this->roomNumber
+	));
 }
 
-public function post(){
+public function post($num,$map,$desc){
 	//insert
+	$this->conn->setData("INSERT into room (roomNumber,roomMap,description) values (:num,:map,:rDesc)",array(
+	":num"=>$num,
+	":map"=>$map,
+	":rDesc"=>$desc
+	));
 }
 
 public function delete(){
 	//delete
+	$this->conn->setData("DELETE from room where roomNumber = :num",array(
+	":num"=> $this->roomNumber
+	));
 }
 
 }

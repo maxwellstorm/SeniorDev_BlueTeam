@@ -105,16 +105,39 @@ public function setDeptId($dId){
 	$this->deptId = $dId;
 }
 
-public function put(){
+public function put($fname,$lname,$user,$pass,$salt,$accessLvl,$deptId){
 	//update
+	$this->conn->setData("UPDATE Admin SET fName=:fname, lName=:lname, username=:user, password=:pass, salt=:salt, accessLevel=:accessLvl, departmentId=:deptId WHERE adminId = :id",array(
+	":fname"=>$fname,
+	":lname"=>$lname,
+	":user"=>$user,
+	":pass"=>$pass,
+	":salt"=>$salt,
+	":accessLvl"=>$accessLvl,
+	":departmentId"=>$deptId,
+	":id"=>$this->adminId
+	));
 }
 
-public function post($change){
+public function post($id,$fname,$lname,$user,$pass,$salt,$accessLvl,$deptId){
 	//insert
+	$this->conn->setData("INSERT into Admin (adminId,fName,lName,username,password,salt,accessLevel,departmentId) values (:id,:fname,:lname,:user,:pass,:salt,:accessLvl,:deptId)",array(
+	":id"=>$id,
+	":fname"=>$fname,
+	":lname"=>$lname,
+	":user"=>$user,
+	":pass"=>$pass,
+	":salt"=>$salt,
+	":accessLvl"=>$accessLvl,
+	":departmentId"=>$deptId
+	));
 }
 
 public function delete(){
 	//delete
+	$this->conn->setData("DELETE from Admin where adminId = :id",array(
+	":id"=> $this->adminId
+	));
 }
 
 }
