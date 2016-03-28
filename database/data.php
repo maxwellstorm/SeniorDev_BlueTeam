@@ -39,9 +39,6 @@ class data{
 	
 	
 	function setData($sql,$params){
-		echo "in SetDate sql = $sql parms = <br/><br/>";
-		var_dump($params);
-		echo "<br/><br/>";
 		$stmt = $this->conn->prepare($sql);
 		$stmt->execute($params);
 	}
