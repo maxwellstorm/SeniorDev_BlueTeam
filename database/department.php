@@ -63,12 +63,28 @@ public function put($name,$abbr){
 	));
 }
 
+public function put(){
+	$this->conn->setData("UPDATE department SET departmentName=:name, departmentAbbr=:abbr WHERE departmentId = :id",array(
+	":name"=>$this->deptName,
+	":abbr"=>$this->deptAbbr,
+	":id"=> $this->deptId
+	));
+}
+
 public function post($id,$name,$abbr){
 	//insert
 	$this->conn->setData("INSERT into department (departmentId,departmentName,departmentAbbr) values (:id,:name,:abbr)",array(
 	":id"=>$id,
 	":name"=>$name,
 	":abbr"=>$abbr
+	));
+}
+
+public function post(){
+	$this->conn->setData("INSERT into department (departmentId,departmentName,departmentAbbr) values (:id,:name,:abbr)",array(
+	":id"=> $this->deptId,
+	":name"=>$this->deptName,
+	":abbr"=>$this->deptAbbr
 	));
 }
 

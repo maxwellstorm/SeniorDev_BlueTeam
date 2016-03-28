@@ -63,12 +63,30 @@ public function put($map,$desc){
 	));
 }
 
+public function put(){
+	//update
+	$this->conn->setData("UPDATE room SET roomMap=:map, description=:roomDesc WHERE roomNumber = :num",array(
+	":map"=>$this->roomMap, 
+	":roomDesc"=>$this->description,
+	":num"=>$this->roomNumber
+	));
+}
+
 public function post($num,$map,$desc){
 	//insert
 	$this->conn->setData("INSERT into room (roomNumber,roomMap,description) values (:num,:map,:rDesc)",array(
 	":num"=>$num,
 	":map"=>$map,
 	":rDesc"=>$desc
+	));
+}
+
+public function post(){
+	//insert
+	$this->conn->setData("INSERT into room (roomNumber,roomMap,description) values (:num,:map,:rDesc)",array(
+	":num"=>$this->roomNumber,
+	":map"=>$this->roomMap,
+	":rDesc"=>$this->description
 	));
 }
 

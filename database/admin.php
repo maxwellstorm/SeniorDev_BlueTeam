@@ -107,7 +107,7 @@ public function setDeptId($dId){
 
 public function put($fname,$lname,$user,$pass,$salt,$accessLvl,$deptId){
 	//update
-	$this->conn->setData("UPDATE Admin SET fName=:fname, lName=:lname, username=:user, password=:pass, salt=:salt, accessLevel=:accessLvl, departmentId=:departmentId WHERE adminId = :id",array(
+	$this->conn->setData("UPDATE Admin SET fName=:fname, lName=:lname, username=:user, password=:pass, salt=:salt, accessLevel=:accessLvl, departmentId=:deptId WHERE adminId = :id",array(
 	":fname"=>$fname,
 	":lname"=>$lname,
 	":user"=>$user,
@@ -119,9 +119,23 @@ public function put($fname,$lname,$user,$pass,$salt,$accessLvl,$deptId){
 	));
 }
 
+public function put(){
+	//update
+	$this->conn->setData("UPDATE Admin SET fName=:fname, lName=:lname, username=:user, password=:pass, salt=:salt, accessLevel=:accessLvl, departmentId=:deptId WHERE adminId = :id",array(
+	":fname"=>$this->fname,
+	":lname"=>$this->lname,
+	":user"=>$this->user,
+	":pass"=>$this->pass,
+	":salt"=>$this->salt,
+	":accessLvl"=>$this->accessLvl,
+	":departmentId"=>$this->deptId,
+	":id"=>$this->adminId
+	));
+}
+
 public function post($id,$fname,$lname,$user,$pass,$salt,$accessLvl,$deptId){
 	//insert
-	$this->conn->setData("INSERT into Admin (adminId,fName,lName,username,password,salt,accessLevel,departmentId) values (:id,:fname,:lname,:user,:pass,:salt,:accessLvl,:departmentId)",array(
+	$this->conn->setData("INSERT into Admin (adminId,fName,lName,username,password,salt,accessLevel,departmentId) values (:id,:fname,:lname,:user,:pass,:salt,:accessLvl,:deptId)",array(
 	":id"=>$id,
 	":fname"=>$fname,
 	":lname"=>$lname,
@@ -130,6 +144,20 @@ public function post($id,$fname,$lname,$user,$pass,$salt,$accessLvl,$deptId){
 	":salt"=>$salt,
 	":accessLvl"=>$accessLvl,
 	":departmentId"=>$deptId
+	));
+}
+
+public function post(){
+	//insert
+	$this->conn->setData("INSERT into Admin (adminId,fName,lName,username,password,salt,accessLevel,departmentId) values (:id,:fname,:lname,:user,:pass,:salt,:accessLvl,:deptId)",array(
+	":id"=>$this->adminId,
+	":fname"=>$this->fname,
+	":lname"=>$this->lname,
+	":user"=>$this->user,
+	":pass"=>$this->pass,
+	":salt"=>$this->salt,
+	":accessLvl"=>$this->accessLvl,
+	":departmentId"=>$this->deptId
 	));
 }
 
