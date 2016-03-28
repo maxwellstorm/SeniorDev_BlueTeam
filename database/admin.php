@@ -107,7 +107,7 @@ public function setDeptId($dId){
 
 public function put($fname,$lname,$user,$pass,$salt,$accessLvl,$deptId){
 	//update
-	$this->conn->setData("UPDATE Admin SET fName=:fname, lName=:lname, username=:user, password=:pass, salt=:salt, accessLevel=:accessLvl, departmentId=:deptId WHERE adminId = :id",array(
+	$this->conn->setData("UPDATE Admin SET fName=:fname, lName=:lname, username=:user, password=:pass, salt=:salt, accessLevel=:accessLvl, departmentId=:departmentId WHERE adminId = :id",array(
 	":fname"=>$fname,
 	":lname"=>$lname,
 	":user"=>$user,
@@ -121,7 +121,7 @@ public function put($fname,$lname,$user,$pass,$salt,$accessLvl,$deptId){
 
 public function post($id,$fname,$lname,$user,$pass,$salt,$accessLvl,$deptId){
 	//insert
-	$this->conn->setData("INSERT into Admin (adminId,fName,lName,username,password,salt,accessLevel,departmentId) values (:id,:fname,:lname,:user,:pass,:salt,:accessLvl,:deptId)",array(
+	$this->conn->setData("INSERT into Admin (adminId,fName,lName,username,password,salt,accessLevel,departmentId) values (:id,:fname,:lname,:user,:pass,:salt,:accessLvl,:departmentId)",array(
 	":id"=>$id,
 	":fname"=>$fname,
 	":lname"=>$lname,
