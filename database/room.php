@@ -54,7 +54,7 @@ public function setDescription($desc){
 	$this->description = $desc;
 }
 
-public function put($map,$desc){
+public function putParams($map,$desc){
 	//update
 	$this->conn->setData("UPDATE room SET roomMap=:map, description=:roomDesc WHERE roomNumber = :num",array(
 	":map"=>$map,
@@ -72,7 +72,7 @@ public function put(){
 	));
 }
 
-public function post($num,$map,$desc){
+public function postParams($num,$map,$desc){
 	//insert
 	$this->conn->setData("INSERT into room (roomNumber,roomMap,description) values (:num,:map,:rDesc)",array(
 	":num"=>$num,
@@ -98,4 +98,5 @@ public function delete(){
 }
 
 }
+
 ?>

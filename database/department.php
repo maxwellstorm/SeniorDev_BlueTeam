@@ -54,7 +54,7 @@ public function setDeptAbbr($abbr){
 	$this->deptAbbr = $abbr;
 }
 
-public function put($name,$abbr){
+public function putParams($name,$abbr){
 	//update
 	$this->conn->setData("UPDATE department SET departmentName=:name, departmentAbbr=:abbr WHERE departmentId = :id",array(
 	":name"=>$name,
@@ -71,7 +71,7 @@ public function put(){
 	));
 }
 
-public function post($id,$name,$abbr){
+public function postParams($id,$name,$abbr){
 	//insert
 	$this->conn->setData("INSERT into department (departmentId,departmentName,departmentAbbr) values (:id,:name,:abbr)",array(
 	":id"=>$id,

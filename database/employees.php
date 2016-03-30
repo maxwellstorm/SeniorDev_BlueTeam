@@ -1,10 +1,28 @@
 <?php
-
+require("util.php");
 class employees{
+	
 
- 
+	public $title;
+	public $secDeptId;
+	public $fname = null;
+	public $lname;
+	public $email;
+	public $roomNumber;
+	public $departmentId;
+	public $isActive;
+	public $isFaculty;
+	public $phone;
+	public $about;
+	public $education;
+	public $highlights;
+    private $facultyId;
 
-	function __construct($conn,$facId){
+	
+
+
+
+	function __construct($conn,$facId = null){
 		$this->conn = $conn;
 		$this->facultyId = $facId;
 	}
@@ -34,6 +52,8 @@ public function fetch(){
 		return false;
 	}
 }	
+
+
 
 public function getEmployeeId(){
 	return $this->facultyId;
@@ -156,8 +176,12 @@ public function setSecDeptId($secDeptId){
 	$this->secondaryDepartmentId = $secDeptId;
 }
 
-public function put($fname,$lname,$email,$active,$faculty,$phone,$about,$edu,$highlights,$deptId,$roomNum,$title,$secDeptId){
+public function putParams($fname,$lname,$email,$active,$faculty,$phone,$about,$edu,$highlights,$deptId,$roomNum,$title,$secDeptId){
 	//update
+	
+	util::checkName($fname);
+	util::checkName($lname);
+	
 	$this->conn->setData("UPDATE Employees SET fName=:fname, lName=:lname, email=:email, isActive=:active, isFaculty=:faculty, phone=:phone, about=:about, education=:edu, highlights=:highlights, departmentId=:deptId, roomNumber=:roomNum, title=:title, secondaryDepartmentId=:secDeptId  WHERE departmentId = :id",array(
 	":fname"=>$fname,
 	":lname"=>$lname,
@@ -169,7 +193,7 @@ public function put($fname,$lname,$email,$active,$faculty,$phone,$about,$edu,$hi
 	":about"=>$about,
 	":edu"=>$edu,
 	":highlights"=>$highlights,
-	":id"=> $this->deptId,
+	":id"=> $this->departmentId,
 	":roomNum"=>$roomNum,
 	":title"=>$title,
 	":secDeptId"=>$secDeptId,
@@ -178,6 +202,9 @@ public function put($fname,$lname,$email,$active,$faculty,$phone,$about,$edu,$hi
 }
 
 public function put(){
+	util::checkName($this->fname);
+	util::checkName($this->lname);
+	
 	$this->conn->setData("UPDATE Employees SET fName=:fname, lName=:lname, email=:email, isActive=:active, isFaculty=:faculty, phone=:phone, about=:about, education=:edu, highlights=:highlights, departmentId=:deptId, roomNumber=:roomNum, title=:title, secondaryDepartmentId=:secDeptId  WHERE departmentId = :id",array(
 	":fname"=>$this->fname,
 	":lname"=>$this->lname,
@@ -197,8 +224,10 @@ public function put(){
 	));
 }
 
-public function post($id,$fname,$lname,$email,$active,$faculty,$phone,$about,$edu,$highlights,$deptId,$roomNum,$title,$secDeptId){
+public function postParams($id,$fname,$lname,$email,$active,$faculty,$phone,$about,$edu,$highlights,$deptId,$roomNum,$title,$secDeptId){
 	//insert
+	util::checkName($fname);
+	util::checkName($lname);
 	$this->conn->setData("INSERT into Employees (facultyId,fName,lName,email,isActive,isFaculty,phone,about,education,highlights,departmentId,roomNumber,title,secondaryDepartmentId) values (:id,:fname,:lname,:email,:active,:faculty,:phone,:about,:edu,:highlights,:deptId,:roomNum,:title,:secDeptId)",array(
 	":id"=>$id,
 	":fname"=>$fname,
@@ -218,6 +247,8 @@ public function post($id,$fname,$lname,$email,$active,$faculty,$phone,$about,$ed
 }
 
 public function post(){
+	util::checkName($this->fname);
+	util::checkName($this->lname);
 	$this->conn->setData("INSERT into Employees (facultyId,fName,lName,email,isActive,isFaculty,phone,about,education,highlights,departmentId,roomNumber,title,secondaryDepartmentId) values (:id,:fname,:lname,:email,:active,:faculty,:phone,:about,:edu,:highlights,:deptId,:roomNum,:title,:secDeptId)",array(
 	":id"=>$this->facultyId, 
 	":fname"=>$this->fname,
@@ -235,12 +266,19 @@ public function post(){
 	"secDeptId"=>$this->secDeptId
 	));
 }
-}
+
 public function delete(){
 	//delete
 	$this->conn->setData("DELETE from Employees where facultyId = :id",array(
 	":id"=> $this->facultyId
 	));
+}
+
+private function checkName($name){
+	if(ctype_alpha($name))
+		throw new Exception("Names can only contain letters",THROW_NON_AlPHA);
+		return false;
+		return true;
 }
 
 }

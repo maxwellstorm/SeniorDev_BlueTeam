@@ -105,7 +105,7 @@ public function setDeptId($dId){
 	$this->deptId = $dId;
 }
 
-public function put($fname,$lname,$user,$pass,$salt,$accessLvl,$deptId){
+function putParams($fname,$lname,$user,$pass,$salt,$accessLvl,$deptId){
 	//update
 	$this->conn->setData("UPDATE Admin SET fName=:fname, lName=:lname, username=:user, password=:pass, salt=:salt, accessLevel=:accessLvl, departmentId=:deptId WHERE adminId = :id",array(
 	":fname"=>$fname,
@@ -119,7 +119,7 @@ public function put($fname,$lname,$user,$pass,$salt,$accessLvl,$deptId){
 	));
 }
 
-public function put(){
+function put(){
 	//update
 	$this->conn->setData("UPDATE Admin SET fName=:fname, lName=:lname, username=:user, password=:pass, salt=:salt, accessLevel=:accessLvl, departmentId=:deptId WHERE adminId = :id",array(
 	":fname"=>$this->fname,
@@ -133,7 +133,7 @@ public function put(){
 	));
 }
 
-public function post($id,$fname,$lname,$user,$pass,$salt,$accessLvl,$deptId){
+public function postParams($id,$fname,$lname,$user,$pass,$salt,$accessLvl,$deptId){
 	//insert
 	$this->conn->setData("INSERT into Admin (adminId,fName,lName,username,password,salt,accessLevel,departmentId) values (:id,:fname,:lname,:user,:pass,:salt,:accessLvl,:deptId)",array(
 	":id"=>$id,

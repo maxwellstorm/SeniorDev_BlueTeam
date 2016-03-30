@@ -1,18 +1,21 @@
 <?php
-require("data.php");
-require("admin.php");
-require("department.php");
-require("employees.php");
-require("room.php");
+require_once("data.php");
+require_once("admin.php");
+require_once("department.php");
+require_once("employees.php");
+require_once("room.php");
 
 $testDb = new data; //connects to database in constructor/*
 
 echo "<br/><br/><strong>select without where stmt example:Admin</strong>";
-$res = $testDb->getData("select * from Admin",array());
-printExample($res);
+//$res = $testDb->getData("select * from Admin",array());
 
-$testDept = new Admin($testDb,"1");
-$testDept->post("1","Test","LTest","user","pass","salt","1","3");
+$testEmp = new employees($testDb,1);
+$testEmp->putParams("test","dsaf","adsfdsa",1,"sadsa","sadsa","sadsa","sadsa","sadsa","sadsa","sadsa","sadsa","sadsa");
+
+//printExample($res);
+
+
 /*
 echo "<br/><br/><strong>select without where stmt example:Employee</strong>";
 $res = $testDb->getData("select * from Employees",array());
