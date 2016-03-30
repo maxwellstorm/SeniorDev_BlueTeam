@@ -1,0 +1,216 @@
+body {
+	margin: 0;
+	background: orange;
+	font-family: Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+	background: #E0E0E0;
+}
+
+h1 {
+	font-family: Montserrat, Helvetica, sans-serif;
+	font-size: 64px;
+	font-weight: normal;
+	margin: 0;
+}
+
+h2 {
+	font-family: Montserrat, Helvetica, sans-serif;
+	font-size: 48px;
+	font-weight: normal;
+	margin: -4px 0px 0px 0px;
+	line-height: 1;
+}
+
+#wrapper, #headerInner {
+	margin: auto;
+}
+
+header {
+	width: 100%;
+	height: 100px;
+	background: #F36E21;
+	color: #FFFFFF;
+}
+
+header h1 {
+	float: left;
+	clear: right;
+}
+
+.dropShadow {
+	box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.25);
+	position: relative;
+	z-index: 10;
+}
+
+.roundCorners {
+	border-radius: 3px;
+}
+
+#imgRIT {
+	float: right;
+	position: relative;
+	top: 35px;
+}
+
+#wrapper {
+	margin-top: 20px;
+	position: relative;
+}
+
+#mapOverlay {
+	display: none;
+	position: absolute;
+	width: 100%;
+	height: calc(100vh - 138px);
+	background: #F8F7ED;
+	z-index: 20;
+}
+
+#infoExpanded {
+	position: relative;
+	padding: 20px;
+	width: calc(25% - 40px);
+	height: calc(100% - 40px);
+	float: left;
+	clear: right;
+}
+
+#closeOverlay {
+	position: absolute;
+	bottom: 20px;
+	color: #F36E21;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+#floorMapContainer {
+	position: relative;
+	float: right;
+	width: 75%;
+	height: 100%;
+	background-color: white;
+}
+
+#floorMap {
+	margin: 20px;
+	width: calc(100% - 40px);
+	height: calc(100% - 40px);
+	background-image: url("../media/floorplans/golisano-2nd-floor-large.png");
+	background-size: 100% 100%;
+}
+
+#professorsContainer {
+	height: calc(100vh - 140px);
+	float: left;
+	clear: right;
+	overflow-x: hidden;
+	overflow-y: scroll !important;
+}
+
+.row {
+	height: 120px;
+	margin-bottom: 20px;
+}
+
+.row:last-of-type {
+	margin-bottom: 0px;
+}
+
+.professorCard {
+	display: inline-block;
+	background: #F8F7ED;
+	width: 27%;
+	height: 92px;
+	padding: 15px;
+	margin-left: 20px;
+	margin-bottom: 20px;
+	cursor: pointer;
+}
+
+.professorCard:first-of-type, .professorCard:nth-child(4n) {
+	margin-left: 0px;
+}
+
+.thumb {
+	position: relative;
+	width: 100px;
+	height: 100px;
+	background-position: center;
+	background-size: 100% 100% !important;
+	background-repeat: no-repeat;
+	border-radius: 50%;
+	background: gray;
+	float: left;
+	clear: right;
+}
+
+.largeThumb {
+	position: relative;
+	width: 250px;
+	height: 250px;
+	background-size: 100% 100% !important;
+	background-repeat: no-repeat;
+	margin: auto auto 20px auto;
+	border-radius: 50%;
+	background: gray;
+}
+
+#bogaard {
+	background-image: url("../media/thumbs/bogaard-thumb.jpg");
+}
+
+#largeBogaard {
+	background-image: url("../media/thumbs/bogaard-thumb.jpg");
+}
+
+.infoPreview {
+	float: right;
+}
+
+.professorName {
+	font-weight: bold;
+}
+
+.moreLink {
+	color: #F36E21;
+}
+
+#filtersContainer {
+	float: right;
+	background: #F8F7ED;
+	width: 23%;
+	height: calc(100vh - 180px);
+	padding: 20px;
+}
+
+@media screen and (min-width: 1920px) {
+	#wrapper, #headerInner {
+		width: 1880px;
+	}
+}
+
+@media screen and (min-width: 1440px) {
+	#wrapper, #headerInner {
+		width: 1400px;
+		/* height: calc(100vh - 140px); */
+	}
+
+	#professorsContainer {
+		width: 1020px;
+	}
+
+	.row {
+		height: 130px;
+	}
+
+	.professorCard {
+		width: 287px;
+		height: 100px;
+	}
+
+	.infoPreview {
+		width: 172px;
+	}
+}
