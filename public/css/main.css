@@ -33,3 +33,30 @@ body {
 #rightCol {
 	float: right;
 }
+
+#results {
+	list-style: none;
+	text-align: left;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	width: 200px;
+	height: 400px;
+	max-height: 400px;
+}
+
+#searchCol {
+	text-align: center;
+}
+
+.rmNum {
+	padding-left: 15px;
+}
+
+#results hr {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#results li:active {
+	background-color: red;
+}
