@@ -1,16 +1,36 @@
 <?php
-	require("data.php");
-	require("employees.php");
+	require("../database/data.php");
+	require("../database/employees.php");
 
 
 	function getAllEmps() {
 		$database = new data;
 
 		//Will need to change statement to only show those in admin's department (role stuff)
-		$emps = $database->getData("SELECT fName, lName, roomNumber FROM Employees;", array());
+		$emps = $database->getData("SELECT fName, lName, roomNumber, facultyId FROM Employees;", array());
 
 		foreach($emps as $arr) {
-			echo "<li><strong>" . $arr['lName'] . ", " . $arr['fName'] . "</strong><br /><span class='rmNum initialism'>" . $arr['roomNumber'] . "</span><hr /></li>";
+			echo "<li onclick='setActive(this);'><span class='fId' style='display: none'>" . $arr['facultyId'] . "</span><strong>" . $arr['lName'] . ", " . $arr['fName'] . "</strong><br /><span class='rmNum initialism'>" . $arr['roomNumber'] . "</span><hr /></li>";
+		}
+	}
+
+	function getAllRooms() {
+		$database = new data;
+
+		$rooms = $database->getData("SELECT roomNumber FROM room", array());
+
+		foreach($rooms as $arr) {
+			echo "<option>" . $arr['roomNumber'] . "</option>";
+		}
+	}
+
+	function getAllDepartments() {
+		$database = new data;
+
+		$depts = $database->getData("SELECT departmentName FROM department", array());
+
+		foreach($depts as $arr) {
+			echo "<option>" . $arr['departmentName'] . "</option>";
 		}
 	}
 ?>
@@ -21,6 +41,7 @@
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" media="screen" href="css/main.css">
+		<script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 	</head>
 	<body>
@@ -29,9 +50,8 @@
 			<h1 class="headerText">Faculty Directory</h1>
 			<h5 class="headerText">Admin Portal</h5>
 		</div>
-
 		<div class="panel panel-default">
-			<div class="panel-heading"></div>
+			<!--<div class="panel-heading"></div>-->
 			<div class="panel-body">
 				<form class="form-horizontal">
 					<div class="col-lg-2" id="searchCol">
@@ -47,6 +67,10 @@
 						</ul>
 						<br />
 
+						<!--Placeholder for test functionality-->
+						<form method="POST" action="addProfessor.html">
+							<input name="go" type="submit" value="Submit">
+						</form>
 						<input type="button" value="Create New" name="new" id="createNew" class="btn btn-primary" onclick="">
 					</div>
 					<div class="col-lg-10">
@@ -98,9 +122,7 @@
 										<label for="room" class="col-lg-3 control-label">Room Number</label>
 										<div class="col-lg-4">
 											<select class="form-control" id="room">
-												<option>GOL-2004</option>
-												<option>GOL-2005</option>
-												<option>GOL-2006</option>
+												<?php getAllRooms() ?>
 											</select>
 										</div>
 									</div>
@@ -109,9 +131,7 @@
 										<label for="dept" class="col-lg-3 control-label">Department</label>
 										<div class="col-lg-4">
 											<select class="form-control" id="dept">
-												<option>Computing Security</option>
-												<option>Information Sciences &amp; Technology</option>
-												<option>Interactive Games &amp; Media</option>
+												<?php getAllDepartments() ?>
 											</select>
 										</div>
 									</div>
@@ -130,7 +150,7 @@
 												</div>
 												<div class="radio">
 													<label>
-														<input type="radio" name="actives" id="active2" value="activeNo">
+														<input type="radio" name="actives" id="active0" value="activeNo">
 														No
 													</label>
 												</div>
@@ -148,7 +168,7 @@
 												</div>
 												<div class="radio">
 													<label>
-														<input type="radio" name="faculties" id="faculty2" value="facNo">
+														<input type="radio" name="faculties" id="faculty0" value="facNo">
 														No
 													</label>
 												</div>
@@ -159,21 +179,21 @@
 									<div class="form-group">
 										<label for="textArea" class="col-lg-2 control-label">About</label>
 										<div class="col-lg-10">
-											<textarea class="form-control" rows="3" id="textArea"></textarea>
+											<textarea class="form-control" rows="3" id="about"></textarea>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label for="textArea" class="col-lg-2 control-label">Education</label>
 										<div class="col-lg-10">
-											<textarea class="form-control" rows="3" id="textArea"></textarea>
+											<textarea class="form-control" rows="3" id="education"></textarea>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label for="textArea" class="col-lg-2 control-label">Highlights</label>
 										<div class="col-lg-10">
-											<textarea class="form-control" rows="3" id="textArea"></textarea>
+											<textarea class="form-control" rows="3" id="highlights"></textarea>
 										</div>
 									</div>
 								</div>
