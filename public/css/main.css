@@ -58,5 +58,18 @@ body {
 }
 
 #results li:active {
-	background-color: red;
+	transition: all .25s ease;
+	background-color: #09F;
+	color: white;
+}
+
+#results li:hover {
+	transition: all .25s ease;
+	background-color: #09F;
+	color: white;
+}
+
+.activeResult {
+	background-color: #09F;
+	color: white;
 }
