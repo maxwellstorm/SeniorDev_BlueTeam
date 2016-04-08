@@ -1,6 +1,21 @@
 var profArray = [];
 
 function init() {
+	$.ajax({
+		type: 'GET',
+		url: '../database/fetch.php',
+		data: 'function=fetchAll',
+		success: function(response) {
+			var dataArray = response;
+			var parsedData = $.parseJSON(dataArray);
+			$.each(parsedData, function(i,val) {
+				if (i == "0") {
+					alert(JSON.stringify(val.fname));
+				}
+			});
+		}
+	});
+	
 	var prof1 = new Professor('Daniel', 'Bogaard', 'dsbics@rit.edu', '2111', 'bogaard-thumb.jpg');
 	var prof2 = new Professor('Catherine', 'Beaton', 'ciiics@rit.edu', '2621', 'beaton-thumb.png');
 	var prof3 = new Professor('Catherine', 'Beaton', 'ciiics@rit.edu', '2621', 'beaton-thumb.png');
