@@ -129,7 +129,7 @@ header h1 {
 	cursor: pointer;
 }
 
-.professorCard:first-of-type, .professorCard:nth-child(4n) {
+.professorCard:nth-child(3n+1) {
 	margin-left: 0px;
 }
 

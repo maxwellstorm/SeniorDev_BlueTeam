@@ -12,8 +12,8 @@
 	function fetchAll() {
 		$database = new data;
 
-		//Will need to change statement to only show those in admin's department (role stuff)
-		$emps = $database->getData("SELECT fName, lName, roomNumber, facultyId FROM Employees;", array());
+		/* $emps = $database->getData("SELECT facultyId, fName, lName, roomNumber, email, phone, departmentId FROM Employees;", array()); */
+		$emps = $database->getData("SELECT * FROM Employees ORDER BY lName;", array());
 
 		return json_encode($emps);
 	}

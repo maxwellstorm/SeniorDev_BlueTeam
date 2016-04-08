@@ -5,25 +5,18 @@ function init() {
 		type: 'GET',
 		url: '../database/fetch.php',
 		data: 'function=fetchAll',
+		async: false,
 		success: function(response) {
 			var dataArray = response;
 			var parsedData = $.parseJSON(dataArray);
+			// alert(dataArray);
 			$.each(parsedData, function(i,val) {
-				if (i == "0") {
-					alert(JSON.stringify(val.fname));
-				}
+				var professor = new Professor(val.facultyId, val.fName, val.lName, val.title, val.email, val.roomNumber, val.phone, val.departmentId, val.isActive, val.isFaculty, val.about, val.education, val.highlights, 'bogaard-thumb.jpg'); 
+				profArray.push(professor);
 			});
 		}
 	});
 	
-	var prof1 = new Professor('Daniel', 'Bogaard', 'dsbics@rit.edu', '2111', 'bogaard-thumb.jpg');
-	var prof2 = new Professor('Catherine', 'Beaton', 'ciiics@rit.edu', '2621', 'beaton-thumb.png');
-	var prof3 = new Professor('Catherine', 'Beaton', 'ciiics@rit.edu', '2621', 'beaton-thumb.png');
-	var prof4 = new Professor('Catherine', 'Beaton', 'ciiics@rit.edu', '2621', 'beaton-thumb.png');
-	profArray.push(prof1);
-	profArray.push(prof2);
-	profArray.push(prof3);
-	profArray.push(prof4);
 	populateGridView();
 }
 
