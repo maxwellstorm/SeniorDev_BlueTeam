@@ -21,15 +21,25 @@ function init() {
 }
 
 function getProfessorCard(Professor) {
-	var card = '<div class="professorCard dropShadow roundCorners">';
+	var card = '<div id="profCard' + Professor.getFacultyId() + '" class="professorCard dropShadow roundCorners">';
 	card += '<div class="thumb" style="background-image: url(media/thumbs/' + Professor.getThumb() + ')"></div>';
 	card += '<div class="infoPreview">';
 	card += '<div class="professorName">' + Professor.getFullName() + '</div>';
-	card += '<div>Room: ' + Professor.getRoom() + '</div>';
+	card += '<div>Room ' + Professor.getRoom() + '</div>';
 	card += '<div class="moreLink">More Info</div>';
 	card += '</div></div>';
 
 	return card;
+}
+
+function getProfessorFromArr(facultyId) {
+	var profToReturn;
+	$.each(profArray, function(i, val) {
+		if (val.getFacultyId() == facultyId) {
+			profToReturn = val;
+		}
+	});
+	return profToReturn;
 }
 
 function populateGridView() {
@@ -37,6 +47,11 @@ function populateGridView() {
 		var card = getProfessorCard(val);
 		$('#gridView').append(card);
 	});
+}
+
+function updateOverlay(Professor) {
+	$('#overlayName').text(Professor.getFullName());
+	$('#overlayRoom').text('Room ' + Professor.getRoom());
 }
 
 function showOverlay() {
@@ -51,6 +66,10 @@ $(document).ready(function() {
 	init();
 
 	$('.professorCard').click(function() {
+		var selectedId = $(this).attr("id").substring(8);
+		var professor = getProfessorFromArr(selectedId);
+		updateOverlay(professor);
+
 		showOverlay();
 	});
 
