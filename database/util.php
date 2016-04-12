@@ -7,7 +7,10 @@
 
     }
  const THROW_ONLY_ALPHA    = 1;
-	
+ const THROW_ROOM_INNCORRECT_FORMAT    = 2;
+ const THROW_INNCORRECT_EMAIL_FORMAT    = 3;
+ const THROW_NULL    = 4;
+ 
 	public static function checkName($name){
 		if(!ctype_alpha($name)){
 			throw new Exception("only letter allowed in names",1);
