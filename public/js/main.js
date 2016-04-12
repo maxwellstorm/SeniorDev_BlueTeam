@@ -3,6 +3,12 @@ var loadFile = function(event) {
     output.src = URL.createObjectURL(event.target.files[0]);
 };
 
+function submitNew(formId) {
+	$("#createNew").click( function() {
+    	$('#' + formId).submit();
+	});
+}
+
 function setActive(active) {
 	$('#results li').removeClass("activeResult");
 	active.className += " activeResult";
@@ -30,10 +36,23 @@ function getInfo(selected) {
 		$('#dept').val(infoResponse["departmentName"]);
 		//NEED TO ACCOMODATE FOR SECOND DEPARTMENT
 		
-		//Need to fix toggling between the 2
-		console.log('#faculty' + infoResponse["isFaculty"]);
-		$('#active' + infoResponse["isActive"]).attr('checked', 'checked');
-		$('#faculty' + infoResponse["isFaculty"]).attr('checked', 'checked');
+		var isActive = infoResponse['isActive'];
+		var isFaculty = infoResponse['isFaculty'];
+		if(isActive == 0) {
+			document.getElementById('activeNo').checked = true;
+			document.getElementById('activeYes').checked = false;
+		} else { //isActive == 1
+			document.getElementById('activeNo').checked = false;
+			document.getElementById('activeYes').checked = true;
+		}
+
+		if(isFaculty == 0) {
+			document.getElementById('facultyNo').checked = true;
+			document.getElementById('facultyYes').checked = false;
+		} else { //isActive == 1
+			document.getElementById('facultyNo').checked = false;
+			document.getElementById('facultyYes').checked = true;
+		}
 
 		$('#about').val(infoResponse["about"]);
 		$('#education').val(infoResponse["education"]);

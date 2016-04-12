@@ -7,7 +7,7 @@
 		$database = new data;
 
 		//Will need to change statement to only show those in admin's department (role stuff)
-		$emps = $database->getData("SELECT fName, lName, roomNumber, facultyId FROM Employees;", array());
+		$emps = $database->getData("SELECT fName, lName, roomNumber, facultyId FROM Employees ORDER BY lName ASC;", array());
 
 		foreach($emps as $arr) {
 			echo "<li onclick='setActive(this);'><span class='fId' style='display: none'>" . $arr['facultyId'] . "</span><strong>" . $arr['lName'] . ", " . $arr['fName'] . "</strong><br /><span class='rmNum initialism'>" . $arr['roomNumber'] . "</span><hr /></li>";
@@ -67,14 +67,13 @@
 						</ul>
 						<br />
 
-						<!--Placeholder for test functionality-->
 						<form method="POST" action="addProfessor.html">
-							<input name="go" type="submit" value="Submit">
+							<input name="edit" id="editBtn" type="button" value="Update" onclick="">
 						</form>
-						<input type="button" value="Create New" name="new" id="createNew" class="btn btn-primary" onclick="">
+						<input type="button" value="Create New" name="new" id="createNew" class="btn btn-primary" onclick="submitNew('createNew')">
 					</div>
 					<div class="col-lg-10">
-						<form class="form-horizontal" action="" method="POST">
+						<form class="form-horizontal" action="newFaculty.php" method="POST">
 							<fieldset>
 								<legend>ADD A NEW PROFESSOR</legend>
 								<div class="col-lg-6" id="leftCol">
@@ -144,13 +143,13 @@
 											<div class="col-lg-8">
 												<div class="radio">
 			 										<label>
-														<input type="radio" name="actives" id="active1" value="activeYes" checked="">
+														<input type="radio" name="actives" id="activeYes" value="activeYes" checked="">
 														Yes
 													</label>
 												</div>
 												<div class="radio">
 													<label>
-														<input type="radio" name="actives" id="active0" value="activeNo">
+														<input type="radio" name="actives" id="activeNo" value="activeNo">
 														No
 													</label>
 												</div>
@@ -162,13 +161,13 @@
 											<div class="col-lg-8">
 												<div class="radio">
 			 										<label>
-														<input type="radio" name="faculties" id="faculty1" value="facYes" checked="">
+														<input type="radio" name="faculties" id="facultyYes" value="facYes" checked="">
 														Yes
 													</label>
 												</div>
 												<div class="radio">
 													<label>
-														<input type="radio" name="faculties" id="faculty0" value="facNo">
+														<input type="radio" name="faculties" id="facultyNo" value="facNo">
 														No
 													</label>
 												</div>
