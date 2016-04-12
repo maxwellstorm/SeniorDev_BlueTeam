@@ -181,7 +181,8 @@ public function putParams($fname,$lname,$email,$active,$faculty,$phone,$about,$e
 	
 	util::checkName($fname);
 	util::checkName($lname);
-	
+	util::checkEmail($email);
+	util::checkNull("deptId",$deptId);
 	$this->conn->setData("UPDATE Employees SET fName=:fname, lName=:lname, email=:email, isActive=:active, isFaculty=:faculty, phone=:phone, about=:about, education=:edu, highlights=:highlights, departmentId=:deptId, roomNumber=:roomNum, title=:title, secondaryDepartmentId=:secDeptId  WHERE departmentId = :id",array(
 	":fname"=>$fname,
 	":lname"=>$lname,
@@ -204,7 +205,8 @@ public function putParams($fname,$lname,$email,$active,$faculty,$phone,$about,$e
 public function put(){
 	util::checkName($this->fname);
 	util::checkName($this->lname);
-	
+	util::checkEmail($this->email);
+	util::checkNull("deptId",$this->deptId);
 	$this->conn->setData("UPDATE Employees SET fName=:fname, lName=:lname, email=:email, isActive=:active, isFaculty=:faculty, phone=:phone, about=:about, education=:edu, highlights=:highlights, departmentId=:deptId, roomNumber=:roomNum, title=:title, secondaryDepartmentId=:secDeptId  WHERE departmentId = :id",array(
 	":fname"=>$this->fname,
 	":lname"=>$this->lname,
@@ -228,6 +230,8 @@ public function postParams($id,$fname,$lname,$email,$active,$faculty,$phone,$abo
 	//insert
 	util::checkName($fname);
 	util::checkName($lname);
+	util::checkEmail($email);
+	util::checkNull("deptId",$deptId);
 	$this->conn->setData("INSERT into Employees (facultyId,fName,lName,email,isActive,isFaculty,phone,about,education,highlights,departmentId,roomNumber,title,secondaryDepartmentId) values (:id,:fname,:lname,:email,:active,:faculty,:phone,:about,:edu,:highlights,:deptId,:roomNum,:title,:secDeptId)",array(
 	":id"=>$id,
 	":fname"=>$fname,
@@ -249,6 +253,8 @@ public function postParams($id,$fname,$lname,$email,$active,$faculty,$phone,$abo
 public function post(){
 	util::checkName($this->fname);
 	util::checkName($this->lname);
+	util::checkEmail($this->email);
+	util::checkNull("deptId",$this->deptId);
 	$this->conn->setData("INSERT into Employees (facultyId,fName,lName,email,isActive,isFaculty,phone,about,education,highlights,departmentId,roomNumber,title,secondaryDepartmentId) values (:id,:fname,:lname,:email,:active,:faculty,:phone,:about,:edu,:highlights,:deptId,:roomNum,:title,:secDeptId)",array(
 	":id"=>$this->facultyId, 
 	":fname"=>$this->fname,

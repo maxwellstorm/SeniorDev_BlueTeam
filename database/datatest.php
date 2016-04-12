@@ -11,7 +11,7 @@ echo "<br/><br/><strong>select without where stmt example:Admin</strong>";
 //$res = $testDb->getData("select * from Admin",array());
 
 $testEmp = new employees($testDb,1);
-$testEmp->putParams("test","dsaf","adsfdsa",1,"sadsa","sadsa","sadsa","sadsa","sadsa","sadsa","sadsa","sadsa","sadsa");
+$testEmp->putParams("test","dsaf","test@test.com",1,"sadsa","sadsa","sadsa","sadsa","sadsa","","sadsa","sadsa","sadsa");
 
 //printExample($res);
 
