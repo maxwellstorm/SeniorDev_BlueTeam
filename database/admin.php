@@ -1,5 +1,5 @@
 <?php
-
+require_once("util.php")
 class admin{
 
 private $adminId = "";
@@ -107,6 +107,9 @@ public function setDeptId($dId){
 
 function putParams($fname,$lname,$user,$pass,$salt,$accessLvl,$deptId){
 	//update
+	
+	util::checkName($fname);
+	util::checkName($lname);
 	$this->conn->setData("UPDATE Admin SET fName=:fname, lName=:lname, username=:user, password=:pass, salt=:salt, accessLevel=:accessLvl, departmentId=:deptId WHERE adminId = :id",array(
 	":fname"=>$fname,
 	":lname"=>$lname,
@@ -121,6 +124,8 @@ function putParams($fname,$lname,$user,$pass,$salt,$accessLvl,$deptId){
 
 function put(){
 	//update
+	util::checkName($this->fname);
+	util::checkName($this->lname);
 	$this->conn->setData("UPDATE Admin SET fName=:fname, lName=:lname, username=:user, password=:pass, salt=:salt, accessLevel=:accessLvl, departmentId=:deptId WHERE adminId = :id",array(
 	":fname"=>$this->fname,
 	":lname"=>$this->lname,
@@ -135,6 +140,8 @@ function put(){
 
 public function postParams($id,$fname,$lname,$user,$pass,$salt,$accessLvl,$deptId){
 	//insert
+	util::checkName($fname);
+	util::checkName($lname);
 	$this->conn->setData("INSERT into Admin (adminId,fName,lName,username,password,salt,accessLevel,departmentId) values (:id,:fname,:lname,:user,:pass,:salt,:accessLvl,:deptId)",array(
 	":id"=>$id,
 	":fname"=>$fname,
@@ -149,6 +156,8 @@ public function postParams($id,$fname,$lname,$user,$pass,$salt,$accessLvl,$deptI
 
 public function post(){
 	//insert
+	util::checkName($this->fname);
+	util::checkName($this->lname);
 	$this->conn->setData("INSERT into Admin (adminId,fName,lName,username,password,salt,accessLevel,departmentId) values (:id,:fname,:lname,:user,:pass,:salt,:accessLvl,:deptId)",array(
 	":id"=>$this->adminId,
 	":fname"=>$this->fname,

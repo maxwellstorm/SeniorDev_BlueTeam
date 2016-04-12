@@ -1,5 +1,5 @@
 <?php
-require("util.php");
+require_once("util.php");
 class employees{
 	
 
@@ -274,12 +274,7 @@ public function delete(){
 	));
 }
 
-private function checkName($name){
-	if(ctype_alpha($name))
-		throw new Exception("Names can only contain letters",THROW_NON_AlPHA);
-		return false;
-		return true;
-}
+
 
 }
 ?>
