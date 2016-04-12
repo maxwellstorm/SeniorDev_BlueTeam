@@ -75,7 +75,7 @@
 					<div class="col-lg-10">
 						<form class="form-horizontal" action="newFaculty.php" method="POST">
 							<fieldset>
-								<legend>ADD A NEW PROFESSOR</legend>
+								<legend>ADD A NEW EMPLOYEE</legend>
 								<div class="col-lg-6" id="leftCol">
 									<div class="form-group">
 										<div class="col-lg-3">
@@ -88,6 +88,8 @@
 											<img id="output" src="media/no-preview.png" />
 										</div>
 									</div>
+
+									 <input type="hidden" id="facultyId" name="id">
 
 									<div class="form-group">
 										<label for="firstName" class="col-lg-3 control-label">First Name</label>

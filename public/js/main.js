@@ -4,9 +4,10 @@ var loadFile = function(event) {
 };
 
 function submitNew(formId) {
-	$("#createNew").click( function() {
-    	$('#' + formId).submit();
-	});
+	/*$("#createNew").click( function() {
+    	alert("Ok");
+    	//$('#' + formId).submit();
+	});*/
 }
 
 function setActive(active) {
@@ -27,6 +28,7 @@ function getInfo(selected) {
 		
 		var infoResponse = JSON.parse(response);
 		console.log(infoResponse);
+		$('#facultyId').val(infoResponse["facultyId"]);
 		$('#firstName').val(infoResponse["fName"]);
 		$('#lastName').val(infoResponse["lName"]);
 		//Accomodate for Title?
@@ -74,4 +76,9 @@ $(document).ready(function() {
 			})
 		}
 	})
+
+	$("#createNew").click( function() {
+    	alert("Ok");
+    	//$('#' + formId).submit();
+	});
 });
