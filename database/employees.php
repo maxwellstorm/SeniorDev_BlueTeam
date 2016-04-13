@@ -226,14 +226,12 @@ public function put(){
 	));
 }
 
-public function postParams($id,$fname,$lname,$email,$active,$faculty,$phone,$about,$edu,$highlights,$deptId,$roomNum,$title,$secDeptId){
+public function postParams($fname,$lname,$email,$active,$faculty,$phone,$about,$edu,$highlights,$deptId,$roomNum,$title,$secDeptId){
 	//insert
 	util::checkName($fname);
 	util::checkName($lname);
 	util::checkEmail($email);
-	util::checkNull("deptId",$deptId);
-	$this->conn->setData("INSERT into Employees (facultyId,fName,lName,email,isActive,isFaculty,phone,about,education,highlights,departmentId,roomNumber,title,secondaryDepartmentId) values (:id,:fname,:lname,:email,:active,:faculty,:phone,:about,:edu,:highlights,:deptId,:roomNum,:title,:secDeptId)",array(
-	":id"=>$id,
+	$this->conn->setData("INSERT into Employees (facultyId,fName,lName,email,isActive,isFaculty,phone,about,education,highlights,departmentId,roomNumber,title,secondaryDepartmentId) values (DEFAULT,:fname,:lname,:email,:active,:faculty,:phone,:about,:edu,:highlights,:deptId,:roomNum,:title,:secDeptId)",array(
 	":fname"=>$fname,
 	":lname"=>$lname,
 	":email"=>$email,
@@ -254,9 +252,7 @@ public function post(){
 	util::checkName($this->fname);
 	util::checkName($this->lname);
 	util::checkEmail($this->email);
-	util::checkNull("deptId",$this->deptId);
-	$this->conn->setData("INSERT into Employees (facultyId,fName,lName,email,isActive,isFaculty,phone,about,education,highlights,departmentId,roomNumber,title,secondaryDepartmentId) values (:id,:fname,:lname,:email,:active,:faculty,:phone,:about,:edu,:highlights,:deptId,:roomNum,:title,:secDeptId)",array(
-	":id"=>$this->facultyId, 
+	$this->conn->setData("INSERT into Employees (facultyId,fName,lName,email,isActive,isFaculty,phone,about,education,highlights,departmentId,roomNumber,title,secondaryDepartmentId) values (DEFAULT, :fname,:lname,:email,:active,:faculty,:phone,:about,:edu,:highlights,:deptId,:roomNum,:title,:secDeptId)",array(
 	":fname"=>$this->fname,
 	":lname"=>$this->lname,
 	":email"=>$this->email,
