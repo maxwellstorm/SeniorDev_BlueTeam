@@ -4,6 +4,7 @@ var loadFile = function(event) {
 };
 
 function submitNew(formId) {
+	$('#addFaculty').submit();
 	/*$("#createNew").click( function() {
     	alert("Ok");
     	//$('#' + formId).submit();
@@ -78,7 +79,6 @@ $(document).ready(function() {
 	})
 
 	$("#createNew").click( function() {
-    	alert("Ok");
-    	//$('#' + formId).submit();
+    	$('#addFaculty').submit();
 	});
 });

@@ -67,13 +67,13 @@
 						</ul>
 						<br />
 
-						<form method="POST" action="addProfessor.html">
+						<form method="POST" name="" action="">
 							<input name="edit" id="editBtn" type="button" value="Update" onclick="">
 						</form>
 						<input type="button" value="Create New" name="new" id="createNew" class="btn btn-primary" onclick="submitNew('createNew')">
 					</div>
 					<div class="col-lg-10">
-						<form class="form-horizontal" action="newFaculty.php" method="POST">
+						<form class="form-horizontal" id="addFaculty" name="addFaculty" action="../database/newFaculty.php" method="POST">
 							<fieldset>
 								<legend>ADD A NEW EMPLOYEE</legend>
 								<div class="col-lg-6" id="leftCol">
@@ -82,47 +82,47 @@
 											<label for="image" class="control-label">Avatar (160 x 160)</label>
 											<br />
 											<br />
-											<input type="file" accept="image/*" onchange="loadFile(event)" value="Upload Image" style="width:95px; float: right">
+											<input type="file" accept="image/*" onchange="loadFile(event)" name="image" value="Upload Image" style="width:95px; float: right">
 										</div>
 										<div class="col-lg-4">
 											<img id="output" src="media/no-preview.png" />
 										</div>
 									</div>
-
-									 <input type="hidden" id="facultyId" name="id">
+									
+									 <input type="hidden" id="facultyId" name="facultyId">
 
 									<div class="form-group">
 										<label for="firstName" class="col-lg-3 control-label">First Name</label>
 										<div class="col-lg-4">
-											<input type="text" class="form-control" id="firstName">
+											<input type="text" class="form-control" id="firstName" name="firstName">
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label for="lastName" class="col-lg-3 control-label">Last Name</label>
 										<div class="col-lg-4">
-											<input type="text" class="form-control" id="lastName">
+											<input type="text" class="form-control" id="lastName" name="lastName">
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label for="email" class="col-lg-3 control-label">Email</label>
 										<div class="col-lg-4">
-											<input type="text" class="form-control" id="email">
+											<input type="text" class="form-control" id="email" name="email">
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label for="phone" class="col-lg-3 control-label">Phone Number</label>
 										<div class="col-lg-4">
-											<input type="text" class="form-control" id="phone">
+											<input type="text" class="form-control" id="phone" name="phone">
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label for="room" class="col-lg-3 control-label">Room Number</label>
 										<div class="col-lg-4">
-											<select class="form-control" id="room">
+											<select class="form-control" id="room" name="room">
 												<?php getAllRooms() ?>
 											</select>
 										</div>
@@ -131,7 +131,7 @@
 									<div class="form-group">
 										<label for="dept" class="col-lg-3 control-label">Department</label>
 										<div class="col-lg-4">
-											<select class="form-control" id="dept">
+											<select class="form-control" id="dept" name="dept">
 												<?php getAllDepartments() ?>
 											</select>
 										</div>
@@ -145,13 +145,13 @@
 											<div class="col-lg-8">
 												<div class="radio">
 			 										<label>
-														<input type="radio" name="actives" id="activeYes" value="activeYes" checked="">
+														<input type="radio" name="active" id="activeYes" value="activeYes" checked="">
 														Yes
 													</label>
 												</div>
 												<div class="radio">
 													<label>
-														<input type="radio" name="actives" id="activeNo" value="activeNo">
+														<input type="radio" name="active" id="activeNo" value="activeNo">
 														No
 													</label>
 												</div>
@@ -163,13 +163,13 @@
 											<div class="col-lg-8">
 												<div class="radio">
 			 										<label>
-														<input type="radio" name="faculties" id="facultyYes" value="facYes" checked="">
+														<input type="radio" name="faculty" id="facultyYes" value="facYes" checked="">
 														Yes
 													</label>
 												</div>
 												<div class="radio">
 													<label>
-														<input type="radio" name="faculties" id="facultyNo" value="facNo">
+														<input type="radio" name="faculty" id="facultyNo" value="facNo">
 														No
 													</label>
 												</div>
@@ -180,21 +180,21 @@
 									<div class="form-group">
 										<label for="textArea" class="col-lg-2 control-label">About</label>
 										<div class="col-lg-10">
-											<textarea class="form-control" rows="3" id="about"></textarea>
+											<textarea class="form-control" rows="3" id="about" name="about"></textarea>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label for="textArea" class="col-lg-2 control-label">Education</label>
 										<div class="col-lg-10">
-											<textarea class="form-control" rows="3" id="education"></textarea>
+											<textarea class="form-control" rows="3" id="education" name="education"></textarea>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label for="textArea" class="col-lg-2 control-label">Highlights</label>
 										<div class="col-lg-10">
-											<textarea class="form-control" rows="3" id="highlights"></textarea>
+											<textarea class="form-control" rows="3" id="highlights" name="highlights"></textarea>
 										</div>
 									</div>
 								</div>
