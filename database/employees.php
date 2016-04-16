@@ -183,7 +183,7 @@ public function putParams($fname,$lname,$email,$active,$faculty,$phone,$about,$e
 	util::checkName($lname);
 	util::checkEmail($email);
 	util::checkNull("deptId",$deptId);
-	$this->conn->setData("UPDATE Employees SET fName=:fname, lName=:lname, email=:email, isActive=:active, isFaculty=:faculty, phone=:phone, about=:about, education=:edu, highlights=:highlights, departmentId=:deptId, roomNumber=:roomNum, title=:title, secondaryDepartmentId=:secDeptId  WHERE departmentId = :id",array(
+	$this->conn->setData("UPDATE Employees SET fName=:fname, lName=:lname, email=:email, isActive=:active, isFaculty=:faculty, phone=:phone, about=:about, education=:edu, highlights=:highlights, departmentId=:deptId, roomNumber=:roomNum, title=:title, secondaryDepartmentId=:secDeptId  WHERE facultyId = :id",array(
 	":fname"=>$fname,
 	":lname"=>$lname,
 	":email"=>$email,
@@ -198,7 +198,7 @@ public function putParams($fname,$lname,$email,$active,$faculty,$phone,$about,$e
 	":roomNum"=>$roomNum,
 	":title"=>$title,
 	":secDeptId"=>$secDeptId,
-	":id"=>$this->facultyId
+	":id"=>$this->getEmployeeId()
 	));
 }
 
@@ -207,7 +207,7 @@ public function put(){
 	util::checkName($this->lname);
 	util::checkEmail($this->email);
 	util::checkNull("deptId",$this->deptId);
-	$this->conn->setData("UPDATE Employees SET fName=:fname, lName=:lname, email=:email, isActive=:active, isFaculty=:faculty, phone=:phone, about=:about, education=:edu, highlights=:highlights, departmentId=:deptId, roomNumber=:roomNum, title=:title, secondaryDepartmentId=:secDeptId  WHERE departmentId = :id",array(
+	$this->conn->setData("UPDATE Employees SET fName=:fname, lName=:lname, email=:email, isActive=:active, isFaculty=:faculty, phone=:phone, about=:about, education=:edu, highlights=:highlights, departmentId=:deptId, roomNumber=:roomNum, title=:title, secondaryDepartmentId=:secDeptId  WHERE facultyId = :id",array(
 	":fname"=>$this->fname,
 	":lname"=>$this->lname,
 	":email"=>$this->email,
@@ -222,7 +222,7 @@ public function put(){
 	":roomNum"=>$this->roomNumber,
 	":title"=>$this->title,
 	":secDeptId"=>$this->secDeptId,
-	":id"=>$this->facultyId
+	":id"=>$this->getEmployeeId()
 	));
 }
 

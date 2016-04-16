@@ -51,9 +51,8 @@
 			<h5 class="headerText">Admin Portal</h5>
 		</div>
 		<div class="panel panel-default">
-			<!--<div class="panel-heading"></div>-->
 			<div class="panel-body">
-				<form class="form-horizontal">
+				<form class="form-horizontal" id="addFaculty" name="addFaculty" action="../database/newFaculty.php" method="POST">
 					<div class="col-lg-2" id="searchCol">
 						<h3>Search</h3>
 						<div class="form-group">
@@ -67,139 +66,137 @@
 						</ul>
 						<br />
 
-						<form method="POST" name="" action="">
-							<input name="edit" id="editBtn" type="button" value="Update" onclick="">
-						</form>
-						<input type="button" value="Create New" name="new" id="createNew" class="btn btn-primary" onclick="submitNew('createNew')">
+						<input type="submit" value="Update" name="edit" id="editBtn">
+						<input type="submit" value="Create New" name="new" id="newBtn" class="btn btn-primary">
 					</div>
 					<div class="col-lg-10">
-						<form class="form-horizontal" id="addFaculty" name="addFaculty" action="../database/newFaculty.php" method="POST">
-							<fieldset>
-								<legend>ADD A NEW EMPLOYEE</legend>
-								<div class="col-lg-6" id="leftCol">
-									<div class="form-group">
-										<div class="col-lg-3">
-											<label for="image" class="control-label">Avatar (160 x 160)</label>
-											<br />
-											<br />
-											<input type="file" accept="image/*" onchange="loadFile(event)" name="image" value="Upload Image" style="width:95px; float: right">
-										</div>
-										<div class="col-lg-4">
-											<img id="output" src="media/no-preview.png" />
-										</div>
+						<fieldset>
+							<legend>ADD A NEW EMPLOYEE</legend>
+							<div class="col-lg-6" id="leftCol">
+								<div class="form-group">
+									<div class="col-lg-3">
+										<label for="image" class="control-label">Avatar (160 x 160)</label>
+										<br />
+										<br />
+										<input type="file" accept="image/*" onchange="loadFile(event)" name="image" value="Upload Image" style="width:95px; float: right">
 									</div>
-									
-									 <input type="hidden" id="facultyId" name="facultyId">
-
-									<div class="form-group">
-										<label for="firstName" class="col-lg-3 control-label">First Name</label>
-										<div class="col-lg-4">
-											<input type="text" class="form-control" id="firstName" name="firstName">
-										</div>
+									<div class="col-lg-4">
+										<img id="output" src="media/no-preview.png" />
 									</div>
+								</div>
+								
+								 <input type="hidden" id="facultyId" name="facultyId">
 
-									<div class="form-group">
-										<label for="lastName" class="col-lg-3 control-label">Last Name</label>
-										<div class="col-lg-4">
-											<input type="text" class="form-control" id="lastName" name="lastName">
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label for="email" class="col-lg-3 control-label">Email</label>
-										<div class="col-lg-4">
-											<input type="text" class="form-control" id="email" name="email">
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label for="phone" class="col-lg-3 control-label">Phone Number</label>
-										<div class="col-lg-4">
-											<input type="text" class="form-control" id="phone" name="phone">
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label for="room" class="col-lg-3 control-label">Room Number</label>
-										<div class="col-lg-4">
-											<select class="form-control" id="room" name="room">
-												<?php getAllRooms() ?>
-											</select>
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label for="dept" class="col-lg-3 control-label">Department</label>
-										<div class="col-lg-4">
-											<select class="form-control" id="dept" name="dept">
-												<?php getAllDepartments() ?>
-											</select>
-										</div>
+								<div class="form-group">
+									<label for="firstName" class="col-lg-3 control-label">First Name</label>
+									<div class="col-lg-4">
+										<input type="text" class="form-control" id="firstName" name="firstName">
 									</div>
 								</div>
 
-								<div class="col-lg-6" id="rightCol">
-									<div class="radios">
-										<div class="form-group col-lg-6">
-											<label class="col-lg-4 control-label">Active</label>
-											<div class="col-lg-8">
-												<div class="radio">
-			 										<label>
-														<input type="radio" name="active" id="activeYes" value="activeYes" checked="">
-														Yes
-													</label>
-												</div>
-												<div class="radio">
-													<label>
-														<input type="radio" name="active" id="activeNo" value="activeNo">
-														No
-													</label>
-												</div>
-											</div>
-										</div>
+								<div class="form-group">
+									<label for="lastName" class="col-lg-3 control-label">Last Name</label>
+									<div class="col-lg-4">
+										<input type="text" class="form-control" id="lastName" name="lastName">
+									</div>
+								</div>
 
-										<div class="form-group col-lg-6">
-											<label class="col-lg-4 control-label">Faculty</label>
-											<div class="col-lg-8">
-												<div class="radio">
-			 										<label>
-														<input type="radio" name="faculty" id="facultyYes" value="facYes" checked="">
-														Yes
-													</label>
-												</div>
-												<div class="radio">
-													<label>
-														<input type="radio" name="faculty" id="facultyNo" value="facNo">
-														No
-													</label>
-												</div>
+								<div class="form-group">
+									<label for="email" class="col-lg-3 control-label">Email</label>
+									<div class="col-lg-4">
+										<input type="text" class="form-control" id="email" name="email">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="phone" class="col-lg-3 control-label">Phone Number</label>
+									<div class="col-lg-4">
+										<input type="text" class="form-control" id="phone" name="phone">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="room" class="col-lg-3 control-label">Room Number</label>
+									<div class="col-lg-4">
+										<select class="form-control" id="room" name="room">
+											<?php getAllRooms() ?>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="dept" class="col-lg-3 control-label">Department</label>
+									<div class="col-lg-4">
+										<select class="form-control" id="dept" name="dept">
+											<?php getAllDepartments() ?>
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-lg-6" id="rightCol">
+								<div class="radios">
+									<div class="form-group col-lg-6">
+										<label class="col-lg-4 control-label">Active</label>
+										<div class="col-lg-8">
+											<div class="radio">
+		 										<label>
+													<input type="radio" name="active" id="activeYes" value="activeYes" checked="">
+													Yes
+												</label>
+											</div>
+											<div class="radio">
+												<label>
+													<input type="radio" name="active" id="activeNo" value="activeNo">
+													No
+												</label>
 											</div>
 										</div>
 									</div>
 
-									<div class="form-group">
-										<label for="textArea" class="col-lg-2 control-label">About</label>
-										<div class="col-lg-10">
-											<textarea class="form-control" rows="3" id="about" name="about"></textarea>
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label for="textArea" class="col-lg-2 control-label">Education</label>
-										<div class="col-lg-10">
-											<textarea class="form-control" rows="3" id="education" name="education"></textarea>
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label for="textArea" class="col-lg-2 control-label">Highlights</label>
-										<div class="col-lg-10">
-											<textarea class="form-control" rows="3" id="highlights" name="highlights"></textarea>
+									<div class="form-group col-lg-6">
+										<label class="col-lg-4 control-label">Faculty</label>
+										<div class="col-lg-8">
+											<div class="radio">
+		 										<label>
+													<input type="radio" name="faculty" id="facultyYes" value="facYes" checked="">
+													Yes
+												</label>
+											</div>
+											<div class="radio">
+												<label>
+													<input type="radio" name="faculty" id="facultyNo" value="facNo">
+													No
+												</label>
+											</div>
 										</div>
 									</div>
 								</div>
-							</fieldset>
-						</form>
+
+								<div class="form-group">
+									<label for="textArea" class="col-lg-2 control-label">About</label>
+									<div class="col-lg-10">
+										<textarea class="form-control" rows="3" id="about" name="about"></textarea>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="textArea" class="col-lg-2 control-label">Education</label>
+									<div class="col-lg-10">
+										<textarea class="form-control" rows="3" id="education" name="education"></textarea>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="textArea" class="col-lg-2 control-label">Highlights</label>
+									<div class="col-lg-10">
+										<textarea class="form-control" rows="3" id="highlights" name="highlights"></textarea>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+						<!--<input type="submit" name="new" value="new" id="hiddenNew" style="visibility:hidden">
+						<input type="submit" name="edit" value="edit" id="hiddenEdit" style="visibility:hidden">-->
 					</div>
 				</form>
 			</div>

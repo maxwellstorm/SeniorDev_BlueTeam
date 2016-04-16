@@ -3,13 +3,6 @@ var loadFile = function(event) {
     output.src = URL.createObjectURL(event.target.files[0]);
 };
 
-function submitNew(formId) {
-	$('#addFaculty').submit();
-	/*$("#createNew").click( function() {
-    	alert("Ok");
-    	//$('#' + formId).submit();
-	});*/
-}
 
 function setActive(active) {
 	$('#results li').removeClass("activeResult");
@@ -77,8 +70,4 @@ $(document).ready(function() {
 			})
 		}
 	})
-
-	$("#createNew").click( function() {
-    	$('#addFaculty').submit();
-	});
 });

@@ -71,18 +71,16 @@ public function put(){
 	));
 }
 
-public function postParams($id,$name,$abbr){
+public function postParams($name,$abbr){
 	//insert
-	$this->conn->setData("INSERT into department (departmentId,departmentName,departmentAbbr) values (:id,:name,:abbr)",array(
-	":id"=>$id,
+	$this->conn->setData("INSERT into department (departmentId,departmentName,departmentAbbr) values (DEFAULT,:name,:abbr)",array(
 	":name"=>$name,
 	":abbr"=>$abbr
 	));
 }
 
 public function post(){
-	$this->conn->setData("INSERT into department (departmentId,departmentName,departmentAbbr) values (:id,:name,:abbr)",array(
-	":id"=> $this->deptId,
+	$this->conn->setData("INSERT into department (departmentId,departmentName,departmentAbbr) values (DEFAULT,:name,:abbr)",array(
 	":name"=>$this->deptName,
 	":abbr"=>$this->deptAbbr
 	));
