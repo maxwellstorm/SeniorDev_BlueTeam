@@ -74,7 +74,7 @@
 							<legend>ADD A NEW EMPLOYEE</legend>
 							<div class="col-lg-6" id="leftCol">
 								<div class="form-group">
-									<div class="col-lg-3">
+									<div class="col-lg-4">
 										<label for="image" class="control-label">Avatar (160 x 160)</label>
 										<br />
 										<br />
@@ -88,36 +88,36 @@
 								 <input type="hidden" id="facultyId" name="facultyId">
 
 								<div class="form-group">
-									<label for="firstName" class="col-lg-3 control-label">First Name</label>
-									<div class="col-lg-4">
+									<label for="firstName" class="col-lg-4 control-label">First Name</label>
+									<div class="col-lg-6">
 										<input type="text" class="form-control" id="firstName" name="firstName">
 									</div>
 								</div>
 
 								<div class="form-group">
-									<label for="lastName" class="col-lg-3 control-label">Last Name</label>
-									<div class="col-lg-4">
+									<label for="lastName" class="col-lg-4 control-label">Last Name</label>
+									<div class="col-lg-6">
 										<input type="text" class="form-control" id="lastName" name="lastName">
 									</div>
 								</div>
 
 								<div class="form-group">
-									<label for="email" class="col-lg-3 control-label">Email</label>
-									<div class="col-lg-4">
+									<label for="email" class="col-lg-4 control-label">Email</label>
+									<div class="col-lg-6">
 										<input type="text" class="form-control" id="email" name="email">
 									</div>
 								</div>
 
 								<div class="form-group">
-									<label for="phone" class="col-lg-3 control-label">Phone Number</label>
-									<div class="col-lg-4">
+									<label for="phone" class="col-lg-4 control-label">Phone Number</label>
+									<div class="col-lg-6">
 										<input type="text" class="form-control" id="phone" name="phone">
 									</div>
 								</div>
 
 								<div class="form-group">
-									<label for="room" class="col-lg-3 control-label">Room Number</label>
-									<div class="col-lg-4">
+									<label for="room" class="col-lg-4 control-label">Room Number</label>
+									<div class="col-lg-6">
 										<select class="form-control" id="room" name="room">
 											<?php getAllRooms() ?>
 										</select>
@@ -125,8 +125,8 @@
 								</div>
 
 								<div class="form-group">
-									<label for="dept" class="col-lg-3 control-label">Department</label>
-									<div class="col-lg-4">
+									<label for="dept" class="col-lg-4 control-label">Department</label>
+									<div class="col-lg-6">
 										<select class="form-control" id="dept" name="dept">
 											<?php getAllDepartments() ?>
 										</select>
