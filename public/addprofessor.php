@@ -52,7 +52,7 @@
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<form class="form-horizontal" id="addFaculty" name="addFaculty" action="../database/newFaculty.php" method="POST">
+				<form class="form-horizontal" id="addFaculty" name="addFaculty" enctype="multipart/form-data" action="../database/newFaculty.php" method="POST">
 					<div class="col-lg-2" id="searchCol">
 						<h3>Search</h3>
 						<div class="form-group">
