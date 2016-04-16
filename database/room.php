@@ -7,7 +7,7 @@ private $roomMap = "";
 private $description = "";
 private $conn;
 
-	function __construct($conn,$roomNum){
+	function __construct($conn,$roomNum = null){
 		$this->conn = $conn;
 		$this->roomNumber = $roomNum;
 	}
