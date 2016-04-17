@@ -2,14 +2,33 @@
 	require("../database/data.php");
 	require("../database/department.php");
 
-	if(isset($_POST['newDept'])) {
-		$database = new data;
+	$database = new data;
 
+	if(isset($_POST['new'])) {
 		$name = $_POST['name'];
 		$abbr = $_POST['abbr'];
 
 		$dept = new department($database, null);
 		$dept->postParams($name, $abbr);
+	} elseif(isset($_POST['edit'])){	
+
+		//Still needs to be done
+
+	} elseif(isset($_POST['delete']) && isset($_POST['deptId'])) {
+		$id = $_POST['deptId'];
+
+		$dept = new department($database, $id);
+		$dept->delete();
+	}
+
+	function getAllDepartments() {
+		$database = new data;
+
+		$depts = $database->getData("SELECT departmentId, departmentName FROM department", array());
+
+		foreach($depts as $arr) {
+			echo "<option>" . $arr['departmentName'] . " - " . $arr['departmentId'] . "</option>";
+		}
 	}
 ?>
 <!DOCTYPE html>
@@ -33,8 +52,20 @@
 				<form class="form-horizontal" id="addDepartment" name="addDepartment" action="addDepartment.php" method="POST">
 					<fieldset>
 						<legend>ADD A NEW DEPARTMENT</legend>
-						<div class="col-lg-12">
+						<div class="col-lg-2" id="searchCol">
+							<select class="form-control">
+								<?php getAllDepartments() ?>
+							</select>
+							<br />
 
+							<input type="submit" value="Update" name="edit" id="editBtn" class="btn btn-primary">
+							<input type="submit" value="Create New" name="new" id="newBtn" class="btn btn-primary">
+							<input type="submit" value="Delete" name="delete" id="deleteBtn" class="btn btn-primary">
+						</div>
+
+						<div class="col-lg-10">
+							
+							<input type="hidden" name="deptId" id="deptId">
 
 							<div class="form-group">
 								<label for="name" class="col-lg-3 control-label">Department Name</label>
@@ -50,8 +81,6 @@
 								</div>
 							</div>
 						</div>
-						<!--<input type="submit" value="Update" name="edit" id="editBtn">-->
-						<input type="submit" value="Create New" name="newDept" id="newBtn" class="btn btn-primary">
 					</fieldset>
 				</form>
 			</div>

@@ -2,15 +2,35 @@
 	require("../database/data.php");
 	require("../database/room.php");
 
-	if(isset($_POST['newDept'])) {
-		$database = new data;
+	$database = new data;
 
-		$roomNum = $_POST['name'];
+	if(isset($_POST['new'])) {
+
+		$roomNum = $_POST['roomNum'];
 		$map = null;
 		$desc = $_POST['description'];
 
 		$room = new room($database, null);
 		$room->postParams($roomNum, $img, $desc);
+	} elseif(isset($_POST['edit'])){	
+
+		//Still needs to be done
+
+	} elseif(isset($_POST['delete']) && isset($_POST['roomNum'])) {
+		$roomNum = $_POST['roomNum'];
+
+		$room = new room($database, $roomNum);
+		$room->delete();
+	}
+
+	function getAllRooms() {
+		$database = new data;
+
+		$rooms = $database->getData("SELECT roomNumber FROM room", array());
+
+		foreach($rooms as $arr) {
+			echo "<option>" . $arr['roomNumber'] . "</option>";
+		}
 	}
 ?>
 <!DOCTYPE html>
@@ -34,13 +54,22 @@
 				<form class="form-horizontal" id="addRoom" name="addRoom" action="addRoom.php" method="POST">
 					<fieldset>
 						<legend>ADD A NEW ROOM</legend>
-						<div class="col-lg-12">
+						<div class="col-lg-2" id="searchCol">
+							<select class="form-control">
+								<?php getAllRooms() ?>
+							</select>
+							<br />
 
+							<input type="submit" value="Update" name="edit" id="editBtn" class="btn btn-primary">
+							<input type="submit" value="Create New" name="new" id="newBtn" class="btn btn-primary">
+							<input type="submit" value="Delete" name="delete" id="deleteBtn" class="btn btn-primary">
+						</div>
 
+						<div class="col-lg-10">
 							<div class="form-group">
-								<label for="name" class="col-lg-3 control-label">Room Number</label>
-								<div class="col-lg-9">
-									<input type="text" class="form-control" id="name" name="name">
+								<label for="name" class="col-lg-2 control-label">Room Number</label>
+								<div class="col-lg-10">
+									<input type="text" class="form-control" id="roomNum" name="roomNum">
 								</div>
 							</div>
 
@@ -55,8 +84,6 @@
 								<p>Room Image uploading will go here, but idk exactly what form that'll take.</p>
 							</div>
 						</div>
-						<!--<input type="submit" value="Update" name="edit" id="editBtn">-->
-						<input type="submit" value="Create New" name="newDept" id="newBtn" class="btn btn-primary">
 					</fieldset>
 				</form>
 			</div>
