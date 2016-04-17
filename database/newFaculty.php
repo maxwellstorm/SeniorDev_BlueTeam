@@ -58,12 +58,12 @@
 		echo($secDeptId . "<br />");
 		echo($dept . "<br />");*/
 
-		/*$employee = new employees($database, null);
-
-		//$employee->postParams($fName, $lName, $email, $active, $faculty, $phone, $about, $education, $highlights, $dept, $roomNum, $title, $secDeptId);
-
-		header('Location: http://kelvin.ist.rit.edu/~blueteam/public/addprofessor.php');*/
+		//still need to add imagePath
+		$employee = new employees($database, null);
+		$employee->postParams($fName, $lName, $email, $active, $faculty, $phone, $about, $education, $highlights, $dept, $roomNum, $title, $secDeptId);
 		uploadImage();
+
+		header('Location: http://kelvin.ist.rit.edu/~blueteam/public/addprofessor.php');
 
 	} elseif(isset($_POST['edit'])){
 		$database = new data;
@@ -103,13 +103,12 @@
 			$faculty = 0;
 		}
 
-		/*$employee = new employees($database, $id);
-
+		//still need to add imagePath
+		$employee = new employees($database, $id);
 		$employee->putParams($fName,$lName,$email,$active,$faculty,$phone,$about,$education,$highlights,$dept,$roomNum,$title,$secDeptId);
+		uploadImage();
 
-		$employee->postParams($fName, $lName, $email, $active, $faculty, $phone, $about, $education, $highlights, $dept, $roomNum, $title, $secDeptId);
-
-		header('Location: http://kelvin.ist.rit.edu/~blueteam/public/addprofessor.php');*/
+		header('Location: http://kelvin.ist.rit.edu/~blueteam/public/addprofessor.php');
 	}
 
 	/*
