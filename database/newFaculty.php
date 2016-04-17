@@ -2,9 +2,9 @@
 	require("data.php");
 	require("employees.php");
 
+	$database = new data;
+
 	if(isset($_POST['new'])) {
-		$database = new data;
-		
 		$fName = $_POST['firstName'];
 		$lName = $_POST['lastName'];
 		$email = $_POST['email'];
@@ -62,12 +62,7 @@
 		$employee = new employees($database, null);
 		$employee->postParams($fName, $lName, $email, $active, $faculty, $phone, $about, $education, $highlights, $dept, $roomNum, $title, $secDeptId);
 		uploadImage();
-
-		header('Location: http://kelvin.ist.rit.edu/~blueteam/public/addprofessor.php');
-
-	} elseif(isset($_POST['edit'])){
-		$database = new data;
-		
+	} elseif(isset($_POST['edit'])){	
 		$id = $_POST['facultyId'];
 		$fName = $_POST['firstName'];
 		$lName = $_POST['lastName'];
@@ -107,9 +102,14 @@
 		$employee = new employees($database, $id);
 		$employee->putParams($fName,$lName,$email,$active,$faculty,$phone,$about,$education,$highlights,$dept,$roomNum,$title,$secDeptId);
 		uploadImage();
+	} elseif(isset($_POST['delete']) && isset($_POST['facultyId'])) {
+		$id = $_POST['facultyId'];
 
-		header('Location: http://kelvin.ist.rit.edu/~blueteam/public/addprofessor.php');
+		$employee = new employees($database, $id);
+		$employee->delete();
 	}
+
+	header('Location: http://kelvin.ist.rit.edu/~blueteam/public/addprofessor.php');
 
 	/*
 	 * A method to upload an image through the admin form

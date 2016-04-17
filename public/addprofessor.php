@@ -66,8 +66,9 @@
 						</ul>
 						<br />
 
-						<input type="submit" value="Update" name="edit" id="editBtn">
+						<input type="submit" value="Update" name="edit" id="editBtn" class="btn btn-primary">
 						<input type="submit" value="Create New" name="new" id="newBtn" class="btn btn-primary">
+						<input type="submit" value="Delete" name="delete" id="deleteBtn" class="btn btn-primary">
 					</div>
 					<div class="col-lg-10">
 						<fieldset>
@@ -75,7 +76,7 @@
 							<div class="col-lg-6" id="leftCol">
 								<div class="form-group">
 									<div class="col-lg-4">
-										<label for="image" class="control-label">Avatar (160 x 160)</label>
+										<label for="image" class="control-label" style="float: right">Avatar (160 x 160)</label>
 										<br />
 										<br />
 										<input type="file" accept="image/*" onchange="loadFile(event)" name="image" value="Upload Image" style="width:95px; float: right">

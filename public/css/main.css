@@ -2,6 +2,11 @@ body {
 	font-family: Helvetica, Arial, sans-serif;
 }
 
+#output {
+	max-width: 160px;
+	max-height: 160px;
+}
+
 #header {
 	background-color: #F36E21;
 	min-height: 75px;
