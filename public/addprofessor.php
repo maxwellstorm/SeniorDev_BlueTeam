@@ -41,7 +41,10 @@
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" media="screen" href="css/main.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="js\bootstrap-select-1.10.0\css\bootstrap-select.css">
 		<script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<script type="text/javascript" src="js/bootstrap-select-1.10.0/js/bootstrap-select.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 	</head>
 	<body>
@@ -119,7 +122,7 @@
 								<div class="form-group">
 									<label for="room" class="col-lg-4 control-label">Room Number</label>
 									<div class="col-lg-6">
-										<select class="form-control" id="room" name="room">
+										<select class="selectpicker" data-live-search="true" id="room" name="room">
 											<?php getAllRooms() ?>
 										</select>
 									</div>
@@ -128,10 +131,11 @@
 								<div class="form-group">
 									<label for="dept" class="col-lg-4 control-label">Department</label>
 									<div class="col-lg-6">
-										<select class="form-control" id="dept" name="dept">
+										<select class="selectpicker" multiple data-max-options="2" id="dept" name="dept">
 											<?php getAllDepartments() ?>
 										</select>
 									</div>
+
 								</div>
 							</div>
 
