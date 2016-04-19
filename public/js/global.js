@@ -80,9 +80,29 @@ $(document).ready(function() {
 		hideOverlay();
 	});
 
-	$('.filterToggle>span').click(function() {
-		$('.selectedToggle').removeClass('selectedToggle');
+	$('#sortToggle span').click(function() {
+		$('#sortToggle .selectedToggle').removeClass('selectedToggle');
 		$(this).addClass('selectedToggle');
-		alert("clicked");
+
+		// slide the toggle slider
+		var selectedId = $(this).attr('id');
+		if (selectedId == "nameToggle") {
+			$('#sortToggle .toggleSlider').css('left', '0px');
+		} else {
+			$('#sortToggle .toggleSlider').css('left', '50%');
+		}
+	});
+
+	$('#viewToggle span').click(function() {
+		$('#viewToggle .selectedToggle').removeClass('selectedToggle');
+		$(this).addClass('selectedToggle');
+
+		// slide the toggle slider
+		var selectedId = $(this).attr('id');
+		if (selectedId == "gridToggle") {
+			$('#viewToggle .toggleSlider').css('left', '0px');
+		} else {
+			$('#viewToggle .toggleSlider').css('left', '50%');
+		}
 	});
 });

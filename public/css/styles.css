@@ -220,6 +220,7 @@ header h1 {
 	text-align: center;
 	z-index: 100;
 	cursor: pointer;
+	transition: color 0.25s ease;
 }
 
 span.selectedToggle {
@@ -234,6 +235,7 @@ span.selectedToggle {
 	width: 50%;
 	height: 115%;
 	background-color: #F36E21;
+	transition: left 0.25s ease;
 }
 
 @media screen and (min-width: 1920px) {
