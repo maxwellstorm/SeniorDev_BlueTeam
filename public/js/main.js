@@ -71,7 +71,3 @@ $(document).ready(function() {
 		}
 	})
 });
-
-$(window).load(function() {
- 	$('.selectpicker').selectpicker('render');
-});
