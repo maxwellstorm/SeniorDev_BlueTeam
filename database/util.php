@@ -9,7 +9,7 @@
  const THROW_ONLY_ALPHA    = 1;
  const THROW_ROOM_INNCORRECT_FORMAT    = 2;
  const THROW_INNCORRECT_EMAIL_FORMAT    = 3;
- const THROW_NULL    = 4;
+
  
 	public static function checkName($name){
 		if(!ctype_alpha($name)){
@@ -21,8 +21,8 @@
 
 
 	public static function checkRoom($roomNumber){
-		//this is in progress waiting for answer from andy of room format
-		if(!ctype_alpha($name)){
+	
+		if(!preg_match("/^[a-zA-Z0-9]{3}\-\d{4}$/",$roomNumber)){
 			throw new Exception("needs to be in proper room format",2);
 			return false;
 		}
@@ -40,19 +40,6 @@
 	}
 	
 	
-	public static function checkNull($paramName,$input){
-		try{
-			if(strlen($input) == 0){
-				throw new Exception("$paramName cannot be null",4);
-				return false;
-			}
-			return true;
-		}
-		catch(Exception $e){
-			throw new Exception("$paramName cannot be null",4);
-			return false;
-		}
-	}
 	
 
 	
