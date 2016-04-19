@@ -12,7 +12,7 @@ class dbException extends Exception
 
     
     public function __toString() {
-        return  return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
+         return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
     }
 	
 	public function alert($type, $text) {
