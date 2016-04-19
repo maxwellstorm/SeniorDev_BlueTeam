@@ -33,6 +33,7 @@ public function fetch(){
 		)
 	);
 	try{
+		
 		$results = $resultsArr[0];
 		$this->fname = $results['fName'];
 		$this->lname = $results['lName'];
@@ -178,7 +179,7 @@ public function setSecDeptId($secDeptId){
 
 public function putParams($fname,$lname,$email,$active,$faculty,$phone,$about,$edu,$highlights,$deptId,$roomNum,$title,$secDeptId){
 	//update
-	
+	util::checkRoom($roomNum);
 	util::checkName($fname);
 	util::checkName($lname);
 	util::checkEmail($email);
@@ -202,6 +203,7 @@ public function putParams($fname,$lname,$email,$active,$faculty,$phone,$about,$e
 }
 
 public function put(){
+	util::checkRoom($this->roomNumber);
 	util::checkName($this->fname);
 	util::checkName($this->lname);
 	util::checkEmail($this->email);
@@ -229,6 +231,7 @@ public function postParams($fname,$lname,$email,$active,$faculty,$phone,$about,$
 	util::checkName($fname);
 	util::checkName($lname);
 	util::checkEmail($email);
+	util::checkRoom($roomNum);
 	$this->conn->setData("INSERT into Employees (facultyId,fName,lName,email,isActive,isFaculty,phone,about,education,highlights,departmentId,roomNumber,title,secondaryDepartmentId) values (DEFAULT,:fname,:lname,:email,:active,:faculty,:phone,:about,:edu,:highlights,:deptId,:roomNum,:title,:secDeptId)",array(
 	":fname"=>$fname,
 	":lname"=>$lname,
@@ -247,6 +250,7 @@ public function postParams($fname,$lname,$email,$active,$faculty,$phone,$about,$
 }
 
 public function post(){
+	util::checkRoom($this->roomNumber);
 	util::checkName($this->fname);
 	util::checkName($this->lname);
 	util::checkEmail($this->email);

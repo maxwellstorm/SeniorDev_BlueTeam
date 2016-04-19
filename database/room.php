@@ -1,5 +1,5 @@
 <?php
-
+require_once("util.php");
 class room{
 
 private $roomNumber = "";
@@ -56,6 +56,7 @@ public function setDescription($desc){
 
 public function putParams($map,$desc){
 	//update
+	util::checkRoom($this->roomNumber);
 	$this->conn->setData("UPDATE room SET roomMap=:map, description=:roomDesc WHERE roomNumber = :num",array(
 	":map"=>$map,
 	":roomDesc"=>$desc,
@@ -65,6 +66,7 @@ public function putParams($map,$desc){
 
 public function put(){
 	//update
+	util::checkRoom($this->roomNumber);
 	$this->conn->setData("UPDATE room SET roomMap=:map, description=:roomDesc WHERE roomNumber = :num",array(
 	":map"=>$this->roomMap, 
 	":roomDesc"=>$this->description,
@@ -74,6 +76,7 @@ public function put(){
 
 public function postParams($num,$map,$desc){
 	//insert
+	util::checkRoom($num);
 	$this->conn->setData("INSERT into room (roomNumber,roomMap,description) values (:num,:map,:rDesc)",array(
 	":num"=>$num,
 	":map"=>$map,
@@ -83,6 +86,7 @@ public function postParams($num,$map,$desc){
 
 public function post(){
 	//insert
+	util::checkRoom($this->roomNumber);
 	$this->conn->setData("INSERT into room (roomNumber,roomMap,description) values (:num,:map,:rDesc)",array(
 	":num"=>$this->roomNumber,
 	":map"=>$this->roomMap,
