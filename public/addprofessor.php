@@ -131,7 +131,7 @@
 								<div class="form-group">
 									<label for="dept" class="col-lg-4 control-label">Department</label>
 									<div class="col-lg-6">
-										<select class="selectpicker" multiple data-max-options="2" id="dept" name="dept">
+										<select class="selectpicker" multiple data-max-options="2" id="dept" name="dept[]" data-width="fit">
 											<?php getAllDepartments() ?>
 										</select>
 									</div>

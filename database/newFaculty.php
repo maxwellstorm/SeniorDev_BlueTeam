@@ -16,19 +16,30 @@
 		$highlights = $_POST['highlights'];
 		$roomNum = $_POST['room'];
 		$title = null; //$_POST[''];
-		$secDeptId = null; //$_POST[''];
-		$dept = $_POST['dept'];
+		$depts = $_POST['dept'];
+		$primaryDept = $depts[0];
+		$secondaryDept = $depts[1];
 
-		if(strcmp($dept, "Information Sciences & Technology") == 0) {
-			$dept = 1;
-		} elseif(strcmp($dept, "Interactive Games & Media") == 0) { 
-			$dept = 2;
-		} elseif(strcmp($dept, "Computing Security") == 0) {
-			$dept = 3;
+		if(strcmp($primaryDept, "Information Sciences & Technology") == 0) {
+			$primaryDept = 1;
+		} elseif(strcmp($primaryDept, "Interactive Games & Media") == 0) { 
+			$primaryDept = 2;
+		} elseif(strcmp($primaryDept, "Computing Security") == 0) {
+			$primaryDept = 3;
 		}
 
-		//var_dump($dept);
-		//echo("DEPARTMENT");
+		if(strlen($secondaryDept) > 0) {
+			if(strcmp($secondaryDept, "Information Sciences & Technology") == 0) {
+				$secondaryDept = 1;
+			} elseif(strcmp($secondaryDept, "Interactive Games & Media") == 0) { 
+				$secondaryDept = 2;
+			} elseif(strcmp($secondaryDept, "Computing Security") == 0) {
+				$secondaryDept = 3;
+			}
+		} else {
+			$secondaryDept = null;
+		}
+
 		if(strcmp($active, "activeYes") == 0) {
 			$active = 1;
 		} else {
@@ -60,7 +71,7 @@
 
 		//still need to add imagePath
 		$employee = new employees($database, null);
-		$employee->postParams($fName, $lName, $email, $active, $faculty, $phone, $about, $education, $highlights, $dept, $roomNum, $title, $secDeptId);
+		$employee->postParams($fName, $lName, $email, $active, $faculty, $phone, $about, $education, $highlights, $primaryDept, $roomNum, $title, $secondaryDept);
 		uploadImage();
 	} elseif(isset($_POST['edit'])){	
 		$id = $_POST['facultyId'];
@@ -75,15 +86,28 @@
 		$highlights = $_POST['highlights'];
 		$roomNum = $_POST['room'];
 		$title = null; //$_POST[''];
-		$secDeptId = null; //$_POST[''];
-		$dept = $_POST['dept'];
+		$depts = $_POST['dept'];
+		$primaryDept = $depts[0];
+		$secondaryDept = $depts[1];
 
-		if(strcmp($dept, "Information Sciences & Technology") == 0) {
-			$dept = 1;
-		} elseif(strcmp($dept, "Interactive Games & Media") == 0) { 
-			$dept = 2;
-		} elseif(strcmp($dept, "Computing Security") == 0) {
-			$dept = 3;
+		if(strcmp($primaryDept, "Information Sciences & Technology") == 0) {
+			$primaryDept = 1;
+		} elseif(strcmp($primaryDept, "Interactive Games & Media") == 0) { 
+			$primaryDept = 2;
+		} elseif(strcmp($primaryDept, "Computing Security") == 0) {
+			$primaryDept = 3;
+		}
+
+		if(strlen($secondaryDept) > 0) {
+			if(strcmp($secondaryDept, "Information Sciences & Technology") == 0) {
+				$secondaryDept = 1;
+			} elseif(strcmp($secondaryDept, "Interactive Games & Media") == 0) { 
+				$secondaryDept = 2;
+			} elseif(strcmp($secondaryDept, "Computing Security") == 0) {
+				$secondaryDept = 3;
+			}
+		} else {
+			$secondaryDept = null;
 		}
 
 		if(strcmp($active, "activeYes") == 0) {
@@ -100,7 +124,7 @@
 
 		//still need to add imagePath
 		$employee = new employees($database, $id);
-		$employee->putParams($fName,$lName,$email,$active,$faculty,$phone,$about,$education,$highlights,$dept,$roomNum,$title,$secDeptId);
+		$employee->putParams($fName,$lName,$email,$active,$faculty,$phone,$about,$education,$highlights,$primaryDept,$roomNum,$title,$secondaryDept);
 		uploadImage();
 	} elseif(isset($_POST['delete']) && isset($_POST['facultyId'])) {
 		$id = $_POST['facultyId'];
@@ -109,7 +133,7 @@
 		$employee->delete();
 	}
 
-	header('Location: http://kelvin.ist.rit.edu/~blueteam/public/addprofessor.php');
+	//header('Location: http://kelvin.ist.rit.edu/~blueteam/public/addprofessor.php');
 
 	/*
 	 * A method to upload an image through the admin form
