@@ -185,6 +185,57 @@ header h1 {
 	padding: 20px;
 }
 
+#toggles {
+	font-weight: bold;
+	margin: 20px 0px;
+	width: 80%;
+	position: relative;
+	display: block;
+}
+
+.toggle {
+	margin: 20px 0px;
+	position: relative;
+	display: block;
+	height: 30px;
+}
+
+.toggleLeft {
+	float: left;
+	clear: right;
+}
+
+.filterToggle {
+	float: right;
+	background: #FFFFFF;
+	position: relative;
+	width: 65%;
+}
+
+.filterToggle span {
+	color: #A4A4A4;
+	position: relative;
+	display: inline-block;
+	width: 50%;
+	text-align: center;
+	z-index: 100;
+	cursor: pointer;
+}
+
+span.selectedToggle {
+	color: #FFFFFF;
+}
+
+.toggleSlider {
+	display: inline-block;
+	position: absolute;
+	left: 0px;
+	top: -2px;
+	width: 50%;
+	height: 115%;
+	background-color: #F36E21;
+}
+
 @media screen and (min-width: 1920px) {
 	#wrapper, #headerInner {
 		width: 1880px;

@@ -25,7 +25,8 @@ function getProfessorCard(Professor) {
 	card += '<div class="thumb" style="background-image: url(media/thumbs/' + Professor.getThumb() + ')"></div>';
 	card += '<div class="infoPreview">';
 	card += '<div class="professorName">' + Professor.getFullName() + '</div>';
-	card += '<div>Room ' + Professor.getRoom() + '</div>';
+	// card += '<div>Room ' + Professor.getRoom() + '</div>';
+	card += '<div>' + Professor.getRoom() + '</div>';
 	card += '<div class="moreLink">More Info</div>';
 	card += '</div></div>';
 
@@ -51,7 +52,9 @@ function populateGridView() {
 
 function updateOverlay(Professor) {
 	$('#overlayName').text(Professor.getFullName());
-	$('#overlayRoom').text('Room ' + Professor.getRoom());
+	$('#overlayEmail').text(Professor.getEmail());
+	// $('#overlayRoom').text('Room ' + Professor.getRoom());
+	$('#overlayRoom').text(Professor.getRoom());
 }
 
 function showOverlay() {
@@ -75,5 +78,11 @@ $(document).ready(function() {
 
 	$('#closeOverlay').click(function() {
 		hideOverlay();
+	});
+
+	$('.filterToggle>span').click(function() {
+		$('.selectedToggle').removeClass('selectedToggle');
+		$(this).addClass('selectedToggle');
+		alert("clicked");
 	});
 });

@@ -19,7 +19,7 @@
 				<div id="infoExpanded">
 					<div class="largeThumb" id="largeBogaard"></div>
 					<div id="overlayName" class="professorName">Daniel Bogaard</div>
-					<div>dsbics@rit.edu</div>
+					<div id="overlayEmail">dsbics@rit.edu</div>
 					<div id="overlayRoom">Room 2111</div>
 					<div id="closeOverlay">BACK</div>
 				</div>
@@ -168,6 +168,24 @@
 			<!-- RIGHT SECTION -->
 			<div id="filtersContainer" class="dropShadow roundCorners">
 				<h2>FILTERS</h2>
+				<div id="toggles">
+					<!-- sort by toggles -->
+					<div class="toggle">
+						<div class="toggleLeft">Sort By: </div>
+						<div class="filterToggle roundCorners">
+							<span id="nameToggle" class="selectedToggle">Name</span><span id="roomToggle">Room</span>
+							<div class="toggleSlider roundCorners">&nbsp;</div>
+						</div>
+					</div>
+					<!-- view as toggles -->
+					<div class="toggle">
+						<div class="toggleLeft">View As: </div>
+						<div class="filterToggle roundCorners">
+							<span id="gridToggle" class="selectedToggle">Grid</span><span id="listToggle">List</span>
+							<div class="toggleSlider roundCorners">&nbsp;</div>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
