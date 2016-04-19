@@ -17,10 +17,19 @@
 		<div id="wrapper">
 			<div id="mapOverlay" class="dropShadow roundCorners">
 				<div id="infoExpanded">
-					<div class="largeThumb" id="largeBogaard"></div>
-					<div id="overlayName" class="professorName">Daniel Bogaard</div>
-					<div id="overlayEmail">dsbics@rit.edu</div>
-					<div id="overlayRoom">Room 2111</div>
+					<div class="thumb" id="largeBogaard"></div>
+					<div id="primaryInfo">
+						<div id="overlayName" class="professorName">Daniel Bogaard</div>
+						<div id="overlayEmail">dsbics@rit.edu</div>
+						<div id="overlayPhone">(888) 888-8888</div>
+					</div>
+					<div id="extensiveInfo">
+						<div id="overlayDept">Information Sciences & Technology</div>
+						<div id="overlayRoom">Room 2111</div>
+						<div id="overlayAbout">About</div>
+						<div id="overlayEducation">Education</div>
+						<div id="overlayHighlights">Highlights</div>
+					</div>
 					<div id="closeOverlay">BACK</div>
 				</div>
 				<div id="floorMapContainer">
@@ -30,138 +39,7 @@
 			<!-- LEFT SECTION -->
 			<div id="professorsContainer">
 				<div id="gridView">
-					<!-- 
-					<div class="row">
-						<div class="professorCard dropShadow roundCorners">
-							<div class="thumb"></div>
-							<div class="infoPreview">
-								<div class="professorName">Daniel Bogaard</div>
-								<div>Room 2111</div>
-								<div class="moreLink">More Info</div>
-							</div>
-						</div>
-						<div class="professorCard dropShadow roundCorners">
-							<div class="thumb"></div>
-							<div class="infoPreview">
-								<div class="professorName">Professor Name</div>
-								<div>Room #</div>
-								<div class="moreLink">More Info</div>
-							</div>
-						</div>
-						<div class="professorCard dropShadow roundCorners">
-							<div class="thumb"></div>
-							<div class="infoPreview">
-								<div class="professorName">Professor Name</div>
-								<div>Room #</div>
-								<div class="moreLink">More Info</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="professorCard dropShadow">
-							<div class="thumb"></div>
-							<div class="infoPreview">
-								<div class="professorName">Professor Name</div>
-								<div>Room 2111</div>
-								<div class="moreLink">More Info</div>
-							</div>
-						</div>
-						<div class="professorCard dropShadow">
-							<div class="thumb"></div>
-							<div class="infoPreview">
-								<div class="professorName">Professor Name</div>
-								<div>Room #</div>
-								<div class="moreLink">More Info</div>
-							</div>
-						</div>
-						<div class="professorCard dropShadow">
-							<div class="thumb"></div>
-							<div class="infoPreview">
-								<div class="professorName">Professor Name</div>
-								<div>Room #</div>
-								<div class="moreLink">More Info</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="professorCard dropShadow">
-							<div class="thumb"></div>
-							<div class="infoPreview">
-								<div class="professorName">Professor Name</div>
-								<div>Room 2111</div>
-								<div class="moreLink">More Info</div>
-							</div>
-						</div>
-						<div class="professorCard dropShadow">
-							<div class="thumb"></div>
-							<div class="infoPreview">
-								<div class="professorName">Professor Name</div>
-								<div>Room #</div>
-								<div class="moreLink">More Info</div>
-							</div>
-						</div>
-						<div class="professorCard dropShadow">
-							<div class="thumb"></div>
-							<div class="infoPreview">
-								<div class="professorName">Professor Name</div>
-								<div>Room #</div>
-								<div class="moreLink">More Info</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="professorCard dropShadow">
-							<div class="thumb"></div>
-							<div class="infoPreview">
-								<div class="professorName">Professor Name</div>
-								<div>Room 2111</div>
-								<div class="moreLink">More Info</div>
-							</div>
-						</div>
-						<div class="professorCard dropShadow">
-							<div class="thumb"></div>
-							<div class="infoPreview">
-								<div class="professorName">Professor Name</div>
-								<div>Room #</div>
-								<div class="moreLink">More Info</div>
-							</div>
-						</div>
-						<div class="professorCard dropShadow">
-							<div class="thumb"></div>
-							<div class="infoPreview">
-								<div class="professorName">Professor Name</div>
-								<div>Room #</div>
-								<div class="moreLink">More Info</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="professorCard dropShadow">
-							<div class="thumb"></div>
-							<div class="infoPreview">
-								<div class="professorName">Professor Name</div>
-								<div>Room 2111</div>
-								<div class="moreLink">More Info</div>
-							</div>
-						</div>
-						<div class="professorCard dropShadow">
-							<div class="thumb"></div>
-							<div class="infoPreview">
-								<div class="professorName">Professor Name</div>
-								<div>Room #</div>
-								<div class="moreLink">More Info</div>
-							</div>
-						</div>
-						<div class="professorCard dropShadow">
-							<div class="thumb"></div>
-							<div class="infoPreview">
-								<div class="professorName">Professor Name</div>
-								<div>Room #</div>
-								<div class="moreLink">More Info</div>
-							</div>
-						</div>
-					</div>
-					-->
+					<!-- pulled from AJAX call -->
 				</div>
 			</div>
 
@@ -169,7 +47,7 @@
 			<div id="filtersContainer" class="dropShadow roundCorners">
 				<h2>FILTERS</h2>
 				<div id="toggles">
-					<!-- sort by toggles -->
+					<!-- Sort toggles -->
 					<div id="sortToggle" class="toggle">
 						<div class="toggleLeft">Sort By: </div>
 						<div class="filterToggle roundCorners">
@@ -177,7 +55,7 @@
 							<div class="toggleSlider roundCorners">&nbsp;</div>
 						</div>
 					</div>
-					<!-- view as toggles -->
+					<!-- View toggles -->
 					<div id="viewToggle" class="toggle">
 						<div class="toggleLeft">View As: </div>
 						<div class="filterToggle roundCorners">
@@ -185,6 +63,10 @@
 							<div class="toggleSlider roundCorners">&nbsp;</div>
 						</div>
 					</div>
+				</div>
+
+				<div id="refine">
+					<div id="refineLink">Refine</div>
 				</div>
 			</div>
 

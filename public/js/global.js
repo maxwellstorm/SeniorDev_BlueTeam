@@ -53,8 +53,12 @@ function populateGridView() {
 function updateOverlay(Professor) {
 	$('#overlayName').text(Professor.getFullName());
 	$('#overlayEmail').text(Professor.getEmail());
+	$('#overlayPhone').text(Professor.getPhone());
 	// $('#overlayRoom').text('Room ' + Professor.getRoom());
 	$('#overlayRoom').text(Professor.getRoom());
+	$('#overlayAbout').text(Professor.getAbout());
+	$('#overlayEducation').text(Professor.getEducation());
+	$('#overlayHighlights').text(Professor.getHighlights());
 }
 
 function showOverlay() {

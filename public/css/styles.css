@@ -1,23 +1,27 @@
 body {
 	margin: 0;
 	background: orange;
-	font-family: Helvetica, sans-serif;
+	font-family: Helvetica, Arial, sans-serif;
 	font-size: 16px;
+	font-weight: 300;
+	letter-spacing: 1px;
 	line-height: 1.5;
 	background: #E0E0E0;
 }
 
 h1 {
-	font-family: Montserrat, Helvetica, sans-serif;
+	font-family: Montserrat, Helvetica, Arial, sans-serif;
 	font-size: 64px;
 	font-weight: normal;
+	letter-spacing: normal;
 	margin: 0;
 }
 
 h2 {
-	font-family: Montserrat, Helvetica, sans-serif;
+	font-family: Montserrat, Helvetica, Arial, sans-serif;
 	font-size: 48px;
 	font-weight: normal;
+	letter-spacing: normal;
 	margin: -4px 0px 0px 0px;
 	line-height: 1;
 }
@@ -70,16 +74,31 @@ header h1 {
 
 #infoExpanded {
 	position: relative;
-	padding: 20px;
-	width: calc(25% - 40px);
-	height: calc(100% - 40px);
+	padding: 15px;
+	width: calc(25% - 30px);
+	height: calc(100% - 30px);
 	float: left;
 	clear: right;
 }
 
+#primaryInfo {
+	display: inline;
+	position: relative;
+	left: 15px;
+}
+
+#extensiveInfo {
+	display: block;
+	margin-top: 40px;
+}
+
+#overlayAbout, #overlayEducation, #overlayHighlights {
+	margin-top: 20px;
+}
+
 #closeOverlay {
 	position: absolute;
-	bottom: 20px;
+	bottom: 15px;
 	color: #F36E21;
 	font-weight: bold;
 	cursor: pointer;
@@ -94,9 +113,9 @@ header h1 {
 }
 
 #floorMap {
-	margin: 20px;
-	width: calc(100% - 40px);
-	height: calc(100% - 40px);
+	margin: 15px;
+	width: calc(100% - 30px);
+	height: calc(100% - 30px);
 	background-image: url("../media/floorplans/golisano-2nd-floor-large.png");
 	background-size: 100% 100%;
 }
@@ -146,15 +165,25 @@ header h1 {
 	clear: right;
 }
 
-.largeThumb {
-	position: relative;
-	width: 250px;
-	height: 250px;
-	background-size: 100% 100% !important;
-	background-repeat: no-repeat;
-	margin: auto auto 20px auto;
+.thumb:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 	border-radius: 50%;
-	background: gray;
+	background: none;
+
+	/* LINEAR GRADIENTS */
+	background: linear-gradient(to bottom left, rgba(255,255,255,0), #F36E21);
+	/* background: linear-gradient(to bottom left, rgba(255,255,255,0), #000000); */
+
+	/* RADIAL GRADIENTS */
+	/* background: radial-gradient(ellipse at center, rgba(255,255,255,0), #F36E21); */
+	/* background: radial-gradient(ellipse at center, rgba(255,255,255,0), #000000); */
+
+	opacity: 0.3;
 }
 
 #bogaard {
@@ -181,12 +210,13 @@ header h1 {
 	float: right;
 	background: #F8F7ED;
 	width: 23%;
-	height: calc(100vh - 180px);
+	/* height: calc(100vh - 180px); */
 	padding: 20px;
+	font-weight: normal;
 }
 
 #toggles {
-	font-weight: bold;
+	font-weight: normal;
 	margin: 20px 0px;
 	width: 80%;
 	position: relative;
@@ -236,6 +266,15 @@ span.selectedToggle {
 	height: 115%;
 	background-color: #F36E21;
 	transition: left 0.25s ease;
+}
+
+#refine {
+	margin-top: 20px;
+}
+
+#refineLink {
+	color: #F36E21;
+	cursor: pointer;
 }
 
 @media screen and (min-width: 1920px) {
