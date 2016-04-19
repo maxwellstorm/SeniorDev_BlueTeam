@@ -1,6 +1,6 @@
 var loadFile = function(event) {
-    var output = document.getElementById('output');
-    output.src = URL.createObjectURL(event.target.files[0]);
+    var img = document.getElementById('userImage');
+    img.src = URL.createObjectURL(event.target.files[0]);
 };
 
 
@@ -23,13 +23,14 @@ function getInfo(selected) {
 		var infoResponse = JSON.parse(response);
 		console.log(infoResponse);
 		$('#facultyId').val(infoResponse["facultyId"]);
+		$('#userImage').attr("src", infoResponse['imageName']);
 		$('#firstName').val(infoResponse["fName"]);
 		$('#lastName').val(infoResponse["lName"]);
 		//Accomodate for Title?
 		$('#email').val(infoResponse["email"]);
 		$('#phone').val(infoResponse["phone"]);
-		$('#room').val(infoResponse["roomNumber"]);
-		$('#dept').val(infoResponse["departmentName"]);
+		$('#room').selectpicker('val', infoResponse["roomNumber"]);
+		$('#dept').selectpicker('val', infoResponse["departmentName"]);
 		//NEED TO ACCOMODATE FOR SECOND DEPARTMENT
 		
 		var isActive = infoResponse['isActive'];

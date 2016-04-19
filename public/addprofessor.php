@@ -69,9 +69,10 @@
 						</ul>
 						<br />
 
-						<input type="submit" value="Update" name="edit" id="editBtn" class="btn btn-primary">
-						<input type="submit" value="Create New" name="new" id="newBtn" class="btn btn-primary">
-						<input type="submit" value="Delete" name="delete" id="deleteBtn" class="btn btn-primary">
+						<input type="submit" value="Update" name="edit" id="editBtn" class="btn btn-primary" style="float: left; ">
+						<input type="submit" value="Create New" name="new" id="newBtn" class="btn btn-primary" style="float: right; margin-right: 0px;">
+						<br /><br />
+						<input type="submit" value="Delete" name="delete" id="deleteBtn" class="btn btn-primary" style="float: right">
 					</div>
 					<div class="col-lg-10">
 						<fieldset>
@@ -85,7 +86,7 @@
 										<input type="file" accept="image/*" onchange="loadFile(event)" name="image" value="Upload Image" style="width:95px; float: right">
 									</div>
 									<div class="col-lg-4">
-										<img id="output" src="media/no-preview.png" />
+										<img id="userImage" src="media/no-preview.png" />
 									</div>
 								</div>
 								
