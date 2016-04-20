@@ -1,18 +1,29 @@
 <?php
 	require("../database/data.php");
 	require("../database/department.php");
+	require_once("../database/dbException.php");
 
 	$database = new data;
-
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	if(isset($_POST['new'])) {
-		$name = $_POST['name'];
-		$abbr = $_POST['abbr'];
+		try{
+		
+			$name = $_POST['name'];
+			$abbr = $_POST['abbr'];
 
-		$dept = new department($database, null);
-		$dept->postParams($name, $abbr);
+			$dept = new department($database, null);
+			$dept->postParams($name, $abbr);
+		}
+		catch(dbException $db){
+			echo $db->alert();
+		}
 	} elseif(isset($_POST['edit'])){	
-
-		//Still needs to be done
+		try{
+			//Still needs to be done
+		}
+		catch(dbException $db){
+			echo $db->alert();
+		}
 
 	} elseif(isset($_POST['delete']) && isset($_POST['deptId'])) {
 		$id = $_POST['deptId'];
@@ -20,6 +31,7 @@
 		$dept = new department($database, $id);
 		$dept->delete();
 	}
+}
 
 	function getAllDepartments() {
 		$database = new data;
