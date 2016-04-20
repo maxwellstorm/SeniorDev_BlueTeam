@@ -94,4 +94,38 @@ $(document).ready(function() {
 	$('#roomSelect').on('change', function() {
   		getRoomInfo($(this).val());
 	});
+
+	applyBullets('highlights');
+	applyBullets('education');
+});
+
+function applyBullets(idName) {
+	$("#" + idName).focus(function() {
+	    if(document.getElementById(idName).value === ''){
+	        document.getElementById(idName).value +='• ';
+		}
+	});
+
+	$("#" + idName).keyup(function(event){
+		var keycode = (event.keyCode ? event.keyCode : event.which);
+	    if(keycode == '13'){
+	        document.getElementById(idName).value +='• ';
+		}
+		var txtval = document.getElementById(idName).value;
+		if(txtval.substr(txtval.length - 1) == '\n'){
+			document.getElementById(idName).value = txtval.substring(0,txtval.length - 1);
+		}
+	});
+}
+
+function removeOnlyBullets(idName) {
+	var txt = document.getElementById(idName);
+	if(txt.value == '• ') {
+		txt.value = "";
+	}
+}
+
+$('#addFaculty').submit(function() {
+	removeOnlyBullets('highlights');
+	removeOnlyBullets('education');
 });

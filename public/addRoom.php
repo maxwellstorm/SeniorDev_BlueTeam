@@ -59,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		<link rel="stylesheet" type="text/css" media="screen" href="css/main.css">
 		<script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
+		<script type="text/javascript" src="js/bootstrap.js"></script>
 	</head>
 	<body>
 		<div id="header">
