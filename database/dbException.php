@@ -15,10 +15,10 @@ class dbException extends Exception
          return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
     }
 	
-	public function alert($type, $text) {
-		$alert = "<div class='alert alert-dismissible alert-$type'>";
+	public function alert() {
+		$alert = "<div class='alert alert-dismissible alert-dbException'>";
 		$alert .= "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>";
-		$alert .= "$text</div>";
+		$alert .= $this->message."</div>";
 
 		return $alert;
 }

@@ -1,24 +1,35 @@
 <?php
-	require("../database/data.php");
-	require("../database/room.php");
+	require_once("../database/data.php");
+	require_once("../database/room.php");
+	require_once("../database/dbException.php");
 
 	$database = new data;
 
 	if(isset($_POST['new'])) {
 
-		$roomNum = $_POST['roomNum'];
-		$map = null; //STILL NEED TO DO MAP
-		$desc = $_POST['description'];
+		try{
+			$roomNum = $_POST['roomNum'];
+			$map = null; //STILL NEED TO DO MAP
+			$desc = $_POST['description'];
 
-		$room = new room($database, null);
-		$room->postParams($roomNum, $map, $desc);
+			$room = new room($database, null);	
+			$room->postParams($roomNum, $map, $desc);
+		}
+	catch(dbException $db){
+			$db->alert();
+		}
 	} elseif(isset($_POST['edit'])){	
-		$roomNum = $_POST['roomNum'];
-		$map = null; //STILL NEED TO DO MAP
-		$desc = $_POST['description'];
+		try{
+			$roomNum = $_POST['roomNum'];
+			$map = null; //STILL NEED TO DO MAP
+			$desc = $_POST['description'];
 
-		$room = new room($database, $roomNum);
-		$room->putParams($map, $desc);		
+			$room = new room($database, $roomNum);
+			$room->putParams($map, $desc);
+		}
+	catch(dbException $db){
+			$db->alert();
+		}		
 
 	} elseif(isset($_POST['delete']) && isset($_POST['roomNum'])) {
 		$roomNum = $_POST['roomNum'];
