@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php
 	require_once("../database/data.php");
 	require_once("../database/room.php");
@@ -49,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		}
 	}
 ?>
-<!DOCTYPE html>
+
 <html lang="en">
 	<head>
 		<title>IST Faculty Management Interface - Admin View: Room</title>
