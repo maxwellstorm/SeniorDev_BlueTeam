@@ -4,31 +4,31 @@
 	require_once("../database/dbException.php");
 
 	$database = new data;
-
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	if(isset($_POST['new'])) {
 
 		try{
 			$roomNum = $_POST['roomNum'];
-			$map = null; //STILL NEED TO DO MAP
+			$map = "asdasda"; //STILL NEED TO DO MAP
 			$desc = $_POST['description'];
 
 			$room = new room($database, null);	
 			$room->postParams($roomNum, $map, $desc);
 		}
 	catch(dbException $db){
-			$db->alert();
+			echo $db->alert();
 		}
 	} elseif(isset($_POST['edit'])){	
 		try{
 			$roomNum = $_POST['roomNum'];
-			$map = null; //STILL NEED TO DO MAP
+			$map = "asdas"; //STILL NEED TO DO MAP
 			$desc = $_POST['description'];
 
 			$room = new room($database, $roomNum);
 			$room->putParams($map, $desc);
 		}
 	catch(dbException $db){
-			$db->alert();
+			echo $db->alert();
 		}		
 
 	} elseif(isset($_POST['delete']) && isset($_POST['roomNum'])) {
@@ -37,6 +37,7 @@
 		$room = new room($database, $roomNum);
 		$room->delete();
 	}
+}
 
 	function getAllRooms() {
 		$database = new data;
