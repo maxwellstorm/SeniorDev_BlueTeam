@@ -7,14 +7,18 @@
 	if(isset($_POST['new'])) {
 
 		$roomNum = $_POST['roomNum'];
-		$map = null;
+		$map = null; //STILL NEED TO DO MAP
 		$desc = $_POST['description'];
 
 		$room = new room($database, null);
-		$room->postParams($roomNum, $img, $desc);
+		$room->postParams($roomNum, $map, $desc);
 	} elseif(isset($_POST['edit'])){	
+		$roomNum = $_POST['roomNum'];
+		$map = null; //STILL NEED TO DO MAP
+		$desc = $_POST['description'];
 
-		//Still needs to be done
+		$room = new room($database, $roomNum);
+		$room->putParams($map, $desc);		
 
 	} elseif(isset($_POST['delete']) && isset($_POST['roomNum'])) {
 		$roomNum = $_POST['roomNum'];
@@ -57,7 +61,8 @@
 					<fieldset>
 						<legend>ADD A NEW ROOM</legend>
 						<div class="col-lg-2" id="searchCol">
-							<select class="form-control">
+							<select class="form-control" id="roomSelect">
+								<option value="" disabled selected>Select a Room</option>
 								<?php getAllRooms() ?>
 							</select>
 							<br />

@@ -19,7 +19,6 @@ function getInfo(selected) {
 		url: "../database/getInfo.php",
 		data: {facultyId : facId}
 	}).done(function(response) {
-		
 		var infoResponse = JSON.parse(response);
 		console.log(infoResponse);
 		$('#facultyId').val(infoResponse["facultyId"]);
@@ -29,8 +28,7 @@ function getInfo(selected) {
 		$('#email').val(infoResponse["email"]);
 		$('#phone').val(infoResponse["phone"]);
 		$('#room').selectpicker('val', infoResponse["roomNumber"]);
-		$('#dept').selectpicker('val', infoResponse["departmentName"]);
-		//NEED TO ACCOMODATE FOR SECOND DEPARTMENT
+		$('#dept').selectpicker('val', [infoResponse["departmentName"], infoResponse["secondaryDepartmentName"]]);
 		
 		var isActive = infoResponse['isActive'];
 		var isFaculty = infoResponse['isFaculty'];
@@ -64,6 +62,20 @@ function getInfo(selected) {
 	})
 }
 
+function getRoomInfo(selectedVal) {
+	$.ajax({
+		method: "GET",
+		url: "../database/getRoomInfo.php",
+		data: {roomNum : selectedVal}
+	}).done(function(response) {
+		var infoResponse = JSON.parse(response);
+		console.log(infoResponse);
+		$('#roomNum').val(infoResponse["roomNumber"]);
+		$('#description').val(infoResponse["description"]);
+		//STILL NEED TO DO ROOM IMAGE STUFF
+	})
+}
+
 $(document).ready(function() {
 	$("#filter").keyup(function() {
 		var searchKeyword = $(this).val();
@@ -78,4 +90,8 @@ $(document).ready(function() {
 			})
 		}
 	})
+
+	$('#roomSelect').on('change', function() {
+  		getRoomInfo($(this).val());
+	});
 });
