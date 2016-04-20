@@ -69,10 +69,9 @@
 		echo($secDeptId . "<br />");
 		echo($dept . "<br />");*/
 
-		//still need to add imagePath
+		$imagePath = uploadImage();
 		$employee = new employees($database, null);
-		$employee->postParams($fName, $lName, $email, $active, $faculty, $phone, $about, $education, $highlights, $primaryDept, $roomNum, $title, $secondaryDept);
-		uploadImage();
+		$employee->postParams($fName, $lName, $email, $active, $faculty, $phone, $about, $education, $highlights, $primaryDept, $roomNum, $title, $secondaryDept, $imagePath);
 	} elseif(isset($_POST['edit'])){	
 		$id = $_POST['facultyId'];
 		$fName = $_POST['firstName'];
@@ -122,10 +121,10 @@
 			$faculty = 0;
 		}
 
-		//still need to add imagePath
+		$imagePath = uploadImage();
+
 		$employee = new employees($database, $id);
-		$employee->putParams($fName,$lName,$email,$active,$faculty,$phone,$about,$education,$highlights,$primaryDept,$roomNum,$title,$secondaryDept);
-		uploadImage();
+		$employee->putParams($fName,$lName,$email,$active,$faculty,$phone,$about,$education,$highlights,$primaryDept,$roomNum,$title,$secondaryDept, $imagePath);
 	} elseif(isset($_POST['delete']) && isset($_POST['facultyId'])) {
 		$id = $_POST['facultyId'];
 
@@ -133,7 +132,7 @@
 		$employee->delete();
 	}
 
-	//header('Location: http://kelvin.ist.rit.edu/~blueteam/public/addprofessor.php');
+	header('Location: http://kelvin.ist.rit.edu/~blueteam/public/addprofessor.php');
 
 	/*
 	 * A method to upload an image through the admin form
@@ -161,11 +160,11 @@
 			} else { //return null if it is the wrong file extension
 				//alert('danger', "Only image files are accpeted for upload");
 				//return null;
-				echo("wrong file extension");
+				//echo("wrong file extension");
 			}
 		} else { //return null if the file is empty or there's an error
 		    //return null;
-		echo("null or error");
+		//echo("null or error");
 	    }
 	}
 ?>

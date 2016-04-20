@@ -52,6 +52,8 @@
 			<img id="headLogo" src="media/rit_black_no_bar.gif" />
 			<h1 class="headerText">Faculty Directory</h1>
 			<h5 class="headerText">Admin Portal</h5>
+			<a href="addDepartment.php">Add Department</a>
+			<a href="addRoom.php">Add Room</a>
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-body">
@@ -64,15 +66,16 @@
 							</div>
 						</div>
 						<br />
-						<ul multiple class="form-control" id="results">
-							<?php getAllEmps() ?>
-						</ul>
-						<br />
-
-						<input type="submit" value="Update" name="edit" id="editBtn" class="btn btn-primary" style="float: left; ">
-						<input type="submit" value="Create New" name="new" id="newBtn" class="btn btn-primary" style="float: right; margin-right: 0px;">
-						<br /><br />
-						<input type="submit" value="Delete" name="delete" id="deleteBtn" class="btn btn-primary" style="float: right">
+						<div class="form-group">
+								<ul multiple class="form-control" id="results">
+									<?php getAllEmps() ?>
+								</ul>
+							<br />
+							<input type="submit" value="Update" name="edit" id="editBtn" class="btn btn-primary">
+							<input type="submit" value="Create New" name="new" id="newBtn" class="btn btn-primary">
+							<br /><br />
+							<input type="submit" value="Delete" name="delete" id="deleteBtn" class="btn btn-primary">
+						</div>
 					</div>
 					<div class="col-lg-10">
 						<fieldset>

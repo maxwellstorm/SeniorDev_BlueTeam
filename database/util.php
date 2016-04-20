@@ -19,8 +19,8 @@ require_once("dbException.php");
 
 
 	public static function checkRoom($roomNumber){
-	
-		if(!preg_match("/^[a-zA-Z0-9]{3}\-\d{4}$/",$roomNumber)){
+		//replace space with '\-' after we've updated all the rooms.
+		if(!preg_match("/^[a-zA-Z0-9]{3} \d{4}$/",$roomNumber)){
 			throw new dbException("needs to be in proper room format",2);
 			return false;
 		}

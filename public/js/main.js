@@ -23,7 +23,6 @@ function getInfo(selected) {
 		var infoResponse = JSON.parse(response);
 		console.log(infoResponse);
 		$('#facultyId').val(infoResponse["facultyId"]);
-		$('#userImage').attr("src", infoResponse['imageName']);
 		$('#firstName').val(infoResponse["fName"]);
 		$('#lastName').val(infoResponse["lName"]);
 		//Accomodate for Title?
@@ -54,6 +53,14 @@ function getInfo(selected) {
 		$('#about').val(infoResponse["about"]);
 		$('#education').val(infoResponse["education"]);
 		$('#highlights').val(infoResponse["highlights"]);
+
+		var imagePath = infoResponse['imageName'];
+		if(imagePath) {
+			$('#userImage').attr("src", imagePath);
+		} else {
+			$('#userImage').attr("src", 'media/no-preview.png');
+		}
+
 	})
 }
 

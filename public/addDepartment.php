@@ -46,6 +46,8 @@
 			<img id="headLogo" src="media/rit_black_no_bar.gif" />
 			<h1 class="headerText">Faculty Directory</h1>
 			<h5 class="headerText">Admin Portal - Department</h5>
+			<a href="addprofessor.php">Add Professor</a>
+			<a href="addRoom.php">Add Room</a>
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-body">

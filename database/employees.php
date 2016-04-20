@@ -16,6 +16,7 @@ class employees{
 	public $about;
 	public $education;
 	public $highlights;
+	public $imageName;
     private $facultyId;
 
 	
@@ -33,7 +34,6 @@ public function fetch(){
 		)
 	);
 	try{
-		
 		$results = $resultsArr[0];
 		$this->fname = $results['fName'];
 		$this->lname = $results['lName'];
@@ -47,6 +47,7 @@ public function fetch(){
 		$this->about = $results['about'];
 		$this->education = $results['education'];
 		$this->highlights = $results['highlights'];
+		$this->imageName = $results['imageName'];
 		return true;
 	}
 	catch(Exception $e){
@@ -96,15 +97,14 @@ public function setEmail($email){
 	$this->email = $email;
 }
 
-/*
-public function getOfficeHours(){
-	return $this->officeHours;
+public function getImageName() {
+	return $this->imageName;
 }
 
-public function setOfficeHous($officeHours){
-	$this->officeHours = $officeHours;
+public function setImageName($imageName) {
+	$this->imageName = $imageName;
 }
-*/
+
 public function getDepartmentId(){
 	return $this->departmentId;
 }
@@ -177,13 +177,13 @@ public function setSecDeptId($secDeptId){
 	$this->secondaryDepartmentId = $secDeptId;
 }
 
-public function putParams($fname,$lname,$email,$active,$faculty,$phone,$about,$edu,$highlights,$deptId,$roomNum,$title,$secDeptId){
+public function putParams($fname,$lname,$email,$active,$faculty,$phone,$about,$edu,$highlights,$deptId,$roomNum,$title,$secDeptId, $imageName){
 	//update
 	util::checkRoom($roomNum);
 	util::checkName($fname);
 	util::checkName($lname);
 	util::checkEmail($email);
-	$this->conn->setData("UPDATE Employees SET fName=:fname, lName=:lname, email=:email, isActive=:active, isFaculty=:faculty, phone=:phone, about=:about, education=:edu, highlights=:highlights, departmentId=:deptId, roomNumber=:roomNum, title=:title, secondaryDepartmentId=:secDeptId  WHERE facultyId = :id",array(
+	$this->conn->setData("UPDATE Employees SET fName=:fname, lName=:lname, email=:email, isActive=:active, isFaculty=:faculty, phone=:phone, about=:about, education=:edu, highlights=:highlights, departmentId=:deptId, roomNumber=:roomNum, title=:title, secondaryDepartmentId=:secDeptId, imageName=:imageName  WHERE facultyId = :id",array(
 	":fname"=>$fname,
 	":lname"=>$lname,
 	":email"=>$email,
@@ -198,6 +198,7 @@ public function putParams($fname,$lname,$email,$active,$faculty,$phone,$about,$e
 	":roomNum"=>$roomNum,
 	":title"=>$title,
 	":secDeptId"=>$secDeptId,
+	":imageName"=>$imageName,
 	":id"=>$this->getEmployeeId()
 	));
 }
@@ -207,7 +208,7 @@ public function put(){
 	util::checkName($this->fname);
 	util::checkName($this->lname);
 	util::checkEmail($this->email);
-	$this->conn->setData("UPDATE Employees SET fName=:fname, lName=:lname, email=:email, isActive=:active, isFaculty=:faculty, phone=:phone, about=:about, education=:edu, highlights=:highlights, departmentId=:deptId, roomNumber=:roomNum, title=:title, secondaryDepartmentId=:secDeptId  WHERE facultyId = :id",array(
+	$this->conn->setData("UPDATE Employees SET fName=:fname, lName=:lname, email=:email, isActive=:active, isFaculty=:faculty, phone=:phone, about=:about, education=:edu, highlights=:highlights, departmentId=:deptId, roomNumber=:roomNum, title=:title, secondaryDepartmentId=:secDeptId, imageName=:imageName  WHERE facultyId = :id",array(
 	":fname"=>$this->fname,
 	":lname"=>$this->lname,
 	":email"=>$this->email,
@@ -222,17 +223,18 @@ public function put(){
 	":roomNum"=>$this->roomNumber,
 	":title"=>$this->title,
 	":secDeptId"=>$this->secDeptId,
+	":imageName"=>$this->imageName,
 	":id"=>$this->getEmployeeId()
 	));
 }
 
-public function postParams($fname,$lname,$email,$active,$faculty,$phone,$about,$edu,$highlights,$deptId,$roomNum,$title,$secDeptId){
+public function postParams($fname,$lname,$email,$active,$faculty,$phone,$about,$edu,$highlights,$deptId,$roomNum,$title,$secDeptId, $imageName){
 	//insert
 	util::checkName($fname);
 	util::checkName($lname);
 	util::checkEmail($email);
 	util::checkRoom($roomNum);
-	$this->conn->setData("INSERT into Employees (facultyId,fName,lName,email,isActive,isFaculty,phone,about,education,highlights,departmentId,roomNumber,title,secondaryDepartmentId) values (DEFAULT,:fname,:lname,:email,:active,:faculty,:phone,:about,:edu,:highlights,:deptId,:roomNum,:title,:secDeptId)",array(
+	$this->conn->setData("INSERT into Employees (facultyId,fName,lName,email,isActive,isFaculty,phone,about,education,highlights,departmentId,roomNumber,title,secondaryDepartmentId, imageName) values (DEFAULT,:fname,:lname,:email,:active,:faculty,:phone,:about,:edu,:highlights,:deptId,:roomNum,:title,:secDeptId, :imageName)",array(
 	":fname"=>$fname,
 	":lname"=>$lname,
 	":email"=>$email,
@@ -245,7 +247,8 @@ public function postParams($fname,$lname,$email,$active,$faculty,$phone,$about,$
 	":deptId"=> $deptId,
 	":roomNum"=>$roomNum,
 	":title"=>$title,
-	"secDeptId"=>$secDeptId
+	":secDeptId"=>$secDeptId,
+	":imageName"=>$imageName
 	));
 }
 
@@ -254,7 +257,7 @@ public function post(){
 	util::checkName($this->fname);
 	util::checkName($this->lname);
 	util::checkEmail($this->email);
-	$this->conn->setData("INSERT into Employees (facultyId,fName,lName,email,isActive,isFaculty,phone,about,education,highlights,departmentId,roomNumber,title,secondaryDepartmentId) values (DEFAULT, :fname,:lname,:email,:active,:faculty,:phone,:about,:edu,:highlights,:deptId,:roomNum,:title,:secDeptId)",array(
+	$this->conn->setData("INSERT into Employees (facultyId,fName,lName,email,isActive,isFaculty,phone,about,education,highlights,departmentId,roomNumber,title,secondaryDepartmentId, imageName) values (DEFAULT, :fname,:lname,:email,:active,:faculty,:phone,:about,:edu,:highlights,:deptId,:roomNum,:title,:secDeptId, :imageName)",array(
 	":fname"=>$this->fname,
 	":lname"=>$this->lname,
 	":email"=>$this->email,
@@ -267,7 +270,8 @@ public function post(){
 	":deptId"=>$this->departmentId,
 	":roomNum"=>$this->roomNumber,
 	":title"=>$this->title,
-	"secDeptId"=>$this->secDeptId
+	":secDeptId"=>$this->secDeptId,
+	":imageName"=>$this->imageName
 	));
 }
 
