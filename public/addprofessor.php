@@ -42,21 +42,13 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" media="screen" href="css/main.css">
 		<link rel="stylesheet" type="text/css" media="screen" href="js/bootstrap-select-1.10.0/css/bootstrap-select.css">
+		<link rel="icon" href="media/favicon.ico">
 		<script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script type="text/javascript" src="js/bootstrap-select-1.10.0/js/bootstrap-select.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 	</head>
 	<body class="admin">
-		<!--
-		<div id="header">
-			<img id="headLogo" src="media/rit_black_no_bar.gif" />
-			<h1 class="headerText">Faculty Directory</h1>
-			<h5 class="headerText">Admin Portal</h5>
-			<a href="addDepartment.php">Add Department</a>
-			<a href="addRoom.php">Add Room</a>
-		</div>
-		-->
 
 		<header class="dropShadow">
 			<div id="headerInner">
@@ -70,18 +62,16 @@
 			<div class="panel-body">
 				<form class="form-horizontal" id="addFaculty" name="addFaculty" enctype="multipart/form-data" action="../database/newFaculty.php" method="POST" onsubmit="removeOnlyBullets('highlights'); removeOnlyBullets('education'")>
 					<div class="col-lg-2" id="searchCol">
-						<h3>Search</h3>
+						<h3>SEARCH</h3>
 						<div class="form-group">
 							<div>
-								<input type="text" class="form-control" id="filter" placeholder="filter by name">
+								<input type="text" class="form-control" id="filter" placeholder="type a name">
 							</div>
 						</div>
-						<br />
 						<div class="form-group">
-								<ul multiple class="form-control" id="results">
-									<?php getAllEmps() ?>
-								</ul>
-							<br />
+							<ul multiple class="form-control" id="results">
+								<?php getAllEmps() ?>
+							</ul>
 							<input type="submit" value="Update" name="edit" id="editBtn" class="btn btn-primary">
 							<input type="submit" value="Create New" name="new" id="newBtn" class="btn btn-primary">
 							<input type="submit" value="Delete" name="delete" id="deleteBtn" class="btn btn-primary">
@@ -89,7 +79,7 @@
 					</div>
 					<div class="col-lg-10">
 						<fieldset>
-							<legend>ADD A NEW EMPLOYEE</legend>
+							<legend><h2>ADD A NEW EMPLOYEE</h2></legend>
 							<div class="col-lg-5" id="leftCol">
 								<div class="form-group">
 									<div class="col-lg-4">

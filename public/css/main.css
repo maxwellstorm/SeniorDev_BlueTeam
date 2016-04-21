@@ -309,8 +309,26 @@ span.selectedToggle {
 }
 
 /* ADMIN-SPECIFIC STYLES BEGIN BELOW */
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+	background: #F36E21;
+}
+
+.form-control:focus {
+	border-color: #F36E21;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6); */
+}
+
+.col-lg-10 {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
 .admin header h1 {
 	margin-top: 13px;
+}
+
+.form-group {
+	margin-bottom: 20px !important;
 }
 
 .panel-body {
@@ -322,8 +340,11 @@ span.selectedToggle {
 	letter-spacing: 1px !important;
 }
 
-.panel-body legend {
-	font-size: 21px;
+.panel-body legend h2 {
+	font-size: 36px;
+	padding: 10px 0px;
+	font-weight: normal;
+	letter-spacing: normal;
 }
 
 .panel-body input[type='file'] {
@@ -338,6 +359,7 @@ label {
 	background-color: #F36E21;
 	border-color: lightgray;
 	display: block;
+	margin-bottom: 10px;
 }
 
 .btn-primary:hover {
@@ -359,7 +381,7 @@ label {
 	float: right;
 }
 
-#results {
+ul#results {
 	list-style: none;
 	text-align: left;
 	overflow-x: hidden;
@@ -368,14 +390,23 @@ label {
 	height: 400px;
 	max-height: 400px;
 	padding: 0px;
+	margin-bottom: 20px !important;
 }
 
 #results li {
 	padding: 0px 5px;
+	cursor: pointer;
 }
 
 #searchCol {
-	text-align: center;
+	/* text-align: center; */
+}
+
+#searchCol h3 {
+	position: relative;
+	right: 15px;
+	font-weight: bold;
+	margin-top: 15px;
 }
 
 #searchCol .btn-primary {
@@ -394,17 +425,17 @@ label {
 
 #results li:active {
 	transition: all 0.25s ease;
-	background-color: #09F;
+	background-color: #F36E21;
 	color: white;
 }
 
 #results li:hover {
 	transition: all 0.25s ease;
-	background-color: #09F;
+	background-color: #F36E21;
 	color: white;
 }
 
 .activeResult {
-	background-color: #09F;
+	background-color: #F36E21;
 	color: white;
 }
