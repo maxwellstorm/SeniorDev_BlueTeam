@@ -8,8 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	if(isset($_POST['new'])) {
 		try{
 		
-			$name = $_POST['name'];
-			$abbr = $_POST['abbr'];
+			$name = $_POST['deptName'];
+			$abbr = $_POST['deptAbbr'];
 
 			$dept = new department($database, null);
 			$dept->postParams($name, $abbr);
@@ -19,7 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		}
 	} elseif(isset($_POST['edit'])){	
 		try{
-			//Still needs to be done
+			$deptId = $_POST['deptId'];
+			$deptName = $_POST['deptName'];
+			$deptAbbr = $_POST['deptAbbr'];
+
+			$dept = new department($database, $deptId);
+			$dept->putParams($deptName, $deptAbbr);
 		}
 		catch(dbException $db){
 			echo $db->alert();
@@ -39,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		$depts = $database->getData("SELECT departmentId, departmentName FROM department", array());
 
 		foreach($depts as $arr) {
-			echo "<option>" . $arr['departmentName'] . " - " . $arr['departmentId'] . "</option>";
+			echo "<option value='" . $arr['departmentId'] . "'>" . $arr['departmentName'] ."</option>";
 		}
 	}
 ?>
@@ -67,7 +72,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 					<fieldset>
 						<legend>ADD A NEW DEPARTMENT</legend>
 						<div class="col-lg-2" id="searchCol">
-							<select class="form-control">
+							<select id="deptSelect" class="form-control">
+								<option value="" disabled selected>Select a Department</option>
 								<?php getAllDepartments() ?>
 							</select>
 							<br />
@@ -84,14 +90,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 							<div class="form-group">
 								<label for="name" class="col-lg-3 control-label">Department Name</label>
 								<div class="col-lg-9">
-									<input type="text" class="form-control" id="name" name="name">
+									<input type="text" class="form-control" id="deptName" name="deptName">
 								</div>
 							</div>
 
 							<div class="form-group">
 								<label for="textArea" class="col-lg-3 control-label">Department Abbreviation</label>
 								<div class="col-lg-9">
-									<input type="text" class="form-control" id="abbr" name="abbr">
+									<input type="text" class="form-control" id="deptAbbr" name="deptAbbr">
 								</div>
 							</div>
 						</div>

@@ -76,6 +76,20 @@ function getRoomInfo(selectedVal) {
 	})
 }
 
+function getDepartmentInfo(selectedVal) {
+	$.ajax({
+		method: "GET",
+		url: "../database/getDepartmentInfo.php",
+		data: {deptId : selectedVal}
+	}).done(function(response) {
+		var infoResponse = JSON.parse(response);
+		console.log(infoResponse);
+		$('#deptId').val(infoResponse["departmentId"]);
+		$('#deptName').val(infoResponse["departmentName"]);
+		$('#deptAbbr').val(infoResponse["departmentAbbr"]);
+	})
+}
+
 $(document).ready(function() {
 	$("#filter").keyup(function() {
 		var searchKeyword = $(this).val();
@@ -91,8 +105,16 @@ $(document).ready(function() {
 		}
 	})
 
+	allowEnableCreate();
+
 	$('#roomSelect').on('change', function() {
   		getRoomInfo($(this).val());
+  		disableCreate();
+	});
+
+	$('#deptSelect').on('change', function() {
+		getDepartmentInfo($(this).val());
+		disableCreate();
 	});
 
 	applyBullets('highlights');
@@ -123,4 +145,15 @@ function removeOnlyBullets(idName) {
 	if(txt.value == '• ') {
 		txt.value = "";
 	}
+}
+
+function disableCreate() {
+	$('#newBtn').prop("disabled", true);
+}
+
+function allowEnableCreate() {
+	//Options = keyup & change
+	$(":input").on('keyup', function() {
+		$('#newBtn').prop("disabled", false);
+	});
 }
