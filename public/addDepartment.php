@@ -2,14 +2,15 @@
 	require("../database/data.php");
 	require("../database/department.php");
 	require_once("../database/dbException.php");
+	require_once("../database/filters.php");
 
 	$database = new data;
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	if(isset($_POST['new'])) {
 		try{
 		
-			$name = $_POST['deptName'];
-			$abbr = $_POST['deptAbbr'];
+			$name = filterString($_POST['deptName']);
+			$abbr = filterString($_POST['deptAbbr']);
 
 			$dept = new department($database, null);
 			$dept->postParams($name, $abbr);
@@ -19,9 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		}
 	} elseif(isset($_POST['edit'])){	
 		try{
-			$deptId = $_POST['deptId'];
-			$deptName = $_POST['deptName'];
-			$deptAbbr = $_POST['deptAbbr'];
+			
+			$deptId = $_POST['deptId']; //add int validation
+			$deptName = filterString($_POST['deptName']);
+			$deptAbbr = filterString($_POST['deptAbbr']);
 
 			$dept = new department($database, $deptId);
 			$dept->putParams($deptName, $deptAbbr);
