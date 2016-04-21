@@ -41,13 +41,14 @@
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" media="screen" href="css/main.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="js\bootstrap-select-1.10.0\css\bootstrap-select.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="js/bootstrap-select-1.10.0/css/bootstrap-select.css">
 		<script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script type="text/javascript" src="js/bootstrap-select-1.10.0/js/bootstrap-select.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 	</head>
 	<body>
+		<!--
 		<div id="header">
 			<img id="headLogo" src="media/rit_black_no_bar.gif" />
 			<h1 class="headerText">Faculty Directory</h1>
@@ -55,6 +56,15 @@
 			<a href="addDepartment.php">Add Department</a>
 			<a href="addRoom.php">Add Room</a>
 		</div>
+		-->
+
+		<header class="dropShadow">
+			<div id="headerInner">
+				<h1>FACULTY DIRECTORY</h1><h4>Admin Panel</h4>
+				<img src="media/rit-logo.png" id="imgRIT" alt="" />
+			</div>
+		</header>
+
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<form class="form-horizontal" id="addFaculty" name="addFaculty" enctype="multipart/form-data" action="../database/newFaculty.php" method="POST" onsubmit="removeOnlyBullets('highlights'); removeOnlyBullets('education'")>
