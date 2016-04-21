@@ -37,7 +37,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>IST Faculty Management Interface - Admin View</title>
+		<title>Touchscreen Directory - Admin Panel</title>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" media="screen" href="css/main.css">
@@ -47,7 +47,7 @@
 		<script type="text/javascript" src="js/bootstrap-select-1.10.0/js/bootstrap-select.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 	</head>
-	<body>
+	<body class="admin">
 		<!--
 		<div id="header">
 			<img id="headLogo" src="media/rit_black_no_bar.gif" />
@@ -60,7 +60,8 @@
 
 		<header class="dropShadow">
 			<div id="headerInner">
-				<h1>FACULTY DIRECTORY</h1><h4>Admin Panel</h4>
+				<h1>FACULTY DIRECTORY</h1>
+				<!-- <h3>Admin Panel</h3> -->
 				<img src="media/rit-logo.png" id="imgRIT" alt="" />
 			</div>
 		</header>
@@ -83,20 +84,19 @@
 							<br />
 							<input type="submit" value="Update" name="edit" id="editBtn" class="btn btn-primary">
 							<input type="submit" value="Create New" name="new" id="newBtn" class="btn btn-primary">
-							<br /><br />
 							<input type="submit" value="Delete" name="delete" id="deleteBtn" class="btn btn-primary">
 						</div>
 					</div>
 					<div class="col-lg-10">
 						<fieldset>
 							<legend>ADD A NEW EMPLOYEE</legend>
-							<div class="col-lg-6" id="leftCol">
+							<div class="col-lg-5" id="leftCol">
 								<div class="form-group">
 									<div class="col-lg-4">
-										<label for="image" class="control-label" style="float: right">Avatar (160 x 160)</label>
+										<label for="image" class="control-label" style="float: right">Avatar<br />(160 x 160)</label>
 										<br />
 										<br />
-										<input type="file" accept="image/*" onchange="loadFile(event)" name="image" value="Upload Image" style="width:95px; float: right">
+										<input type="file" accept="image/*" onchange="loadFile(event)" name="image" value="Upload Image" style="float: right">
 									</div>
 									<div class="col-lg-4">
 										<img id="userImage" src="media/no-preview.png" />
@@ -153,7 +153,7 @@
 								</div>
 							</div>
 
-							<div class="col-lg-6" id="rightCol">
+							<div class="col-lg-7" id="rightCol">
 								<div class="radios">
 									<div class="form-group col-lg-6">
 										<label class="col-lg-4 control-label">Active</label>

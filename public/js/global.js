@@ -57,7 +57,7 @@ function updateOverlay(Professor) {
 	// $('#overlayRoom').text('Room ' + Professor.getRoom());
 	$('#overlayRoom').text(Professor.getRoom());
 	$('#overlayAbout').text(Professor.getAbout());
-	$('#overlayEducation').text(Professor.getEducation());
+	$('#overlayEducation').html(Professor.getEducation());
 	$('#overlayHighlights').text(Professor.getHighlights());
 }
 
