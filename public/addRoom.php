@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 							<div class="form-group">
 								<label for="name" class="col-lg-2 control-label">Room Number</label>
 								<div class="col-lg-10">
-									<input type="text" class="form-control" id="roomNum" name="roomNum">
+									<input type="text" class="form-control" id="roomNum" name="roomNum" required pattern="[a-zA-Z0-9]{3} [A-Za-z0-9]{1}\d{3}">
 								</div>
 							</div>
 
@@ -102,6 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 							</div>
 
 							<div class="form-group">
+								<!--Will be required-->
 								<p>Room Image uploading will go here, but idk exactly what form that'll take.</p>
 							</div>
 						</div>

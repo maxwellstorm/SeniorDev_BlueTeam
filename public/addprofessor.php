@@ -98,21 +98,21 @@
 								<div class="form-group">
 									<label for="firstName" class="col-lg-4 control-label">First Name</label>
 									<div class="col-lg-6">
-										<input type="text" class="form-control" id="firstName" name="firstName">
+										<input type="text" class="form-control" id="firstName" name="firstName" required>
 									</div>
 								</div>
 
 								<div class="form-group">
 									<label for="lastName" class="col-lg-4 control-label">Last Name</label>
 									<div class="col-lg-6">
-										<input type="text" class="form-control" id="lastName" name="lastName">
+										<input type="text" class="form-control" id="lastName" name="lastName" required>
 									</div>
 								</div>
 
 								<div class="form-group">
 									<label for="email" class="col-lg-4 control-label">Email</label>
 									<div class="col-lg-6">
-										<input type="text" class="form-control" id="email" name="email">
+										<input type="text" class="form-control" id="email" name="email" patten="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}">
 									</div>
 								</div>
 
@@ -126,7 +126,7 @@
 								<div class="form-group">
 									<label for="room" class="col-lg-4 control-label">Room Number</label>
 									<div class="col-lg-6">
-										<select class="selectpicker" data-live-search="true" id="room" name="room">
+										<select class="selectpicker" data-live-search="true" id="room" name="room" required>
 											<?php getAllRooms() ?>
 										</select>
 									</div>
@@ -135,7 +135,7 @@
 								<div class="form-group">
 									<label for="dept" class="col-lg-4 control-label">Department</label>
 									<div class="col-lg-6">
-										<select class="selectpicker" multiple data-max-options="2" id="dept" name="dept[]" data-width="fit">
+										<select class="selectpicker" multiple data-max-options="2" id="dept" name="dept[]" data-width="fit" required>
 											<?php getAllDepartments() ?>
 										</select>
 									</div>
@@ -150,7 +150,7 @@
 										<div class="col-lg-8">
 											<div class="radio">
 		 										<label>
-													<input type="radio" name="active" id="activeYes" value="activeYes" checked="">
+													<input type="radio" name="active" id="activeYes" value="activeYes" checked="" required>
 													Yes
 												</label>
 											</div>
@@ -168,7 +168,7 @@
 										<div class="col-lg-8">
 											<div class="radio">
 		 										<label>
-													<input type="radio" name="faculty" id="facultyYes" value="facYes" checked="">
+													<input type="radio" name="faculty" id="facultyYes" value="facYes" checked="" required>
 													Yes
 												</label>
 											</div>

@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 							<div class="form-group">
 								<label for="name" class="col-lg-3 control-label">Department Name</label>
 								<div class="col-lg-9">
-									<input type="text" class="form-control" id="deptName" name="deptName">
+									<input type="text" class="form-control" id="deptName" name="deptName" required>
 								</div>
 							</div>
 
