@@ -29,7 +29,7 @@ class employees{
 	}
 
 public function fetch(){
-	$resultsArr = $this->conn->getData("select * from employees where facultyId = :id",array(
+	$resultsArr = $this->conn->getData("SELECT * FROM Employees WHERE facultyId = :id",array(
 		":id" => $this->facultyId
 		)
 	);
@@ -39,7 +39,6 @@ public function fetch(){
 		$this->lname = $results['lName'];
 		$this->roomNumber = $results['roomNumber'];
 		$this->email = $results['email'];
-		//$this->officeHours = $results['officeHours'];
 		$this->departmentId = $result['departmentId'];
 		$this->isActive = $results['isActive'];
 		$this->isFaculty = $results['isFaculty'];
@@ -48,6 +47,8 @@ public function fetch(){
 		$this->education = $results['education'];
 		$this->highlights = $results['highlights'];
 		$this->imageName = $results['imageName'];
+		$this->secDeptId = $results['secondaryDepartmentID'];
+		$this->title = $results['title'];
 		return true;
 	}
 	catch(Exception $e){

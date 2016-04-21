@@ -69,8 +69,9 @@
 		echo($secDeptId . "<br />");
 		echo($dept . "<br />");*/
 
-		$imagePath = uploadImage();
 		$employee = new employees($database, null);
+		$imagePath = uploadImage($employee);
+
 		$employee->postParams($fName, $lName, $email, $active, $faculty, $phone, $about, $education, $highlights, $primaryDept, $roomNum, $title, $secondaryDept, $imagePath);
 	} elseif(isset($_POST['edit'])){	
 		$id = $_POST['facultyId'];
@@ -121,9 +122,10 @@
 			$faculty = 0;
 		}
 
-		$imagePath = uploadImage();
-
 		$employee = new employees($database, $id);
+		$employee->fetch();
+		$imagePath = uploadImage($employee);
+
 		$employee->putParams($fName,$lName,$email,$active,$faculty,$phone,$about,$education,$highlights,$primaryDept,$roomNum,$title,$secondaryDept, $imagePath);
 	} elseif(isset($_POST['delete']) && isset($_POST['facultyId'])) {
 		$id = $_POST['facultyId'];
@@ -139,9 +141,8 @@
 	 * The method will return the filepath of the uploaded image provided the upload was successful
 	 * otherwise, it'll return null, which will trigger an error message
 	 */
-	function uploadImage() {
+	function uploadImage($emp) {
 		if(!empty($_FILES['image']) && $_FILES['image']['error'] == 0) { //If there is a file and there is no error uploading it...
-
 			//check size and type of file
 			$filename = basename($_FILES['image']['name']);
 			$ext = substr($filename, strrpos($filename, '.') + 1);
@@ -162,6 +163,8 @@
 				//return null;
 				//echo("wrong file extension");
 			}
+		} else if(empty($_FILES['image']['type']) && $emp->getImageName() != null) { 
+			return $emp->getImageName();
 		} else { //return null if the file is empty or there's an error
 		    //return null;
 		//echo("null or error");

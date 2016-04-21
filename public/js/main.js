@@ -124,8 +124,3 @@ function removeOnlyBullets(idName) {
 		txt.value = "";
 	}
 }
-
-$('#addFaculty').submit(function() {
-	removeOnlyBullets('highlights');
-	removeOnlyBullets('education');
-});
