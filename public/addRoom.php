@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			$roomNum = filterString($_POST['roomNum']);
 			$map = "asdasda"; //STILL NEED TO DO MAP
 			$desc = filterString($_POST['description']);
-			
+
 			$room = new room($database, null);	
 			$room->postParams($roomNum, $map, $desc);
 		}
@@ -58,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" media="screen" href="css/main.css">
+		<link rel="icon" href="media/favicon.ico">
 		<script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 		<script type="text/javascript" src="js/bootstrap.js"></script>
