@@ -5,7 +5,6 @@
 		$newString = strip_tags($newString);
 		$newString = html_entity_decode($newString); //or maybe this one?
 		$newString = htmlspecialchars_decode($newString); //maybe take this out?
-		$newString = filter_var($str, FILTER_SANITIZE_STRING);
 
 		return $newString;
 	}

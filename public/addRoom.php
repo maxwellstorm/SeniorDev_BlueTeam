@@ -3,16 +3,17 @@
 	require_once("../database/data.php");
 	require_once("../database/room.php");
 	require_once("../database/dbException.php");
+	require_once("../database/filters.php");
 
 	$database = new data;
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	if(isset($_POST['new'])) {
 
 		try{
-			$roomNum = $_POST['roomNum'];
+			$roomNum = filterString($_POST['roomNum']);
 			$map = "asdasda"; //STILL NEED TO DO MAP
-			$desc = $_POST['description'];
-
+			$desc = filterString($_POST['description']);
+			
 			$room = new room($database, null);	
 			$room->postParams($roomNum, $map, $desc);
 		}
@@ -21,9 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		}
 	} elseif(isset($_POST['edit'])){	
 		try{
-			$roomNum = $_POST['roomNum'];
+			$roomNum = filterString($_POST['roomNum']);
 			$map = "asdas"; //STILL NEED TO DO MAP
-			$desc = $_POST['description'];
+			$desc = filterString($_POST['description']);
 
 			$room = new room($database, $roomNum);
 			$room->putParams($map, $desc);
@@ -33,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		}		
 
 	} elseif(isset($_POST['delete']) && isset($_POST['roomNum'])) {
-		$roomNum = $_POST['roomNum'];
+		$roomNum = filterString($_POST['roomNum']);
 
 		$room = new room($database, $roomNum);
 		$room->delete();
