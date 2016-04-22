@@ -11,6 +11,13 @@ function setActive(active) {
 	getInfo(active);
 }
 
+function setAdminActive(active) {
+	$('#results li').removeClass("activeResult");
+	active.className += " activeResult";
+
+	getAdminInfo(active);
+}
+
 function getInfo(selected) {
 	var facId = $(selected).children('.fId').text();
 
@@ -59,6 +66,26 @@ function getInfo(selected) {
 			$('#userImage').attr("src", 'media/no-preview.png');
 		}
 
+	})
+}
+
+function getAdminInfo(selected) {
+	var aId = $(selected).children('.aId').text();
+
+	$.ajax({
+		method: "GET",
+		url: "../database/getAdminInfo.php",
+		data: {adminId : aId}
+	}).done(function(response) {
+		var infoResponse = JSON.parse(response);
+		console.log(infoResponse);
+		$('#adminId').val(infoResponse["adminId"]);
+		$('#firstName').val(infoResponse["fName"]);
+		$('#lastName').val(infoResponse["lName"]);
+		//Accomodate for Title?
+		$('#username').val(infoResponse["username"]);
+		$('#accessLevel').val(infoResponse["accessLevel"]);
+		$('#dept').val(infoResponse["departmentName"]);
 	})
 }
 

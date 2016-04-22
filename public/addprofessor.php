@@ -59,6 +59,7 @@
 		</header>
 		<a href="addRoom.php">Add Room</a>
 		<a href="addDepartment.php">Add Department</a>
+		<a href="addAdmin.php">Add Admin</a>
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<form class="form-horizontal" id="addFaculty" name="addFaculty" enctype="multipart/form-data" action="../database/newFaculty.php" method="POST" onsubmit="removeOnlyBullets('highlights'); removeOnlyBullets('education')">
@@ -186,21 +187,21 @@
 								<div class="form-group">
 									<label for="textArea" class="col-lg-2 control-label">About</label>
 									<div class="col-lg-10">
-										<textarea class="form-control" rows="3" id="about" name="about"></textarea>
+										<textarea class="form-control" rows="5" id="about" name="about"></textarea>
 									</div>
 								</div>
 
 								<div class="form-group">
 									<label for="textArea" class="col-lg-2 control-label">Education</label>
 									<div class="col-lg-10">
-										<textarea class="form-control" rows="3" id="education" name="education"></textarea>
+										<textarea class="form-control" rows="5" id="education" name="education"></textarea>
 									</div>
 								</div>
 
 								<div class="form-group">
 									<label for="textArea" class="col-lg-2 control-label">Highlights</label>
 									<div class="col-lg-10">
-										<textarea class="form-control" rows="3" id="highlights" name="highlights"></textarea>
+										<textarea class="form-control" rows="5" id="highlights" name="highlights"></textarea>
 									</div>
 								</div>
 							</div>

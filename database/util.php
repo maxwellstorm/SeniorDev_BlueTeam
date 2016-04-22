@@ -11,7 +11,7 @@ require_once("dbException.php");
  
 	public static function checkName($name){
 		if(!ctype_alpha(str_replace(array(' ', "'", '-'), '', $name))){
-			throw new dbException("only letter allowed in names",1);
+			throw new dbException($name . "only letter allowed in names",1);
 			return false;
 		}
 		return true;

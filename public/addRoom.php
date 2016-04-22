@@ -6,40 +6,41 @@
 	require("../database/filters.php");
 
 	$database = new data;
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-	if(isset($_POST['new'])) {
+	
+	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+		if(isset($_POST['new'])) {
 
-		try{
-			$roomNum = filterString($_POST['roomNum']);
-			$map = "asdasda"; //STILL NEED TO DO MAP
-			$desc = filterString($_POST['description']);
+			try{
+				$roomNum = filterString($_POST['roomNum']);
+				$map = "asdasda"; //STILL NEED TO DO MAP
+				$desc = filterString($_POST['description']);
 
-			$room = new room($database, null);	
-			$room->postParams($roomNum, $map, $desc);
-		}
-	catch(dbException $db){
-			echo $db->alert();
-		}
-	} elseif(isset($_POST['edit'])){	
-		try{
+				$room = new room($database, null);	
+				$room->postParams($roomNum, $map, $desc);
+			}
+		catch(dbException $db){
+				echo $db->alert();
+			}
+		} elseif(isset($_POST['edit'])){	
+			try{
+				$roomNum = filterString($_POST['roomNum']);
+				$map = "asdas"; //STILL NEED TO DO MAP
+				$desc = filterString($_POST['description']);
+
+				$room = new room($database, $roomNum);
+				$room->putParams($map, $desc);
+			}
+		catch(dbException $db){
+				echo $db->alert();
+			}		
+
+		} elseif(isset($_POST['delete']) && isset($_POST['roomNum'])) {
 			$roomNum = filterString($_POST['roomNum']);
-			$map = "asdas"; //STILL NEED TO DO MAP
-			$desc = filterString($_POST['description']);
 
 			$room = new room($database, $roomNum);
-			$room->putParams($map, $desc);
+			$room->delete();
 		}
-	catch(dbException $db){
-			echo $db->alert();
-		}		
-
-	} elseif(isset($_POST['delete']) && isset($_POST['roomNum'])) {
-		$roomNum = filterString($_POST['roomNum']);
-
-		$room = new room($database, $roomNum);
-		$room->delete();
 	}
-}
 
 	function getAllRooms() {
 		$database = new data;
@@ -70,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 			<h5 class="headerText">Admin Portal - Room</h5>
 			<a href="addprofessor.php">Add Employee</a>
 			<a href="addDepartment.php">Add Department</a>
+			<a href="addAdmin.php">Add Admin</a>
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-body">
