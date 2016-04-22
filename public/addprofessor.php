@@ -117,14 +117,14 @@
 								</div>
 
 								<div class="form-group">
-									<label for="phone" class="col-lg-4 control-label">Phone Number</label>
+									<label for="phone" class="col-lg-4 control-label">Phone</label>
 									<div class="col-lg-6">
 										<input type="text" class="form-control" id="phone" name="phone">
 									</div>
 								</div>
 
 								<div class="form-group">
-									<label for="room" class="col-lg-4 control-label">Room Number</label>
+									<label for="room" class="col-lg-4 control-label">Room #</label>
 									<div class="col-lg-6">
 										<select class="selectpicker" data-live-search="true" id="room" name="room" required>
 											<?php getAllRooms() ?>
