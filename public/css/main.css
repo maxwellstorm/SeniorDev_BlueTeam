@@ -7,6 +7,7 @@ body {
 	letter-spacing: 1px;
 	line-height: 1.5;
 	background: #E0E0E0;
+	color: #252525;
 }
 
 h1 {
@@ -278,6 +279,63 @@ span.selectedToggle {
 	cursor: pointer;
 }
 
+#letters {
+	margin-top: 10px;
+}
+
+.letterBox {
+	width: 20%;
+	/* border: 1px solid #a4a4a4; */
+	position: relative;
+	float: left;
+}
+
+.letterBox:before {
+	content: "";
+	display: block;
+	padding-top: 100%;
+}
+
+.letter {
+	position: absolute;
+	top: 5%;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	font-size: 36px;
+	text-align: center;
+}
+
+
+/* OVERRIDE WEBKIT SCROLLBAR PROPERTIES */
+::-webkit-scrollbar {
+	border-radius: 1em;
+	background-color: rgb(248, 247, 237);
+	/* background-color: #BBBBBB; */
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	border-radius: 1em;
+	background-color: rgb(248, 247, 237);
+	/* background-color: #BBBBBB; */
+}
+
+::-webkit-scrollbar-track-piece {
+	border-radius: 1em;
+	background-color: rgb(248, 247, 237);
+	/* background-color: #BBBBBB; */
+}
+
+::-webkit-scrollbar-thumb {
+	border-radius: 1em;
+	background-color: #F36E21;
+	/*
+	border-top: 6px solid #F8F7ED;
+	border-bottom: 6px solid #F8F7ED;
+	*/
+}
+
 @media screen and (min-width: 1920px) {
 	#wrapper, #headerInner {
 		width: 1880px;
@@ -336,12 +394,12 @@ span.selectedToggle {
 }
 
 .panel-body * {
-	font-size: 16px;
+	font-size: 15px;
 	letter-spacing: 1px !important;
 }
 
 .panel-body legend h2 {
-	font-size: 36px;
+	font-size: 28px;
 	padding: 10px 0px;
 	font-weight: normal;
 	letter-spacing: normal;
