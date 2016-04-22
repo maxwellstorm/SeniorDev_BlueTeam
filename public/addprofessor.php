@@ -57,7 +57,8 @@
 				<img src="media/rit-logo.png" id="imgRIT" alt="" />
 			</div>
 		</header>
-
+		<a href="addRoom.php">Add Room</a>
+		<a href="addDepartment.php">Add Department</a>
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<form class="form-horizontal" id="addFaculty" name="addFaculty" enctype="multipart/form-data" action="../database/newFaculty.php" method="POST" onsubmit="removeOnlyBullets('highlights'); removeOnlyBullets('education')">

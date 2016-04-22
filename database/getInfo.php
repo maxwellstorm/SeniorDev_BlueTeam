@@ -2,7 +2,7 @@
 	require("data.php");
 	require("employees.php");
 
-	$facultyId = $_GET['facultyId'];
+	$facultyId = $_GET['facultyId']; //VALIDATE INT
 
 	$database = new data;
 

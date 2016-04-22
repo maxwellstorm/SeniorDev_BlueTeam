@@ -5,20 +5,20 @@
 	$database = new data;
 
 	if(isset($_POST['new'])) {
-		$fName = $_POST['firstName'];
-		$lName = $_POST['lastName'];
-		$email = $_POST['email'];
-		$active = $_POST['active'];
-		$faculty = $_POST['faculty'];
-		$phone = $_POST['phone'];
-		$about = $_POST['about'];
-		$education = $_POST['education'];
-		$highlights = $_POST['highlights'];
-		$roomNum = $_POST['room'];
+		$fName = filterString($_POST['firstName']);
+		$lName = filterString($_POST['lastName']);
+		$email = $_POST['email']; //VALIDATE EMAIL
+		$active = $_POST['active']; //VALIDATE INT
+		$faculty = $_POST['faculty']; //VALIDATE INT
+		$phone = filterString($_POST['phone']);
+		$about = filterString($_POST['about']);
+		$education = filterString($_POST['education']);
+		$highlights = filterString($_POST['highlights']);
+		$roomNum = filterString($_POST['room']);
 		$title = null; //$_POST[''];
 		$depts = $_POST['dept'];
-		$primaryDept = $depts[0];
-		$secondaryDept = $depts[1];
+		$primaryDept = filterString($depts[0]);
+		$secondaryDept = filterString($depts[1]);
 
 		if(strcmp($primaryDept, "Information Sciences & Technology") == 0) {
 			$primaryDept = 1;
@@ -74,13 +74,13 @@
 
 		$employee->postParams($fName, $lName, $email, $active, $faculty, $phone, $about, $education, $highlights, $primaryDept, $roomNum, $title, $secondaryDept, $imagePath);
 	} elseif(isset($_POST['edit'])){	
-		$id = $_POST['facultyId'];
+		$id = $_POST['facultyId']; //Validate Int
 		$fName = $_POST['firstName'];
 		$lName = $_POST['lastName'];
-		$email = $_POST['email'];
-		$active = $_POST['active'];
-		$faculty = $_POST['faculty'];
-		$phone = $_POST['phone'];
+		$email = $_POST['email']; //Validate Email
+		$active = $_POST['active']; //validate int
+		$faculty = $_POST['faculty']; //validate int
+		$phone = $_POST['phone']; //is there validate phone?
 		$about = $_POST['about'];
 		$education = $_POST['education'];
 		$highlights = $_POST['highlights'];

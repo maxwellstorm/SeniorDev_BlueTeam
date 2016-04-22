@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <?php
-	require_once("../database/data.php");
-	require_once("../database/room.php");
+	require("../database/data.php");
+	require("../database/room.php");
 	require_once("../database/dbException.php");
-	require_once("../database/filters.php");
+	require("../database/filters.php");
 
 	$database = new data;
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){

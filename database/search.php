@@ -2,7 +2,7 @@
 	require("data.php");
 	require("employees.php");
 
-	$name = $_POST['name'];
+	$name = filterString($_POST['name']);
 
 	$database = new data;
 

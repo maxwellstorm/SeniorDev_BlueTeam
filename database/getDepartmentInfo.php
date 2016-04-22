@@ -2,7 +2,7 @@
 	require("data.php");
 	require("department.php");
 
-	$deptId = $_GET['deptId'];
+	$deptId = $_GET['deptId']; //Validate Int
 
 	$database = new data;
 

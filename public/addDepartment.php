@@ -2,7 +2,7 @@
 	require("../database/data.php");
 	require("../database/department.php");
 	require_once("../database/dbException.php");
-	require_once("../database/filters.php");
+	require("../database/filters.php");
 
 	$database = new data;
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
