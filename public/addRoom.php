@@ -58,10 +58,13 @@
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" media="screen" href="css/main.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="js/formvalidation/css/formValidation.min.css">
 		<link rel="icon" href="media/favicon.ico">
 		<script type="text/javascript" src="js/jquery-1.12.2.min.js"></script>
-		<script type="text/javascript" src="js/main.js"></script>
 		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<script type="text/javascript" src="js/formvalidation/js/formValidation.min.js"></script>
+		<script type="text/javascript" src="js/formvalidation/js/framework/bootstrap.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
 	</head>
 	<body class="admin">
 		<header class="dropShadow">

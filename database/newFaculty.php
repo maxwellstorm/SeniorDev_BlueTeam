@@ -11,7 +11,7 @@
 		$email = $_POST['email']; //VALIDATE EMAIL
 		$active = $_POST['active']; //VALIDATE INT
 		$faculty = $_POST['faculty']; //VALIDATE INT
-		$phone = filterString($_POST['phone']);
+		$phone = filterString($_POST['phone']); //filterString(preg_replace("/[^0-9]/", "", $_POST['phone']));
 		$about = filterString($_POST['about']);
 		$education = filterString($_POST['education']);
 		$highlights = filterString($_POST['highlights']);
