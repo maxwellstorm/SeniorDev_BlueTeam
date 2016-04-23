@@ -11,12 +11,12 @@
 
 	function validateInt($int) {
 		if(!filter_var($int, FILTER_VALIDATE_INT) === false) {
-			//valid, non-zero int
+			return $int;
 		} else {
 			if(filter_var($int, FILTER_VALIDATE_INT) === 0) {
-				//valid zero
+				return $int;
 			} else {
-				//invalid int
+				//throw exception, I think
 			}
 		}
 	}
@@ -25,9 +25,9 @@
 		$newEmail = filter_var($email, FILTER_SANITIZE_EMAIL);
 
 		if(!filter_var($newEmail, FILTER_VALIDATE_EMAIL) === false) {
-			//valid email
+			return $email;
 		} else {
-			//invalid email
+			//throw exception, I think
 		}
 	}
 ?>
