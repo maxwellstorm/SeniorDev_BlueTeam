@@ -1,6 +1,7 @@
 <?php
 	require("data.php");
 	require("employees.php");
+	require("filters.php");
 
 	$name = filterString($_POST['name']);
 
