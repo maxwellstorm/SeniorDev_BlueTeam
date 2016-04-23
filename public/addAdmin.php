@@ -6,10 +6,9 @@
 
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		if(isset($_POST['new'])) {
-
 			try{
-				$fName = $_POST['fName'];
-				$lName = $_POST['lName'];
+				$fName = $_POST['firstName'];
+				$lName = $_POST['lastName'];
 				$username = $_POST['username'];
 				$accessLevel = $_POST['accessLevel'];
 				$department = $_POST['dept'];
@@ -119,7 +118,7 @@
 						<h3>SEARCH</h3>
 						<div class="form-group">
 							<div>
-								<input type="text" class="form-control" id="filter" placeholder="type a name">
+								<input type="text" class="form-control" id="adminFilter" placeholder="type a name">
 							</div>
 						</div>
 						<div class="form-group">

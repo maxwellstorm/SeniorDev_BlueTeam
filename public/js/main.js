@@ -81,7 +81,7 @@ function getAdminInfo(selected) {
 	}).done(function(response) {
 		var infoResponse = JSON.parse(response);
 		console.log(infoResponse);
-		$('#adminId').val(infoResponse["adminId"]);
+		$('#adminId').val(infoResponse["AdminId"]);
 		$('#firstName').val(infoResponse["fName"]);
 		$('#lastName').val(infoResponse["lName"]);
 		//Accomodate for Title?
@@ -128,6 +128,20 @@ $(document).ready(function() {
 			$.ajax({
 				method: "POST",
 				url: "../database/search.php",
+				data: {name : searchKeyword}
+			}).done(function(response) {
+				$('#results').replaceWith('<ul multiple class="form-control" id="results">' + response + "</ul>");
+			})
+		}
+	})
+
+	$("#adminFilter").keyup(function() {
+		var searchKeyword = $(this).val();
+
+		if(searchKeyword.length >= 2 || searchKeyword.length == 0) {
+			$.ajax({
+				method: "POST",
+				url: "../database/adminSearch.php",
 				data: {name : searchKeyword}
 			}).done(function(response) {
 				$('#results').replaceWith('<ul multiple class="form-control" id="results">' + response + "</ul>");

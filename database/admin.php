@@ -87,8 +87,8 @@ public function setDeptId($dId){
 
 function putParams($fname,$lname,$user,$accessLvl,$deptId){
 	//update
-	//util::checkName($fname);
-	//util::checkName($lname);
+	util::checkName($fname);
+	util::checkName($lname);
 	$this->conn->setData("UPDATE Admin SET fName=:fname, lName=:lname, username=:user, accessLevel=:accessLvl, departmentId=:deptId WHERE adminId = :id;",array(
 	":fname"=>$fname,
 	":lname"=>$lname,
