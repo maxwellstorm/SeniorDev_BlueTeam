@@ -18,25 +18,11 @@
 		$roomNum = filterString($_POST['room']);
 		$title = filterString($_POST['title']);
 		$depts = $_POST['dept'];
-		$primaryDept = filterString($depts[0]);
+		$primaryDept = getDepartmentId(filterString($depts[0]));
 		$secondaryDept = filterString($depts[1]);
 
-		if(strcmp($primaryDept, "Information Sciences & Technology") == 0) {
-			$primaryDept = 1;
-		} elseif(strcmp($primaryDept, "Interactive Games & Media") == 0) { 
-			$primaryDept = 2;
-		} elseif(strcmp($primaryDept, "Computing Security") == 0) {
-			$primaryDept = 3;
-		}
-
 		if(strlen($secondaryDept) > 0) {
-			if(strcmp($secondaryDept, "Information Sciences & Technology") == 0) {
-				$secondaryDept = 1;
-			} elseif(strcmp($secondaryDept, "Interactive Games & Media") == 0) { 
-				$secondaryDept = 2;
-			} elseif(strcmp($secondaryDept, "Computing Security") == 0) {
-				$secondaryDept = 3;
-			}
+			$secondaryDept = getDepartmentId($secondaryDept);
 		} else {
 			$secondaryDept = null;
 		}
@@ -52,23 +38,6 @@
 		} else {
 			$faculty = 0;
 		}
-
-		/*var_dump($_POST);
-
-		echo("<br /><br />");
-		echo($fName . "<br />");
-		echo($lName . "<br />");
-		echo($email . "<br />");
-		echo($active . "<br />"); 
-		echo($faculty . "<br />"); 
-		echo($phone . "<br />");
-		echo($about . "<br />");
-		echo($education . "<br />");
-		echo($highlights . "<br />");
-		echo($roomNum . "<br />");
-		echo($title . "<br />");
-		echo($secDeptId . "<br />");
-		echo($dept . "<br />");*/
 
 		$employee = new employees($database, null);
 		$imagePath = uploadImage($employee);
@@ -88,25 +57,11 @@
 		$roomNum = filterString($_POST['room']);
 		$title = filterString($_POST['title']);
 		$depts = $_POST['dept'];
-		$primaryDept = filterString($depts[0]);
+		$primaryDept = getDepartmentId(filterString($depts[0]));
 		$secondaryDept = filterString($depts[1]);
 
-		if(strcmp($primaryDept, "Information Sciences & Technology") == 0) {
-			$primaryDept = 1;
-		} elseif(strcmp($primaryDept, "Interactive Games & Media") == 0) { 
-			$primaryDept = 2;
-		} elseif(strcmp($primaryDept, "Computing Security") == 0) {
-			$primaryDept = 3;
-		}
-
 		if(strlen($secondaryDept) > 0) {
-			if(strcmp($secondaryDept, "Information Sciences & Technology") == 0) {
-				$secondaryDept = 1;
-			} elseif(strcmp($secondaryDept, "Interactive Games & Media") == 0) { 
-				$secondaryDept = 2;
-			} elseif(strcmp($secondaryDept, "Computing Security") == 0) {
-				$secondaryDept = 3;
-			}
+			$secondaryDept = getDepartmentId($secondaryDept);
 		} else {
 			$secondaryDept = null;
 		}
@@ -170,5 +125,17 @@
 		    //return null;
 		//echo("null or error");
 	    }
+	}
+
+	function getDepartmentId($deptName) {
+		$database = new data;
+
+		$depts = $database->getData("SELECT departmentId, departmentName FROM department", array());
+
+		foreach($depts as $arr) {
+			if(strcmp($deptName, $arr['departmentName']) == 0) {
+				return $arr['departmentId'];
+			}
+		}
 	}
 ?>

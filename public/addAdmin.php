@@ -12,15 +12,7 @@
 				$lName = filterString($_POST['lastName']);
 				$username = filterString($_POST['username']);
 				$accessLevel = $_POST['accessLevel']; //verify int
-				$department = filterString($_POST['dept']);
-
-				if(strcmp($department, "Information Sciences & Technology") == 0) {
-					$department = 1;
-				} elseif(strcmp($department, "Interactive Games & Media") == 0) { 
-					$department = 2;
-				} elseif(strcmp($department, "Computing Security") == 0) {
-					$department = 3;
-				}
+				$department = getDepartmentId(filterString($_POST['dept']));
 
 				$admin = new admin($database, null);	
 				$admin->postParams($fName, $lName, $username, $accessLevel, $department);
@@ -35,15 +27,7 @@
 				$lName = filterString($_POST['lastName']);
 				$username = filterString($_POST['username']);
 				$accessLevel = $_POST['accessLevel']; //verify int
-				$department = filterString($_POST['dept']);
-
-				if(strcmp($department, "Information Sciences & Technology") == 0) {
-					$department = 1;
-				} elseif(strcmp($department, "Interactive Games & Media") == 0) { 
-					$department = 2;
-				} elseif(strcmp($department, "Computing Security") == 0) {
-					$department = 3;
-				}
+				$department = getDepartmentId(filterString($_POST['dept']));
 
 				$admin = new admin($database, $adminId);
 				$admin->fetch();
@@ -79,6 +63,18 @@
 
 		foreach($depts as $arr) {
 			echo "<option>" . $arr['departmentName'] . "</option>";
+		}
+	}
+
+	function getDepartmentId($deptName) {
+		$database = new data;
+
+		$depts = $database->getData("SELECT departmentId, departmentName FROM department", array());
+
+		foreach($depts as $arr) {
+			if(strcmp($deptName, $arr['departmentName']) == 0) {
+				return $arr['departmentId'];
+			}
 		}
 	}
 ?>

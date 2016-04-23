@@ -12,7 +12,6 @@
 	function fetchAll() {
 		$database = new data;
 
-		/* $emps = $database->getData("SELECT facultyId, fName, lName, roomNumber, email, phone, departmentId FROM Employees;", array()); */
 		$emps = $database->getData("SELECT * FROM Employees ORDER BY lName;", array());
 
 		return json_encode($emps);
