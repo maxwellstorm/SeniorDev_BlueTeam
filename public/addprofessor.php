@@ -114,7 +114,7 @@
 								<div class="form-group">
 									<label for="title" class="col-lg-4 control-label">Title</label>
 									<div class="col-lg-6">
-										<input type="text" class="form-control" id="title" name="title" required>
+										<input type="text" class="form-control" id="title" name="title">
 									</div>
 								</div>
 
