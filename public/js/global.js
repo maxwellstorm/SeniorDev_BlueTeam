@@ -1,4 +1,6 @@
 var profArray = [];
+var refined = false;
+var refineLetter;
 
 function init() {
 	$.ajax({
@@ -60,7 +62,47 @@ function resetGridView() {
 	populateGridView();
 }
 
+function sortProfArray(by) {
+	if (by == "lname") { // sort by last name
+		profArray.sort(function(a, b) {
+			var aLast = a.getLast();
+			var bLast = b.getLast();
+			if (aLast < bLast) {
+				return -1;
+			} else {
+				return 1;
+			}
+		});
+	} else if (by == "room") { // sort by room
+		profArray.sort(function(a, b) {
+			var aRoom = a.getRoom();
+			var bRoom = b.getRoom();
+			if (aRoom < bRoom) {
+				return -1;
+			} else if (aRoom > bRoom) {
+				return 1;
+			} else { // professors have same room number, decide on last name
+				var aLast = a.getLast();
+				var bLast = b.getLast();
+				if (aLast < bLast) {
+					return -1;
+				} else {
+					return 1;
+				}
+			}
+		});
+	}
+	// set the view with different sort
+	if (refined) {
+		refineList(refineLetter);
+	} else {
+		resetGridView();
+	}
+}
+
 function refineList(letter) {
+	refined = true;
+	refineLetter = letter;
 	resetGridView();
 
 	$('.professorCard').each(function(i) {
@@ -93,7 +135,7 @@ function hideOverlay() {
 $(document).ready(function() {
 	init();
 
-	$('.professorCard').click(function() {
+	$('#gridView').on('click', 'div.professorCard', function() {
 		var selectedId = $(this).attr("id").substring(8);
 		var professor = getProfessorFromArr(selectedId);
 		updateOverlay(professor);
@@ -111,9 +153,11 @@ $(document).ready(function() {
 
 		// slide the toggle slider
 		var selectedId = $(this).attr('id');
-		if (selectedId == "nameToggle") {
+		if (selectedId == "nameToggle") { // user wants to sort professors by last name
+			sortProfArray("lname");
 			$('#sortToggle .toggleSlider').css('left', '0px');
-		} else {
+		} else { // user wants to sort professors by room number
+			sortProfArray("room");
 			$('#sortToggle .toggleSlider').css('left', '50%');
 		}
 	});
@@ -135,6 +179,7 @@ $(document).ready(function() {
 		if ($('#refineToggle').hasClass('visible')) {
 			$('#refineToggle').slideUp(250).removeClass('visible');
 			$('.selected').removeClass('selected');
+			refined = false;
 			resetGridView();
 		} else {
 			$('#refineToggle').slideDown(250).addClass('visible');
@@ -144,6 +189,7 @@ $(document).ready(function() {
 	$('.letter').click(function() {
 		if ($(this).hasClass('selected')) {
 			$(this).removeClass('selected');
+			refined = false;
 			resetGridView();
 		} else {
 			$('.selected').removeClass('selected');
