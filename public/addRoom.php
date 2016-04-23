@@ -63,33 +63,38 @@
 		<script type="text/javascript" src="js/main.js"></script>
 		<script type="text/javascript" src="js/bootstrap.js"></script>
 	</head>
-	<body>
-		<div id="header">
-			<img id="headLogo" src="media/rit_black_no_bar.gif" />
-			<h1 class="headerText">Faculty Directory</h1>
-			<h5 class="headerText">Admin Portal - Room</h5>
-			<a href="addprofessor.php">Add Employee</a>
-			<a href="addDepartment.php">Add Department</a>
-			<a href="addAdmin.php">Add Admin</a>
-		</div>
+	<body class="admin">
+		<header class="dropShadow">
+			<div id="headerInner">
+				<h1>FACULTY DIRECTORY</h1>
+				<!-- <h3>Admin Panel</h3> -->
+				<img src="media/rit-logo.png" id="imgRIT" alt="" />
+			</div>
+		</header>
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<form class="form-horizontal" id="addRoom" name="addRoom" action="addRoom.php" method="POST">
-					<fieldset>
-						<legend>ADD A NEW ROOM</legend>
-						<div class="col-lg-2" id="searchCol">
-							<select class="form-control" id="roomSelect">
-								<option value="" disabled selected>Select a Room</option>
-								<?php getAllRooms() ?>
-							</select>
-							<br />
+					<div class="col-lg-2" id="searchCol">
+						<select class="form-control" id="roomSelect">
+							<option value="" disabled selected>Select a Room</option>
+							<?php getAllRooms() ?>
+						</select>
+						<br />
 
-							<input type="submit" value="Update" name="edit" id="editBtn" class="btn btn-primary" disabled>
-							<input type="submit" value="Create New" name="new" id="newBtn" class="btn btn-primary">
-							<input type="submit" value="Delete" name="delete" id="deleteBtn" class="btn btn-primary">
-						</div>
+						<input type="submit" value="Update" name="edit" id="editBtn" class="btn btn-primary" disabled>
+						<input type="submit" value="Create New" name="new" id="newBtn" class="btn btn-primary">
+						<input type="submit" value="Delete" name="delete" id="deleteBtn" class="btn btn-primary">
+					</div>
 
-						<div class="col-lg-10">
+					<div class="col-lg-10">
+						<ul class="nav nav-tabs">
+							<li role="presentation"><a href="addprofessor.php">Employee</a></li>
+							<li role="presentation" class="active"><a href="addRoom.php">Add Room</a></li>
+							<li role="presentation"><a href="addDepartment.php">Add Department</a></li>
+							<li role="presentation"><a href="addAdmin.php">Add Admin</a></li>
+						</ul>
+						<fieldset>
+							<legend><h2>ADD A NEW ROOM</h2></legend>
 							<div class="form-group">
 								<label for="name" class="col-lg-2 control-label">Room Number</label>
 								<div class="col-lg-10">
@@ -108,8 +113,8 @@
 								<!--Will be required-->
 								<p>Room Image uploading will go here, but idk exactly what form that'll take.</p>
 							</div>
-						</div>
-					</fieldset>
+						</fieldset>
+					</div>
 				</form>
 			</div>
 		</div>

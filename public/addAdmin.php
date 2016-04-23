@@ -100,9 +100,6 @@
 				<img src="media/rit-logo.png" id="imgRIT" alt="" />
 			</div>
 		</header>
-		<a href="addprofessor.php">Add Professor</a>
-		<a href="addRoom.php">Add Room</a>
-		<a href="addDepartment.php">Add Department</a>
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<form class="form-horizontal" id="addFaculty" name="addFaculty" action="addAdmin.php" method="POST">
@@ -110,7 +107,7 @@
 						<h3>SEARCH</h3>
 						<div class="form-group">
 							<div>
-								<input type="text" class="form-control" id="adminFilter" placeholder="type a name">
+								<input type="text" class="form-control" id="adminFilter" placeholder="Enter a name">
 							</div>
 						</div>
 						<div class="form-group">
@@ -123,6 +120,12 @@
 						</div>
 					</div>
 					<div class="col-lg-10">
+						<ul class="nav nav-tabs">
+							<li role="presentation"><a href="addprofessor.php">Employee</a></li>
+							<li role="presentation"><a href="addRoom.php">Add Room</a></li>
+							<li role="presentation"><a href="addDepartment.php">Add Department</a></li>
+							<li role="presentation" class="active"><a href="addAdmin.php">Add Admin</a></li>
+						</ul>
 						<fieldset>
 							<legend><h2>ADD A NEW ADMINISTRATOR</h2></legend>
 							<div class="col-lg-6" id="leftCol">
