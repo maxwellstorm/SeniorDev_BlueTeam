@@ -12,7 +12,7 @@
 				$lName = filterString($_POST['lastName']);
 				$username = filterString($_POST['username']);
 				$accessLevel = $_POST['accessLevel']; //verify int
-				$department = getDepartmentId(filterString($_POST['dept']));
+				$department = getDepartmentId(filterString($_POST['department']));
 
 				$admin = new admin($database, null);	
 				$admin->postParams($fName, $lName, $username, $accessLevel, $department);
@@ -27,7 +27,7 @@
 				$lName = filterString($_POST['lastName']);
 				$username = filterString($_POST['username']);
 				$accessLevel = $_POST['accessLevel']; //verify int
-				$department = getDepartmentId(filterString($_POST['dept']));
+				$department = getDepartmentId(filterString($_POST['department']));
 
 				$admin = new admin($database, $adminId);
 				$admin->fetch();
@@ -170,9 +170,9 @@
 								</div>
 
 								<div class="form-group">
-									<label for="dept" class="col-lg-4 control-label">Department</label>
+									<label for="department" class="col-lg-4 control-label">Department</label>
 									<div class="col-lg-7">
-										<select class="form-control" id="dept" name="dept" required>
+										<select class="form-control" id="department" name="department" required>
 											<option selected disabled>Select a Department</option>
 											<?php getAllDepartments() ?>
 										</select>

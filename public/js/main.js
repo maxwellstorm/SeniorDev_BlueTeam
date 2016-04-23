@@ -37,7 +37,7 @@ function getInfo(selected) {
 		$('#email').val(infoResponse["email"]);
 		$('#phone').val(infoResponse["phone"]);
 		$('#room').selectpicker('val', infoResponse["roomNumber"]);
-		$('#dept').selectpicker('val', [infoResponse["departmentName"], infoResponse["secondaryDepartmentName"]]);
+		$('#depts').selectpicker('val', [infoResponse["departmentName"], infoResponse["secondaryDepartmentName"]]);
 		
 		var isActive = infoResponse['isActive'];
 		var isFaculty = infoResponse['isFaculty'];
@@ -165,6 +165,174 @@ $(document).ready(function() {
 
 	applyBullets('highlights');
 	applyBullets('education');
+
+	$('.form-horizontal').formValidation({
+		framework: 'bootstrap',
+
+		icon: {
+			valid: 'glyphicon glyphicon-ok',
+			invalid: 'glyphicon glyphicon-remove',
+			validating: 'glyphicon glyphicon-refresh'
+		},
+
+		err: {
+            container: 'tooltip'
+        },
+
+		fields: {
+			firstName: {
+				validators: {
+					notEmpty: {
+						message: "A first name is required"
+					},
+
+					stringLength: {
+						min: 1,
+						max: 50,
+						message: "The name must be between 1 & 50 characters"
+					}, 
+
+					regexp: {
+						regexp: /^[a-zA-Z \'\-\.\(\)]+$/,
+						message: "Acceptable characters are letters and ' - . ( )"
+					}
+				}
+			}, 
+
+			lastName: {
+				validators: {
+					notEmpty: {
+						message: "A last name is required"
+					},
+
+					stringLength: {
+						min: 1,
+						max: 50,
+						message: "The name must be between 1 & 50 characters"
+					}, 
+
+					regexp: {
+						regexp: /^[a-zA-Z \'\-\.\(\)]+$/,
+						message: "Acceptable characters are letters and ' - . ( )"
+					}
+				}
+			},
+
+			title: {
+				validators: {
+					stringLength: {
+						max: 100,
+						message: "The name must be less than 100 characters"
+					}
+				}
+			},
+
+			 email: {
+				validators: {
+					stringLength: {
+						max: 100,
+						message: "The name must be less than 100 characters"
+					}, 
+
+					regexp: {
+						regexp: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+						message: "Please input a valid email address"
+					}
+				}
+			},
+
+			phone: {
+				validators: {
+					regexp: {
+						regexp: /^\([0-9]{3}\) [0-9]{3}\-[0-9]{4}$/,
+						message: "Phone number must be in the format (###) ###-####"
+					}
+				}
+			},
+
+			room: {
+				validators: {
+					notEmpty: {
+						message: "A room is required"
+					}
+				}
+			},
+
+			active: {
+				validators: {
+					notEmpty: {
+						message: "An active status is required"
+					}
+				}
+			},
+
+			faculty: {
+				validators: {
+					notEmpty: {
+						message: "A faculty status is required"
+					}
+				}
+			},
+
+			deptName: {
+				validators: {
+					notEmpty: {
+						message: "A department Name is required"
+					},
+
+					stringLength: {
+						min: 1,
+						max: 250,
+						message: "Department Names must be between 1 & 250 characters"
+					}
+				}
+			},
+
+			deptAbbr: {
+				validators: {
+					notEmpty: {
+						message: "An abbreviation is required"
+					},
+
+					stringLength: {
+						min: 1,
+						max: 10,
+						message: "Department Abbreviations must be between 1 & 10 characters"
+					}
+				}
+			},
+
+			username: {
+				validators: {
+					notEmpty: {
+						message: "An RIT Username is required"
+					},
+
+					stringLength: {
+						min: 1,
+						max: 256,
+						message: "RIT Usernames must be between 1 & 256 characters"
+					}
+				}
+			},
+
+			accessLevel: {
+				validators: {
+					notEmpty: {
+						message: "An Access Level is required"
+					}
+				}
+			},
+
+			department: {
+				validators: {
+					notEmpty: {
+						message: "A department is required"
+					}
+				}
+			}
+		}
+	})
 });
 
 function applyBullets(idName) {

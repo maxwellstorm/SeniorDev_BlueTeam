@@ -17,7 +17,7 @@
 		$highlights = filterString($_POST['highlights']);
 		$roomNum = filterString($_POST['room']);
 		$title = filterString($_POST['title']);
-		$depts = $_POST['dept'];
+		$depts = $_POST['depts'];
 		$primaryDept = getDepartmentId(filterString($depts[0]));
 		$secondaryDept = filterString($depts[1]);
 
@@ -56,7 +56,7 @@
 		$highlights = filterString($_POST['highlights']);
 		$roomNum = filterString($_POST['room']);
 		$title = filterString($_POST['title']);
-		$depts = $_POST['dept'];
+		$depts = $_POST['depts'];
 		$primaryDept = getDepartmentId(filterString($depts[0]));
 		$secondaryDept = filterString($depts[1]);
 

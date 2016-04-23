@@ -3,7 +3,7 @@
 	require("room.php");
 	require("filters.php");
 
-	$roomNum = filterString($_GET['roomNum']);
+	$roomNum = filterString($_GET['room']);
 
 	$database = new data;
 

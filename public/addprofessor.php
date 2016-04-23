@@ -148,9 +148,9 @@
 								</div>
 
 								<div class="form-group">
-									<label for="dept" class="col-lg-4 control-label">Department</label>
+									<label for="depts" class="col-lg-4 control-label">Department</label>
 									<div class="col-lg-6">
-										<select class="selectpicker" multiple data-max-options="2" id="dept" name="dept[]" data-width="fit" required>
+										<select class="selectpicker" multiple data-max-options="2" id="depts" name="depts[]" data-width="fit" required>
 											<?php getAllDepartments() ?>
 										</select>
 									</div>

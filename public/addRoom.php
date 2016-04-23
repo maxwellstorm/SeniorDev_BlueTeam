@@ -11,7 +11,7 @@
 		if(isset($_POST['new'])) {
 
 			try{
-				$roomNum = filterString($_POST['roomNum']);
+				$roomNum = filterString($_POST['room']);
 				$map = "asdasda"; //STILL NEED TO DO MAP
 				$desc = filterString($_POST['description']);
 
@@ -23,7 +23,7 @@
 			}
 		} elseif(isset($_POST['edit'])){	
 			try{
-				$roomNum = filterString($_POST['roomNum']);
+				$roomNum = filterString($_POST['room']);
 				$map = "asdas"; //STILL NEED TO DO MAP
 				$desc = filterString($_POST['description']);
 
@@ -34,8 +34,8 @@
 				echo $db->alert();
 			}		
 
-		} elseif(isset($_POST['delete']) && isset($_POST['roomNum'])) {
-			$roomNum = filterString($_POST['roomNum']);
+		} elseif(isset($_POST['delete']) && isset($_POST['room'])) {
+			$roomNum = filterString($_POST['room']);
 
 			$room = new room($database, $roomNum);
 			$room->delete();
@@ -99,9 +99,9 @@
 						<fieldset>
 							<legend><h2>ADD A NEW ROOM</h2></legend>
 							<div class="form-group">
-								<label for="name" class="col-lg-2 control-label">Room Number</label>
+								<label for="room" class="col-lg-2 control-label">Room Number</label>
 								<div class="col-lg-10">
-									<input type="text" class="form-control" id="roomNum" name="roomNum" required pattern="[a-zA-Z0-9]{3} [A-Za-z0-9]{1}\d{3}">
+									<input type="text" class="form-control" id="room" name="room" required pattern="[a-zA-Z0-9]{3} [A-Za-z0-9]{1}\d{3}">
 								</div>
 							</div>
 

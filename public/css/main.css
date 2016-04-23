@@ -477,3 +477,8 @@ ul#results {
 	background-color: #F36E21;
 	color: white;
 }
+
+i[data-fv-icon-for~=depts] {
+	display: none !important;
+	visibility: hidden !important;
+}
