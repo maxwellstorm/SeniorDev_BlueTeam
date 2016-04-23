@@ -52,7 +52,6 @@
 		}
 	}
 ?>
-
 <html lang="en">
 	<head>
 		<title>IST Faculty Management Interface - Admin View: Room</title>
@@ -85,7 +84,7 @@
 							</select>
 							<br />
 
-							<input type="submit" value="Update" name="edit" id="editBtn" class="btn btn-primary">
+							<input type="submit" value="Update" name="edit" id="editBtn" class="btn btn-primary" disabled>
 							<input type="submit" value="Create New" name="new" id="newBtn" class="btn btn-primary">
 							<input type="submit" value="Delete" name="delete" id="deleteBtn" class="btn btn-primary">
 						</div>

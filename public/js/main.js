@@ -7,6 +7,7 @@ var loadFile = function(event) {
 function setActive(active) {
 	$('#results li').removeClass("activeResult");
 	active.className += " activeResult";
+	document.getElementById('editBtn').disabled = false;
 
 	getInfo(active);
 }
@@ -14,6 +15,7 @@ function setActive(active) {
 function setAdminActive(active) {
 	$('#results li').removeClass("activeResult");
 	active.className += " activeResult";
+	document.getElementById('editBtn').disabled = false;
 
 	getAdminInfo(active);
 }
@@ -95,6 +97,7 @@ function getRoomInfo(selectedVal) {
 		url: "../database/getRoomInfo.php",
 		data: {roomNum : selectedVal}
 	}).done(function(response) {
+		console.log(response);
 		var infoResponse = JSON.parse(response);
 		console.log(infoResponse);
 		$('#roomNum').val(infoResponse["roomNumber"]);
@@ -135,11 +138,13 @@ $(document).ready(function() {
 	allowEnableCreate();
 
 	$('#roomSelect').on('change', function() {
+		document.getElementById('editBtn').disabled = false;  		
   		getRoomInfo($(this).val());
   		disableCreate();
 	});
 
 	$('#deptSelect').on('change', function() {
+		document.getElementById('editBtn').disabled = false;
 		getDepartmentInfo($(this).val());
 		disableCreate();
 	});

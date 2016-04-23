@@ -1,6 +1,7 @@
 <?php
 	require("data.php");
 	require("room.php");
+	require("filters.php");
 
 	$roomNum = filterString($_GET['roomNum']);
 
