@@ -108,7 +108,7 @@ function put(){
 	":lname"=>$this->lname,
 	":user"=>$this->user,
 	":accessLvl"=>$this->accessLvl,
-	":departmentId"=>$this->deptId,
+	":deptId"=>$this->deptId,
 	":id"=>$this->adminId
 	));
 }
@@ -122,7 +122,7 @@ public function postParams($fname,$lname,$user,$accessLvl,$deptId){
 	":lname"=>$lname,
 	":user"=>$user,
 	":accessLvl"=>$accessLvl,
-	":departmentId"=>$deptId
+	":deptId"=>$deptId
 	));
 }
 
@@ -135,7 +135,7 @@ public function post(){
 	":lname"=>$this->lname,
 	":user"=>$this->user,
 	":accessLvl"=>$this->accessLvl,
-	":departmentId"=>$this->deptId
+	":deptId"=>$this->deptId
 	));
 }
 
