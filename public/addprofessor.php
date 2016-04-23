@@ -112,6 +112,13 @@
 								</div>
 
 								<div class="form-group">
+									<label for="title" class="col-lg-4 control-label">Title</label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control" id="title" name="title" required>
+									</div>
+								</div>
+
+								<div class="form-group">
 									<label for="email" class="col-lg-4 control-label">Email</label>
 									<div class="col-lg-6">
 										<input type="text" class="form-control" id="email" name="email" patten="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}">

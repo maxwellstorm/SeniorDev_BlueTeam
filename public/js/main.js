@@ -31,7 +31,7 @@ function getInfo(selected) {
 		$('#facultyId').val(infoResponse["facultyId"]);
 		$('#firstName').val(infoResponse["fName"]);
 		$('#lastName').val(infoResponse["lName"]);
-		//Accomodate for Title?
+		$('#title').val(infoResponse["title"]);
 		$('#email').val(infoResponse["email"]);
 		$('#phone').val(infoResponse["phone"]);
 		$('#room').selectpicker('val', infoResponse["roomNumber"]);
@@ -121,7 +121,7 @@ $(document).ready(function() {
 	$("#filter").keyup(function() {
 		var searchKeyword = $(this).val();
 
-		if(searchKeyword.length >= 3 || searchKeyword.length == 0) {
+		if(searchKeyword.length >= 2 || searchKeyword.length == 0) {
 			$.ajax({
 				method: "POST",
 				url: "../database/search.php",

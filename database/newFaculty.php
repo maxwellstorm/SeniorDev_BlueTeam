@@ -1,6 +1,7 @@
 <?php
 	require("data.php");
 	require("employees.php");
+	require("filters.php");
 
 	$database = new data;
 
@@ -15,7 +16,7 @@
 		$education = filterString($_POST['education']);
 		$highlights = filterString($_POST['highlights']);
 		$roomNum = filterString($_POST['room']);
-		$title = null; //$_POST[''];
+		$title = filterString($_POST['title']);
 		$depts = $_POST['dept'];
 		$primaryDept = filterString($depts[0]);
 		$secondaryDept = filterString($depts[1]);
@@ -75,20 +76,20 @@
 		$employee->postParams($fName, $lName, $email, $active, $faculty, $phone, $about, $education, $highlights, $primaryDept, $roomNum, $title, $secondaryDept, $imagePath);
 	} elseif(isset($_POST['edit'])){	
 		$id = $_POST['facultyId']; //Validate Int
-		$fName = $_POST['firstName'];
-		$lName = $_POST['lastName'];
+		$fName = filterString($_POST['firstName']);
+		$lName = filterString($_POST['lastName']);
 		$email = $_POST['email']; //Validate Email
 		$active = $_POST['active']; //validate int
 		$faculty = $_POST['faculty']; //validate int
-		$phone = $_POST['phone']; //is there validate phone?
-		$about = $_POST['about'];
-		$education = $_POST['education'];
-		$highlights = $_POST['highlights'];
-		$roomNum = $_POST['room'];
-		$title = null; //$_POST[''];
+		$phone = filterString($_POST['phone']);
+		$about = filterString($_POST['about']);
+		$education = filterString($_POST['education']);
+		$highlights = filterString($_POST['highlights']);
+		$roomNum = filterString($_POST['room']);
+		$title = filterString($_POST['title']);
 		$depts = $_POST['dept'];
-		$primaryDept = $depts[0];
-		$secondaryDept = $depts[1];
+		$primaryDept = filterString($depts[0]);
+		$secondaryDept = filterString($depts[1]);
 
 		if(strcmp($primaryDept, "Information Sciences & Technology") == 0) {
 			$primaryDept = 1;
@@ -128,7 +129,7 @@
 
 		$employee->putParams($fName,$lName,$email,$active,$faculty,$phone,$about,$education,$highlights,$primaryDept,$roomNum,$title,$secondaryDept, $imagePath);
 	} elseif(isset($_POST['delete']) && isset($_POST['facultyId'])) {
-		$id = $_POST['facultyId'];
+		$id = $_POST['facultyId']; //VALIDATE INT
 
 		$employee = new employees($database, $id);
 		$employee->delete();
