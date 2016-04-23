@@ -21,7 +21,7 @@ function init() {
 }
 
 function getProfessorCard(Professor) {
-	var card = '<div id="profCard' + Professor.getFacultyId() + '" class="professorCard dropShadow roundCorners">';
+	var card = '<div id="profCard' + Professor.getFacultyId() + '" data-lastinitial="' + Professor.getLastInitial() + '" data-room="' + Professor.getRoom().replace(/\s/g, '') + '" class="professorCard dropShadow roundCorners">';
 	card += '<div class="thumb" style="background-image: url(media/thumbs/' + Professor.getThumb() + ')"></div>';
 	card += '<div class="infoPreview">';
 	card += '<div class="professorName">' + Professor.getFullName() + '</div>';
@@ -47,6 +47,19 @@ function populateGridView() {
 	$.each(profArray, function(i, val) {
 		var card = getProfessorCard(val);
 		$('#gridView').append(card);
+	});
+}
+
+function refineList(letter) {
+	$('.professorCard').each(function(i) {
+		$(this).show();
+	});
+
+	$('.professorCard').each(function(i) {
+		var lastInitial = $(this).attr('data-lastinitial');
+		if (lastInitial != letter) {
+			$(this).hide();
+		}
 	});
 }
 
@@ -108,5 +121,24 @@ $(document).ready(function() {
 		} else {
 			$('#viewToggle .toggleSlider').css('left', '50%');
 		}
+	});
+
+	$('#refineLink').click(function() {
+		if ($('#refineToggle').hasClass('visible')) {
+			$('#refineToggle').slideUp(250).removeClass('visible');
+		} else {
+			$('#refineToggle').slideDown(250).addClass('visible');
+		}
+	});
+
+	$('.letter').click(function() {
+		if ($(this).hasClass('selected')) {
+			$(this).removeClass('selected');
+		} else {
+			$('.selected').removeClass('selected');
+			$(this).addClass('selected');
+		}
+		var clickedLetter = $(this).text();
+		refineList(clickedLetter);
 	});
 });

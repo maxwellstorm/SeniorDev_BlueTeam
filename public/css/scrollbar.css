@@ -1,0 +1,28 @@
+/* OVERRIDE WEBKIT SCROLLBAR PROPERTIES */
+::-webkit-scrollbar {
+	border-radius: 1em;
+	background-color: rgb(248, 247, 237);
+	/* background-color: #BBBBBB; */
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	border-radius: 1em;
+	background-color: rgb(248, 247, 237);
+	/* background-color: #BBBBBB; */
+}
+
+::-webkit-scrollbar-track-piece {
+	border-radius: 1em;
+	background-color: rgb(248, 247, 237);
+	/* background-color: #BBBBBB; */
+}
+
+::-webkit-scrollbar-thumb {
+	border-radius: 1em;
+	background-color: #F36E21;
+	/*
+	border-top: 6px solid #F8F7ED;
+	border-bottom: 6px solid #F8F7ED;
+	*/
+}

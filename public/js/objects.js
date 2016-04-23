@@ -5,7 +5,7 @@ class Professor {
 		this.last = last;
 		this.specialTitle = title;
 		this.email = email;
-		this.room = room;
+		this.room = room.toUpperCase();
 		this.phone = phone;
 		this.departmentId = departmentId;
 		this.isActive = isActive;
@@ -26,6 +26,10 @@ class Professor {
 
 	getLast() {
 		return this.last;
+	}
+
+	getLastInitial() {
+		return this.last.substring(0, 1).toUpperCase();
 	}
 
 	getFullName() {
