@@ -74,7 +74,7 @@
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<form class="form-horizontal" id="addRoom" name="addRoom" action="addRoom.php" method="POST">
-					<div class="col-lg-2" id="searchCol">
+					<div class="col-lg-2 dropdownSelect" id="searchCol">
 						<select class="form-control" id="roomSelect">
 							<option value="" disabled selected>Select a Room</option>
 							<?php getAllRooms() ?>

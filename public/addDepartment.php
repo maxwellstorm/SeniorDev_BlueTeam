@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<form class="form-horizontal" id="addDepartment" name="addDepartment" action="addDepartment.php" method="POST">
-					<div class="col-lg-2" id="searchCol">
+					<div class="col-lg-2 dropdownSelect" id="searchCol">
 						<select id="deptSelect" class="form-control">
 							<option value="" disabled selected>Select a Department</option>
 							<?php getAllDepartments() ?>
