@@ -50,15 +50,23 @@ function populateGridView() {
 	});
 }
 
-function refineList(letter) {
+function resetGridView() {
+	// First, remove all cards in the grid
 	$('.professorCard').each(function(i) {
-		$(this).show();
+		$(this).remove();
 	});
+
+	// Then, repopulate
+	populateGridView();
+}
+
+function refineList(letter) {
+	resetGridView();
 
 	$('.professorCard').each(function(i) {
 		var lastInitial = $(this).attr('data-lastinitial');
 		if (lastInitial != letter) {
-			$(this).hide();
+			$(this).remove();
 		}
 	});
 }
@@ -126,6 +134,8 @@ $(document).ready(function() {
 	$('#refineLink').click(function() {
 		if ($('#refineToggle').hasClass('visible')) {
 			$('#refineToggle').slideUp(250).removeClass('visible');
+			$('.selected').removeClass('selected');
+			resetGridView();
 		} else {
 			$('#refineToggle').slideDown(250).addClass('visible');
 		}
@@ -134,11 +144,11 @@ $(document).ready(function() {
 	$('.letter').click(function() {
 		if ($(this).hasClass('selected')) {
 			$(this).removeClass('selected');
+			resetGridView();
 		} else {
 			$('.selected').removeClass('selected');
-			$(this).addClass('selected');
+			$(this).addClass('selected').addClass('roundCorners');
+			refineList($(this).text());
 		}
-		var clickedLetter = $(this).text();
-		refineList(clickedLetter);
 	});
 });
