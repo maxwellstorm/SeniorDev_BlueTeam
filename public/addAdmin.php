@@ -1,17 +1,18 @@
 <?php
 	require("../database/data.php");
 	require("../database/admin.php");
+	require("../database/filters.php");
 
 	$database = new data;
 
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		if(isset($_POST['new'])) {
 			try{
-				$fName = $_POST['firstName'];
-				$lName = $_POST['lastName'];
-				$username = $_POST['username'];
-				$accessLevel = $_POST['accessLevel'];
-				$department = $_POST['dept'];
+				$fName = filterString($_POST['firstName']);
+				$lName = filterString($_POST['lastName']);
+				$username = filterString($_POST['username']);
+				$accessLevel = $_POST['accessLevel']; //verify int
+				$department = filterString($_POST['dept']);
 
 				if(strcmp($department, "Information Sciences & Technology") == 0) {
 					$department = 1;
@@ -29,12 +30,12 @@
 			}
 		} elseif(isset($_POST['edit'])){	
 			try{
-				$adminId = $_POST['adminId'];
-				$fName = $_POST['firstName'];
-				$lName = $_POST['lastName'];
-				$username = $_POST['username'];
-				$accessLevel = $_POST['accessLevel'];
-				$department = $_POST['dept'];
+				$adminId = filterString($_POST['adminId']);
+				$fName = filterString($_POST['firstName']);
+				$lName = filterString($_POST['lastName']);
+				$username = filterString($_POST['username']);
+				$accessLevel = $_POST['accessLevel']; //verify int
+				$department = filterString($_POST['dept']);
 
 				if(strcmp($department, "Information Sciences & Technology") == 0) {
 					$department = 1;
@@ -43,12 +44,7 @@
 				} elseif(strcmp($department, "Computing Security") == 0) {
 					$department = 3;
 				}
-				echo($adminId);
-				echo($fName);
-				echo($lName);
-				echo($username);
-				echo($accessLevel);
-				echo($department);
+
 				$admin = new admin($database, $adminId);
 				$admin->fetch();
 				$admin->putParams($fName, $lName, $username, $accessLevel, $department);
