@@ -2,6 +2,19 @@
 	require("../database/data.php");
 	require("../database/admin.php");
 	require("../database/filters.php");
+	require("../database/commonAuth.php");
+
+
+	//THESE GET REPLACED WITH SHIB-RELATED VARIABLES
+	$adminDeptId = 1;
+	$accessLevel = 3;
+	$allowed = true;
+
+	if($accessLevel < 2 || !$allowed) {
+		header("Location: notAuthorized.html");
+        die("Redirecting to notAuthorized.html");
+	}
+
 
 	$database = new data;
 
@@ -54,11 +67,17 @@
 		}
 	}
 
-	function getAllAdmins() {
+	function getAllAdmins($adminDeptId, $accessLevel) {
 		$database = new data;
 
-		//Will need to change statement to only show those in admin's department (role stuff)
-		$admins = $database->getData("SELECT fName, lName, departmentAbbr, adminId FROM Admin JOIN department ON Admin.departmentId = department.departmentId ORDER BY lName ASC;", array());
+
+		if($accessLevel == 3) {
+			$admins = $database->getData("SELECT fName, lName, departmentAbbr, adminId FROM Admin JOIN department ON Admin.departmentId = department.departmentId ORDER BY lName ASC;", array());
+		} else {
+			$admins = $database->getData("SELECT fName, lName, departmentAbbr, adminId FROM Admin JOIN department ON Admin.departmentId = department.departmentId WHERE Admin.departmentId=:deptId ORDER BY lName ASC;", array(
+					":deptId"=>$adminDeptId
+				));
+		}
 
 		foreach($admins as $arr) {
 			echo "<li onclick='setAdminActive(this); disableCreate();'><span class='aId' style='display: none'>" . $arr['adminId'] . "</span><strong>" . $arr['lName'] . ", " . $arr['fName'] . "</strong><br /><span class='rmNum initialism'>" . $arr['departmentAbbr'] . "</span><hr /></li>";
@@ -124,7 +143,7 @@
 						</div>
 						<div class="form-group">
 							<ul multiple class="form-control" id="results">
-								<?php getAllAdmins() ?>
+								<?php getAllAdmins($adminDeptId, $accessLevel) ?>
 							</ul>
 							<input type="submit" value="Update" name="edit" id="editBtn" class="btn btn-primary" disabled>
 							<input type="submit" value="Create New" name="new" id="newBtn" class="btn btn-primary">
@@ -132,12 +151,7 @@
 						</div>
 					</div>
 					<div class="col-lg-10">
-						<ul class="nav nav-tabs">
-							<li role="presentation"><a href="addprofessor.php">Employee</a></li>
-							<li role="presentation"><a href="addRoom.php">Add Room</a></li>
-							<li role="presentation"><a href="addDepartment.php">Add Department</a></li>
-							<li role="presentation" class="active"><a href="addAdmin.php">Add Admin</a></li>
-						</ul>
+						<?php displayNav($accessLevel) ?>
 						<fieldset>
 							<legend><h2>ADD A NEW ADMINISTRATOR</h2></legend>
 							<div class="col-lg-6" id="leftCol">
@@ -193,5 +207,10 @@
 				</form>
 			</div>
 		</div>
+		<script>
+			$(document).ready(function(){
+				$('#adminNav').addClass('active');
+			});
+		</script>
 	</body>
 </html>

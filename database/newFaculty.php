@@ -1,4 +1,11 @@
 <?php
+	$allowed = true;
+
+	if(!$allowed) {
+		header("Location: ../public/notAuthorized.html");
+		die("Redirecting to notAuthorized.html");
+	}
+
 	require("data.php");
 	require("employees.php");
 	require("filters.php");

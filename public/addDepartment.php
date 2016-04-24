@@ -3,6 +3,19 @@
 	require("../database/department.php");
 	require_once("../database/dbException.php");
 	require("../database/filters.php");
+	require("../database/commonAuth.php");
+
+
+	//THESE GET REPLACED WITH SHIB-RELATED VARIABLES
+	$adminDeptId = 1;
+	$accessLevel = 3;
+	$allowed = true;
+
+	if($accessLevel < 3 || !$allowed) {
+		header("Location: notAuthorized.html");
+        die("Redirecting to notAuthorized.html");
+	}
+
 
 	$database = new data;
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -89,12 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 					</div>
 
 					<div class="col-lg-10">
-						<ul class="nav nav-tabs">
-							<li role="presentation"><a href="addprofessor.php">Employee</a></li>
-							<li role="presentation"><a href="addRoom.php">Add Room</a></li>
-							<li role="presentation" class="active"><a href="addDepartment.php">Add Department</a></li>
-							<li role="presentation"><a href="addAdmin.php">Add Admin</a></li>
-						</ul>
+						<?php displayNav($accessLevel) ?>
 						<fieldset>
 							<legend><h2>ADD A NEW DEPARTMENT</h2></legend>
 							<input type="hidden" name="deptId" id="deptId">
@@ -117,5 +125,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 				</form>
 			</div>
 		</div>
+		<script>
+			$(document).ready(function(){
+				$('#deptNav').addClass('active');
+			});
+		</script>
 	</body>
 </html>

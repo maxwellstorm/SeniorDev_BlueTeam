@@ -1,13 +1,31 @@
 <?php
 	require("../database/data.php");
 	require("../database/employees.php");
+	require("../database/commonAuth.php");
+
+	//THESE GET REPLACED WITH SHIB-RELATED VARIABLES
+	$adminDeptId = 1;
+	$accessLevel = 3;
+	$allowed = true;
+
+	if(!$allowed) {
+		header("Location: notAuthorized.html");
+        die("Redirecting to notAuthorized.html");
+	}
 
 
-	function getAllEmps() {
+	function getAllEmps($adminDeptId, $accessLevel) {
 		$database = new data;
 
-		//Will need to change statement to only show those in admin's department (role stuff)
-		$emps = $database->getData("SELECT fName, lName, roomNumber, facultyId FROM Employees ORDER BY lName ASC;", array());
+
+		if($accessLevel == 3) {
+			$emps = $database->getData("SELECT fName, lName, roomNumber, facultyId FROM Employees ORDER BY lName ASC;", array());
+		} else {
+			$emps = $database->getData("SELECT fName, lName, roomNumber, facultyId FROM Employees WHERE (departmentId=:deptId OR secondaryDepartmentID=:sdId) ORDER BY lName ASC;", array(
+				":deptId"=>$adminDeptId,
+				":sdId"=>$adminDeptId
+			));
+		}
 
 		foreach($emps as $arr) {
 			echo "<li onclick='setActive(this); disableCreate();'><span class='fId' style='display: none'>" . $arr['facultyId'] . "</span><strong>" . $arr['lName'] . ", " . $arr['fName'] . "</strong><br /><span class='rmNum initialism'>" . $arr['roomNumber'] . "</span><hr /></li>";
@@ -72,7 +90,7 @@
 						</div>
 						<div class="form-group">
 							<ul multiple class="form-control" id="results">
-								<?php getAllEmps() ?>
+								<?php getAllEmps($adminDeptId, $accessLevel) ?>
 							</ul>
 							<input type="submit" value="Update" name="edit" id="editBtn" class="btn btn-primary" disabled>
 							<input type="submit" value="Create New" name="new" id="newBtn" class="btn btn-primary">
@@ -80,12 +98,7 @@
 						</div>
 					</div>
 					<div class="col-lg-10">
-						<ul class="nav nav-tabs">
-							<li role="presentation" class="active"><a href="addprofessor.php">Employee</a></li>
-							<li role="presentation"><a href="addRoom.php">Add Room</a></li>
-							<li role="presentation"><a href="addDepartment.php">Add Department</a></li>
-							<li role="presentation"><a href="addAdmin.php">Add Admin</a></li>
-						</ul>
+						<?php displayNav($accessLevel) ?>
 						<fieldset>
 							<legend><h2>ADD A NEW EMPLOYEE</h2></legend>
 							<div class="col-lg-5" id="leftCol">
@@ -222,5 +235,10 @@
 				</form>
 			</div>
 		</div>
+		<script>
+			$(document).ready(function(){
+				$('#profNav').addClass('active');
+			});
+		</script>
 	</body>
 </html>

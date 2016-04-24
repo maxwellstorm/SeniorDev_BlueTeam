@@ -1,4 +1,12 @@
 <?php
+
+$allowed = true;
+
+if(!$allowed) {
+	header("Location: ../public/notAuthorized.html");
+    die("Redirecting to notAuthorized.html");
+}
+
 class data{
 	
 	private $server = 'facultydb.cdh6zybsklle.us-east-1.rds.amazonaws.com';

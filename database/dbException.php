@@ -1,4 +1,12 @@
 <?php
+
+$allowed = true;
+
+if(!$allowed) {
+	header("Location: ../public/notAuthorized.html");
+    die("Redirecting to notAuthorized.html");
+}
+
  const THROW_ONLY_ALPHA    = 1;
  const THROW_ROOM_INNCORRECT_FORMAT    = 2;
  const THROW_INNCORRECT_EMAIL_FORMAT    = 3;

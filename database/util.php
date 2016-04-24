@@ -1,4 +1,12 @@
 <?php
+
+$allowed = true;
+
+if(!$allowed) {
+	header("Location: ../public/notAuthorized.html");
+		die("Redirecting to notAuthorized.html");
+}	
+
 require_once("dbException.php");
  class util{
 	 
