@@ -133,7 +133,7 @@
 								<div class="form-group">
 									<label for="phone" class="col-lg-4 control-label">Phone</label>
 									<div class="col-lg-6">
-										<input type="text" class="form-control" id="phone" name="phone">
+										<input type="text" class="form-control" id="phone" name="phone" onBlur="formatPhoneNum(this);">
 									</div>
 								</div>
 

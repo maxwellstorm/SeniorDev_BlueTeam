@@ -12,6 +12,15 @@ function setActive(active) {
 	getInfo(active);
 }
 
+function formatPhoneNum(phone) {
+
+	if(phone.value.length == 10) {
+		phone.value = "(" + phone.value.slice(0,3) + ") " + phone.value.slice(3, 6) + "-" + phone.value.slice(6,10);
+	}
+
+
+}
+
 function setAdminActive(active) {
 	$('#results li').removeClass("activeResult");
 	active.className += " activeResult";
