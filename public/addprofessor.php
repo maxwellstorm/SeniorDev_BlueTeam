@@ -100,7 +100,6 @@
 										<img id="userImage" src="media/no-preview.png" />
 									</div>
 								</div>
-								
 								 <input type="hidden" id="facultyId" name="facultyId">
 
 								<div class="form-group">

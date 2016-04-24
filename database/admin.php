@@ -17,13 +17,12 @@ class admin{
 	
 	
 public function fetch(){
-	$resultsArr = $this->conn->getData("select * from Admin where adminId = :id",array(
+	$resultsArr = $this->conn->getData("SELECT * FROM Admin WHERE adminId = :id",array(
 		":id" => $this->adminId
 		)
 	);
 	try{
 		$results = $resultsArr[0];
-		$this->adminId = $results['adminId'];
 		$this->fname = $results['fName'];
 		$this->lname = $results['lName'];
 		$this->user = $results['username'];

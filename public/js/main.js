@@ -87,7 +87,7 @@ function getAdminInfo(selected) {
 		//Accomodate for Title?
 		$('#username').val(infoResponse["username"]);
 		$('#accessLevel').val(infoResponse["accessLevel"]);
-		$('#dept').val(infoResponse["departmentName"]);
+		$('#department').val(infoResponse["departmentName"]);
 	})
 }
 
@@ -95,12 +95,11 @@ function getRoomInfo(selectedVal) {
 	$.ajax({
 		method: "GET",
 		url: "../database/getRoomInfo.php",
-		data: {roomNum : selectedVal}
+		data: {room : selectedVal}
 	}).done(function(response) {
-		console.log(response);
 		var infoResponse = JSON.parse(response);
 		console.log(infoResponse);
-		$('#roomNum').val(infoResponse["roomNumber"]);
+		$('#room').val(infoResponse["roomNumber"]);
 		$('#description').val(infoResponse["description"]);
 		//STILL NEED TO DO ROOM IMAGE STUFF
 	})
@@ -254,6 +253,10 @@ $(document).ready(function() {
 				validators: {
 					notEmpty: {
 						message: "A room is required"
+					},
+					regexp: {
+						regexp: /^[a-zA-Z0-9]{3} [A-Za-z0-9]{1}\d{3}$/,
+						message: "Room numbers must be in the format 'AAA ####'"
 					}
 				}
 			},

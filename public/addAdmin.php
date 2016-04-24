@@ -22,16 +22,25 @@
 			}
 		} elseif(isset($_POST['edit'])){	
 			try{
-				$adminId = filterString($_POST['adminId']);
+				$adminId = $_POST['adminId']; //int validate
 				$fName = filterString($_POST['firstName']);
 				$lName = filterString($_POST['lastName']);
 				$username = filterString($_POST['username']);
 				$accessLevel = $_POST['accessLevel']; //verify int
 				$department = getDepartmentId(filterString($_POST['department']));
 
+
+				var_dump($adminId);
+				var_dump($_POST);
+
 				$admin = new admin($database, $adminId);
 				$admin->fetch();
+
+				var_dump($admin);
+
 				$admin->putParams($fName, $lName, $username, $accessLevel, $department);
+
+				var_dump($admin);
 			}
 		catch(dbException $db){
 				echo $db->alert();

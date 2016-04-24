@@ -45,7 +45,7 @@
 	function getAllRooms() {
 		$database = new data;
 
-		$rooms = $database->getData("SELECT roomNumber FROM room", array());
+		$rooms = $database->getData("SELECT roomNumber FROM room;", array());
 
 		foreach($rooms as $arr) {
 			echo "<option>" . $arr['roomNumber'] . "</option>";
