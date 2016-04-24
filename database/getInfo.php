@@ -6,8 +6,12 @@
 
 	$database = new data;
 
-	$results = $database->getData("SELECT * FROM Employees JOIN department ON Employees.departmentId = department.departmentID WHERE facultyId= " . $facultyId . ";", array());
-	$results2 = $database->getData("SELECT secondaryDepartmentID, departmentName FROM Employees JOIN department on Employees.secondaryDepartmentID = department.departmentID WHERE facultyId= " . $facultyId . ";", array());
+	$results = $database->getData("SELECT * FROM Employees JOIN department ON Employees.departmentId = department.departmentID WHERE facultyId=:facultyId;", array(
+			":facultyId"=>$facultyId
+		));
+	$results2 = $database->getData("SELECT secondaryDepartmentID, departmentName FROM Employees JOIN department on Employees.secondaryDepartmentID = department.departmentID WHERE facultyId=:facultyId;", array(
+			":facultyId"=>$facultyId
+		));
 
 	//$array[] = $returnArray;
 	$returnArray = array();

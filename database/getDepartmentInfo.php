@@ -6,7 +6,9 @@
 
 	$database = new data;
 
-	$results = $database->getData("SELECT * FROM department WHERE departmentId = '" . $deptId . "';", array());
+	$results = $database->getData("SELECT * FROM department WHERE departmentId = :deptId;", array(
+		":deptId"=>$deptId
+	));
 
 	$returnArray = array();
 

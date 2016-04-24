@@ -7,7 +7,9 @@
 
 	$database = new data;
 
-	$results = $database->getData("SELECT * FROM room WHERE roomNumber = '" . $roomNum . "';", array());
+	$results = $database->getData("SELECT * FROM room WHERE roomNumber = :roomNum;", array(
+		":roomNum"=>$roomNum
+	));
 
 	$returnArray = array();
 

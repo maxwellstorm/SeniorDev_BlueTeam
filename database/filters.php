@@ -3,8 +3,8 @@
 		$newString = trim($string);
 		$newString = stripslashes($newString);
 		$newString = strip_tags($newString);
-		$newString = html_entity_decode($newString); //or maybe this one?
-		$newString = htmlspecialchars_decode($newString); //maybe take this out?
+		$newString = html_entity_decode($newString);
+		$newString = htmlspecialchars_decode($newString);
 
 		return $newString;
 	}

@@ -6,7 +6,9 @@
 
 	$database = new data;
 
-	$results = $database->getData("SELECT * FROM Admin JOIN department ON Admin.departmentId = department.departmentID WHERE adminId= " . $adminId . ";", array());
+	$results = $database->getData("SELECT * FROM Admin JOIN department ON Admin.departmentId = department.departmentID WHERE adminId=:adminId;", array(
+		":adminId"=>$adminId
+	));
 
 	$returnArray = array();
 
