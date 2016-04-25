@@ -1,9 +1,9 @@
 <?php
-	require("../database/data.php");
-	require("../database/admin.php");
-	require("../database/filters.php");
-	require("../database/commonAuth.php");
-
+	require_once("../database/data.php");
+	require_once("../database/admin.php");
+	require_once("../database/filters.php");
+	require_once("../database/commonAuth.php");
+	//do we need to require dbException?
 
 	//THESE GET REPLACED WITH SHIB-RELATED VARIABLES
 	$adminDeptId = 1;
@@ -18,53 +18,86 @@
 
 	$database = new data;
 
-	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-		if(isset($_POST['new'])) {
-			try{
-				$fName = filterString($_POST['firstName']);
-				$lName = filterString($_POST['lastName']);
-				$username = filterString($_POST['username']);
-				$accessLevel = $_POST['accessLevel']; //verify int
-				$department = getDepartmentId(filterString($_POST['department']));
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		$department = getDepartmentId(filterString($_POST['department']));
 
-				$admin = new admin($database, null);	
-				$admin->postParams($fName, $lName, $username, $accessLevel, $department);
+		if(isset($_POST['new'])) {
+			try {
+				if($accessLevel == 3) {
+					postAdmin();
+				} else if($accessLevel < 3 && $adminDeptId == $department) {
+					postAdmin();
+				} else {
+					//RETURN ERROR MESSAGE
+					echo("You aren't authorized to do that!");
+				}
 			}
-		catch(dbException $db){
+		catch(dbException $db) {
 				echo $db->alert();
 			}
 		} elseif(isset($_POST['edit'])){	
-			try{
-				$adminId = $_POST['adminId']; //int validate
-				$fName = filterString($_POST['firstName']);
-				$lName = filterString($_POST['lastName']);
-				$username = filterString($_POST['username']);
-				$accessLevel = $_POST['accessLevel']; //verify int
-				$department = getDepartmentId(filterString($_POST['department']));
-
-
-				var_dump($adminId);
-				var_dump($_POST);
-
-				$admin = new admin($database, $adminId);
-				$admin->fetch();
-
-				var_dump($admin);
-
-				$admin->putParams($fName, $lName, $username, $accessLevel, $department);
-
-				var_dump($admin);
+			try {
+				if($accessLevel == 3) {
+					putAdmin();
+				} else if($accessLevel < 3 && $adminDeptId == $department) {
+					putAdmin();
+				} else {
+					//RETURN ERROR MESSAGE
+					echo("You aren't authorized to do that!");
+				}
 			}
-		catch(dbException $db){
+		catch(dbException $db) {
 				echo $db->alert();
 			}		
 
 		} elseif(isset($_POST['delete']) && isset($_POST['adminId'])) {
-			$adminId = $_POST['adminId'];
-
-			$admin = new admin($database, $adminId);
-			$admin->delete();
+			//add try/catch?
+			if($accessLevel == 3) {
+					deleteAdmin();
+				} else if($accessLevel < 3 && $adminDeptId == $department) {
+					deleteAdmin();
+				} else {
+					//RETURN ERROR MESSAGE
+					echo("You aren't authorized to do that!");
+				}
 		}
+	}
+
+	function postAdmin() {
+		global $database;
+
+		$fName = filterString($_POST['firstName']);
+		$lName = filterString($_POST['lastName']);
+		$username = filterString($_POST['username']);
+		$accessLevel = $_POST['accessLevel']; //verify int
+		$department = getDepartmentId(filterString($_POST['department']));
+
+		$admin = new admin($database, null);	
+		$admin->postParams($fName, $lName, $username, $accessLevel, $department);
+	}
+
+	function putAdmin() {
+		global $database;
+
+		$adminId = $_POST['adminId']; //int validate
+		$fName = filterString($_POST['firstName']);
+		$lName = filterString($_POST['lastName']);
+		$username = filterString($_POST['username']);
+		$accessLevel = $_POST['accessLevel']; //verify int
+		$department = getDepartmentId(filterString($_POST['department']));
+
+		$admin = new admin($database, $adminId);
+		$admin->fetch(); //Do I need to fetch?
+		$admin->putParams($fName, $lName, $username, $accessLevel, $department);
+	}
+
+	function deleteAdmin() {
+		global $database;
+
+		$adminId = $_POST['adminId'];
+
+		$admin = new admin($database, $adminId);
+		$admin->delete();
 	}
 
 	function getAllAdmins($adminDeptId, $accessLevel) {

@@ -1,7 +1,7 @@
 <?php
-	require("../database/data.php");
-	require("../database/employees.php");
-	require("../database/commonAuth.php");
+	require_once("../database/data.php");
+	require_once("../database/employees.php");
+	require_once("../database/commonAuth.php");
 
 	//THESE GET REPLACED WITH SHIB-RELATED VARIABLES
 	$adminDeptId = 1;

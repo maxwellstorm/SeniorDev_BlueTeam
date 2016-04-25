@@ -1,4 +1,7 @@
 <?php
+	//THESE GET REPLACED WITH SHIB-RELATED VARIABLES
+	$adminDeptId = 1;
+	$accessLevel = 3;
 	$allowed = true;
 
 	if(!$allowed) {
@@ -6,13 +9,60 @@
 		die("Redirecting to notAuthorized.html");
 	}
 
-	require("data.php");
-	require("employees.php");
-	require("filters.php");
+	require_once("data.php");
+	require_once("employees.php");
+	require_once("filters.php");
+	require_once("commonAuth.php");
 
 	$database = new data;
 
-	if(isset($_POST['new'])) {
+	if($_SERVER['REQUEST_METHOD'] == 'POST') {
+		$primaryDept = getDepartmentId(filterString($depts[0]));
+		$secondaryDept = filterString($depts[1]);
+
+		if(isset($_POST['new'])) {
+			try {
+				if($accessLevel == 3) {
+					postEmployee();
+				} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
+					postEmployee();
+				} else {
+					echo("You aren't authorized to do that!");
+				}
+			} catch(dbException $db) {
+				echo $db->alert();
+			}
+		} elseif(isset($_POST['edit'])){
+			try {
+				if($accessLevel == 3) {
+					putEmployee();
+				} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
+					putEmployee();
+				} else {
+					//RETURN ERROR MESSAGE
+					echo("You aren't authorized to do that!");
+				}
+			} catch(dbException $db) {
+				echo $db->alert();
+			}
+		} elseif(isset($_POST['delete']) && isset($_POST['facultyId'])) {
+			if($accessLevel == 3) {
+				deleteEmployee();
+			} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
+				deleteEmployee();
+			} else {
+				//RETURN ERROR MESSAGE
+				echo("You aren't authorized to do that!");
+			}
+		}
+	}
+
+	header('Location: http://kelvin.ist.rit.edu/~blueteam/public/addprofessor.php');
+
+
+	function postEmployee() {
+		global $database;
+
 		$fName = filterString($_POST['firstName']);
 		$lName = filterString($_POST['lastName']);
 		$email = $_POST['email']; //VALIDATE EMAIL
@@ -50,7 +100,11 @@
 		$imagePath = uploadImage($employee);
 
 		$employee->postParams($fName, $lName, $email, $active, $faculty, $phone, $about, $education, $highlights, $primaryDept, $roomNum, $title, $secondaryDept, $imagePath);
-	} elseif(isset($_POST['edit'])){	
+	}
+
+	function putEmployee() {
+		global $database;
+
 		$id = $_POST['facultyId']; //Validate Int
 		$fName = filterString($_POST['firstName']);
 		$lName = filterString($_POST['lastName']);
@@ -90,14 +144,15 @@
 		$imagePath = uploadImage($employee);
 
 		$employee->putParams($fName,$lName,$email,$active,$faculty,$phone,$about,$education,$highlights,$primaryDept,$roomNum,$title,$secondaryDept, $imagePath);
-	} elseif(isset($_POST['delete']) && isset($_POST['facultyId'])) {
+	}
+
+	function deleteEmployee() {
 		$id = $_POST['facultyId']; //VALIDATE INT
 
 		$employee = new employees($database, $id);
 		$employee->delete();
 	}
 
-	header('Location: http://kelvin.ist.rit.edu/~blueteam/public/addprofessor.php');
 
 	/*
 	 * A method to upload an image through the admin form
