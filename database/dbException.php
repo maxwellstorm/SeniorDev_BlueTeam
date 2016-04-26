@@ -4,6 +4,7 @@ $allowed = true;
 
 
 require_once("commonAuth.php");
+require_once("util.php");
 
 if(!$allowed) {
 	header("Location: ../public/notAuthorized.html");
@@ -19,12 +20,15 @@ class dbException extends Exception
     // Redefine the exception so message isn't optional
     public function __construct($message, $code = 0, Exception $previous = null) {
         parent::__construct($message, $code, $previous);
+		util::logMessage("../log/testLog.text",$message);
     }
 
     
     public function __toString() {
          return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
     }
+	
+
 	
 	public function alert() {
 		$alert = "<div class='alert alert-dismissible'>";
