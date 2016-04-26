@@ -1,7 +1,7 @@
 <?php
-	require("data.php");
+	require_once("data.php");
 	require("employees.php");
-	require("admin.php");
+	require_once("admin.php");
 	require("filters.php");
 	require_once("commonAuth.php");
 
