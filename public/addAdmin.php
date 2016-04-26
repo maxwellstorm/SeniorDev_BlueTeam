@@ -166,7 +166,7 @@
 		</header>
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<form class="form-horizontal" id="addFaculty" name="addFaculty" action="addAdmin.php" method="POST">
+				<form class="form-horizontal" id="addAdmin" name="addAdmin" action="addAdmin.php" method="POST">
 					<div class="col-lg-2" id="searchCol">
 						<h3>SEARCH</h3>
 						<div class="form-group">

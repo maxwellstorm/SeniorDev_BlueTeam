@@ -10,14 +10,14 @@ function setActive(active) {
 	document.getElementById('editBtn').disabled = false;
 
 	getInfo(active);
-	$('#addFaculty').data('formValidation').resetForm();
+	$('#addEmployee').data('formValidation').resetForm();
 }
 
 function formatPhoneNum(phone) {
 
 	if(phone.value.length == 10) {
 		phone.value = "(" + phone.value.slice(0,3) + ") " + phone.value.slice(3, 6) + "-" + phone.value.slice(6,10);
-		$('#addFaculty').formValidation('revalidateField', 'phone');
+		$('#addEmployee').formValidation('revalidateField', 'phone');
 	}
 
 
@@ -29,7 +29,7 @@ function setAdminActive(active) {
 	document.getElementById('editBtn').disabled = false;
 
 	getAdminInfo(active);
-	$('#addFaculty').data('formValidation').resetForm();
+	$('#addAdmin').data('formValidation').resetForm();
 }
 
 function getInfo(selected) {

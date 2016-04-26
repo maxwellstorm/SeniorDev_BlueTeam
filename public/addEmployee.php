@@ -80,7 +80,7 @@
 		</header>
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<form class="form-horizontal" id="addFaculty" name="addFaculty" enctype="multipart/form-data" action="../database/newEmployee.php" method="POST" onsubmit="removeOnlyBullets('highlights'); removeOnlyBullets('education')">
+				<form class="form-horizontal" id="addEmployee" name="addEmployee" enctype="multipart/form-data" action="../database/newEmployee.php" method="POST" onsubmit="removeOnlyBullets('highlights'); removeOnlyBullets('education')">
 					<div class="col-lg-2" id="searchCol">
 						<h3>SEARCH</h3>
 						<div class="form-group">
