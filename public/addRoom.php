@@ -48,9 +48,12 @@
 
 		} elseif(isset($_POST['delete']) && isset($_POST['room'])) {
 			$roomNum = filterString($_POST['room']);
-
-			$room = new room($database, $roomNum);
-			$room->delete();
+			if(isRoomInUse($roomNum)) {
+				echo("You can't delete a room that's in use!");
+			} else {
+				$room = new room($database, $roomNum);
+				$room->delete();
+			}
 		}
 	}
 
@@ -61,6 +64,20 @@
 
 		foreach($rooms as $arr) {
 			echo "<option>" . $arr['roomNumber'] . "</option>";
+		}
+	}
+
+	function isRoomInUse($roomNum) {
+		$database = new data;
+
+		$match = $database->getData("SELECT facultyId FROM Employees WHERE roomNumber=:roomNum;", array(
+			":roomNum"=>$roomNum
+		));
+
+		if(count($match) > 0) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 ?>
