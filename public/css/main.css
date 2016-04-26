@@ -8,11 +8,12 @@ body {
 	line-height: 1.5;
 	background: #E0E0E0;
 	color: #252525;
+	overflow-x: hidden !important;
 }
 
 h1 {
 	font-family: Montserrat, Helvetica, Arial, sans-serif;
-	font-size: 54px;
+	font-size: 64px;
 	font-weight: normal;
 	letter-spacing: normal;
 	margin: 0;
@@ -91,6 +92,7 @@ header h1 {
 #extensiveInfo {
 	display: block;
 	margin-top: 40px;
+	letter-spacing: normal;
 }
 
 #overlayAbout, #overlayEducation, #overlayHighlights {
@@ -123,20 +125,12 @@ header h1 {
 }
 
 #professorsContainer {
+	width: 72.8%;
 	height: calc(100vh - 140px);
 	float: left;
 	clear: right;
 	overflow-x: hidden;
 	overflow-y: scroll !important;
-}
-
-.row {
-	height: 120px;
-	margin-bottom: 20px;
-}
-
-.row:last-of-type {
-	margin-bottom: 0px;
 }
 
 .professorCard {
@@ -159,7 +153,8 @@ header h1 {
 	width: 100px;
 	height: 100px;
 	background-position: center;
-	background-size: 100% 100% !important;
+	background-size: cover !important;
+	/* background-size: 100% 100% !important; */
 	background-repeat: no-repeat;
 	border-radius: 50%;
 	background: gray;
@@ -186,14 +181,6 @@ header h1 {
 	/* background: radial-gradient(ellipse at center, rgba(255,255,255,0), #000000); */
 
 	opacity: 0.3;
-}
-
-#bogaard {
-	background-image: url("../media/thumbs/bogaard-thumb.jpg");
-}
-
-#largeBogaard {
-	background-image: url("../media/thumbs/bogaard-thumb.jpg");
 }
 
 .infoPreview {
@@ -241,7 +228,7 @@ header h1 {
 	float: right;
 	background: #FFFFFF;
 	position: relative;
-	width: 65%;
+	width: 66%;
 }
 
 .filterToggle span {
@@ -290,18 +277,7 @@ span.selectedToggle {
 	float: left;
 }
 
-.letterBox:before {
-	content: "";
-	display: block;
-	padding-top: 100%;
-}
-
 .letter {
-	position: absolute;
-	top: 15%;
-	left: 0;
-	bottom: 0;
-	right: 0;
 	font-size: 36px;
 	text-align: center;
 	cursor: pointer;
@@ -328,14 +304,6 @@ span.selectedToggle {
 		/* height: calc(100vh - 140px); */
 	}
 
-	#professorsContainer {
-		width: 1020px;
-	}
-
-	.row {
-		height: 130px;
-	}
-
 	.professorCard {
 		width: 287px;
 		height: 100px;
@@ -343,6 +311,45 @@ span.selectedToggle {
 
 	.infoPreview {
 		width: 172px;
+	}
+}
+
+@media screen and (min-width: 1900px) {
+	#wrapper, #headerInner {
+		width: 1870px;
+	}
+
+	#professorsContainer {
+		width: 74.5%;
+	}
+
+	#filtersContainer {
+		width: 22%;
+	}
+
+	.professorCard {
+		width: 295px;
+	}
+
+	.professorCard:nth-child(3n+1) {
+		margin-left: 20px;
+	}
+
+	.professorCard:nth-child(4n+1) {
+		margin-left: 0px;
+	}
+
+	#toggles {
+		width: 70%;
+	}
+
+	.filterToggle {
+		width: 70%;
+	}
+
+	.letter {
+		padding-top: 10px !important;
+		padding-bottom: 10px !important;
 	}
 }
 

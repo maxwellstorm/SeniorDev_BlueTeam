@@ -2,6 +2,8 @@ var profArray = [];
 var refined = false;
 var refineLetter;
 
+var time = new Date().getTime();
+
 function init() {
 	$.ajax({
 		type: 'GET',
@@ -13,18 +15,32 @@ function init() {
 			var parsedData = $.parseJSON(dataArray);
 			// alert(dataArray);
 			$.each(parsedData, function(i,val) {
-				var professor = new Professor(val.facultyId, val.fName, val.lName, val.title, val.email, val.roomNumber, val.phone, val.departmentId, val.isActive, val.isFaculty, val.about, val.education, val.highlights, 'bogaard-thumb.jpg'); 
+				var professor = new Professor(val.facultyId, val.fName, val.lName, val.title, val.email, val.roomNumber, val.phone, val.departmentId, val.isActive, val.isFaculty, val.about, val.education, val.highlights, val.imageName); 
 				profArray.push(professor);
 			});
 		}
 	});
 	
 	populateGridView();
+
+	$(document.body).bind('mousemove keypress', function(e) {
+		time = new Date().getTime();
+	});
+
+	function refresh() {
+		if (new Date().getTime() - time >= 30000) {
+			window.location.reload(true);
+		} else {
+			setTimeout(refresh, 5000);
+		}
+	}
+
+	setTimeout(refresh, 5000);
 }
 
 function getProfessorCard(Professor) {
 	var card = '<div id="profCard' + Professor.getFacultyId() + '" data-lastinitial="' + Professor.getLastInitial() + '" data-room="' + Professor.getRoom().replace(/\s/g, '') + '" class="professorCard dropShadow roundCorners">';
-	card += '<div class="thumb" style="background-image: url(media/thumbs/' + Professor.getThumb() + ')"></div>';
+	card += '<div class="thumb" style="background-image: url(' + Professor.getThumb() + ')"></div>';
 	card += '<div class="infoPreview">';
 	card += '<div class="professorName">' + Professor.getFullName() + '</div>';
 	// card += '<div>Room ' + Professor.getRoom() + '</div>';
@@ -114,6 +130,7 @@ function refineList(letter) {
 }
 
 function updateOverlay(Professor) {
+	$('#overlayThumb').css('background-image', 'url(' + Professor.getThumb() + ')');
 	$('#overlayName').text(Professor.getFullName());
 	$('#overlayEmail').text(Professor.getEmail());
 	$('#overlayPhone').text(Professor.getPhone());
