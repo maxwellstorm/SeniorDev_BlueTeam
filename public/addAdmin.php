@@ -20,16 +20,21 @@
 
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$department = getDepartmentId(filterString($_POST['department']));
-
+		$fName = $_POST['firstName'];
+		$lName = $_POST['lastName'];
 		if(isset($_POST['new'])) {
 			try {
-				if($accessLevel == 3) {
-					postAdmin();
-				} else if($accessLevel < 3 && $adminDeptId == $department) {
-					postAdmin();
+				if(isDuplicateName($firstName, $lastName)) {
+					echo("You can't create duplicate Admins");
 				} else {
-					//RETURN ERROR MESSAGE
-					echo("You aren't authorized to do that!");
+					if($accessLevel == 3) {
+					postAdmin();
+					} else if($accessLevel < 3 && $adminDeptId == $department) {
+						postAdmin();
+					} else {
+						//RETURN ERROR MESSAGE
+						echo("You aren't authorized to do that!");
+					}
 				}
 			}
 		catch(dbException $db) {

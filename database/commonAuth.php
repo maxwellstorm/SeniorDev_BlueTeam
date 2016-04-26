@@ -68,4 +68,19 @@
 		
 		echo($navs);
 	}
+
+	function isDuplicateName($fName, $lName) {
+		$database = new data;
+
+		$match  =$database->getData("SELECT facultyId FROM Employees WHERE fName=:fName AND lName=:lName;", array(
+			":fName"=>$fName,
+			":lName"=>$lName
+		));
+
+		if(count($match) > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 ?>

@@ -20,15 +20,21 @@
 		$depts = $_POST['depts'];
 		$primaryDept = getDepartmentId(filterString($depts[0]));
 		$secondaryDept = getDepartmentId(filterString($depts[1]));
+		$fName = filterString($_POST['firstName']);
+		$lName = filterString($_POST['lastName']);
 
 		if(isset($_POST['new'])) {
 			try {
-				if($accessLevel == 3) {
-					postEmployee();
-				} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
-					postEmployee();
+				if(isDuplicateName($fName, $lName)) {
+					echo("You can't create duplicate employees!");
 				} else {
-					echo("You aren't authorized to do that!");
+					if($accessLevel == 3) {
+						postEmployee();
+					} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
+						postEmployee();
+					} else {
+						echo("You aren't authorized to do that!");
+					}
 				}
 			} catch(dbException $db) {
 				echo $db->alert();
