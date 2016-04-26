@@ -14,13 +14,10 @@ function setActive(active) {
 }
 
 function formatPhoneNum(phone) {
-
 	if(phone.value.length == 10) {
 		phone.value = "(" + phone.value.slice(0,3) + ") " + phone.value.slice(3, 6) + "-" + phone.value.slice(6,10);
 		$('#addEmployee').formValidation('revalidateField', 'phone');
 	}
-
-
 }
 
 function setAdminActive(active) {
