@@ -7,7 +7,7 @@
 		die("Redirecting to notAuthorized.html");
 	}
 
-require("util.php");
+require_once("util.php");
 class room{
 
 private $roomNumber = "";

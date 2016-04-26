@@ -36,7 +36,7 @@ function getInfo(selected) {
 	$.ajax({
 		method: "GET",
 		url: "../database/getInfo.php",
-		data: {facultyId : facId}
+		data: {facultyId : facId, page : "employee"}
 	}).done(function(response) {
 		var infoResponse = JSON.parse(response);
 		console.log(infoResponse);
@@ -86,8 +86,8 @@ function getAdminInfo(selected) {
 
 	$.ajax({
 		method: "GET",
-		url: "../database/getAdminInfo.php",
-		data: {adminId : aId}
+		url: "../database/getInfo.php",
+		data: {adminId : aId, page : "admin"}
 	}).done(function(response) {
 		var infoResponse = JSON.parse(response);
 		console.log(infoResponse);
@@ -104,8 +104,8 @@ function getAdminInfo(selected) {
 function getRoomInfo(selectedVal) {
 	$.ajax({
 		method: "GET",
-		url: "../database/getRoomInfo.php",
-		data: {room : selectedVal}
+		url: "../database/getInfo.php",
+		data: {room : selectedVal, page : "room"}
 	}).done(function(response) {
 		var infoResponse = JSON.parse(response);
 		console.log(infoResponse);
@@ -118,8 +118,8 @@ function getRoomInfo(selectedVal) {
 function getDepartmentInfo(selectedVal) {
 	$.ajax({
 		method: "GET",
-		url: "../database/getDepartmentInfo.php",
-		data: {deptId : selectedVal}
+		url: "../database/getInfo.php",
+		data: {deptId : selectedVal, page : "department"}
 	}).done(function(response) {
 		var infoResponse = JSON.parse(response);
 		console.log(infoResponse);
@@ -135,9 +135,9 @@ $(document).ready(function() {
 
 		if(searchKeyword.length >= 2 || searchKeyword.length == 0) {
 			$.ajax({
-				method: "POST",
+				method: "GET",
 				url: "../database/search.php",
-				data: {name : searchKeyword}
+				data: {name : searchKeyword, page : "employee"}
 			}).done(function(response) {
 				$('#results').replaceWith('<ul multiple class="form-control" id="results">' + response + "</ul>");
 			})
@@ -149,9 +149,9 @@ $(document).ready(function() {
 
 		if(searchKeyword.length >= 2 || searchKeyword.length == 0) {
 			$.ajax({
-				method: "POST",
-				url: "../database/adminSearch.php",
-				data: {name : searchKeyword}
+				method: "GET",
+				url: "../database/search.php",
+				data: {name : searchKeyword, page : "admin"}
 			}).done(function(response) {
 				$('#results').replaceWith('<ul multiple class="form-control" id="results">' + response + "</ul>");
 			})

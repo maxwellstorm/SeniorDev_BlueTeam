@@ -7,7 +7,7 @@ if(!$allowed) {
 		die("Redirecting to notAuthorized.html");
 }
 
-require("util.php");
+require_once("util.php");
 class employees{
 	
 
