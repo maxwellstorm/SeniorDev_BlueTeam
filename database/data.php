@@ -1,5 +1,6 @@
 <?php
 require_once("commonAuth.php");
+require_once("configuration.php")
 
 //REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
 $allowed = true;
@@ -11,10 +12,10 @@ if(!$allowed) {
 
 class data{
 	
-	private $server = 'facultydb.cdh6zybsklle.us-east-1.rds.amazonaws.com';
-	private $username = 'maxwellsweikert';
-	private $password = 'M3312140m';
-	private $DBName = 'facultyDb';
+	private $server = DB_HOST;
+	private $username = DB_USER;
+	private $password = DB_PASSWORD;
+	private $DBName = DB_DATABASE;
 	private $conn;
 	
 	function __construct(){
