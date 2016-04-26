@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Faculty Directory</string>
+    <color name="white">#FFFFFF</color>
+    <color name="rit_orange">#F36E21</color>
+</resources>
