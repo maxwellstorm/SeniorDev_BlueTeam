@@ -5,11 +5,11 @@
 	require_once("../database/commonAuth.php");
 	//do we need to require dbException?
 
-	//THESE GET REPLACED WITH SHIB-RELATED VARIABLES
+	//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
 	$adminDeptId = 1;
 	$accessLevel = 3;
 	$allowed = true;
-
+	
 	if($accessLevel < 2 || !$allowed) {
 		header("Location: notAuthorized.html");
         die("Redirecting to notAuthorized.html");

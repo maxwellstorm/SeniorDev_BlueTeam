@@ -3,7 +3,7 @@
 	require_once("../database/employees.php");
 	require_once("../database/commonAuth.php");
 
-	//THESE GET REPLACED WITH SHIB-RELATED VARIABLES
+	//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
 	$adminDeptId = 1;
 	$accessLevel = 3;
 	$allowed = true;
@@ -80,7 +80,7 @@
 		</header>
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<form class="form-horizontal" id="addFaculty" name="addFaculty" enctype="multipart/form-data" action="../database/newFaculty.php" method="POST" onsubmit="removeOnlyBullets('highlights'); removeOnlyBullets('education')">
+				<form class="form-horizontal" id="addFaculty" name="addFaculty" enctype="multipart/form-data" action="../database/newEmployee.php" method="POST" onsubmit="removeOnlyBullets('highlights'); removeOnlyBullets('education')">
 					<div class="col-lg-2" id="searchCol">
 						<h3>SEARCH</h3>
 						<div class="form-group">

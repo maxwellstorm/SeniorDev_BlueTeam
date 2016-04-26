@@ -1,24 +1,25 @@
 <?php
-	//THESE GET REPLACED WITH SHIB-RELATED VARIABLES
+	//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
 	$adminDeptId = 1;
 	$accessLevel = 3;
 	$allowed = true;
-
-	if(!$allowed) {
-		header("Location: ../public/notAuthorized.html");
-		die("Redirecting to notAuthorized.html");
-	}
 
 	require_once("data.php");
 	require_once("employees.php");
 	require_once("filters.php");
 	require_once("commonAuth.php");
 
+	if(!$allowed) {
+		header("Location: ../public/notAuthorized.html");
+		die("Redirecting to notAuthorized.html");
+	} //put these in an else?
+
 	$database = new data;
 
 	if($_SERVER['REQUEST_METHOD'] == 'POST') {
+		$depts = $_POST['depts'];
 		$primaryDept = getDepartmentId(filterString($depts[0]));
-		$secondaryDept = filterString($depts[1]);
+		$secondaryDept = getDepartmentId(filterString($depts[1]));
 
 		if(isset($_POST['new'])) {
 			try {
@@ -57,7 +58,8 @@
 		}
 	}
 
-	header('Location: http://kelvin.ist.rit.edu/~blueteam/public/addprofessor.php');
+	header('Location: ../public/addEmployee.php');
+	exit();
 
 
 	function postEmployee() {

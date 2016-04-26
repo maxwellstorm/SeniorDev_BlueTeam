@@ -1,13 +1,16 @@
 <?php
 
-	$allowed = true;
+require_once("util.php");
+require_once("commonAuth.php");
 
-	if(!$allowed) {
+//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
+$allowed = true;
+
+if(!$allowed) {
 		header("Location: ../public/notAuthorized.html");
 		die("Redirecting to notAuthorized.html");
 	}
 
-require_once("util.php");
 class room{
 
 private $roomNumber = "";

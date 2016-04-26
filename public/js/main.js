@@ -10,6 +10,7 @@ function setActive(active) {
 	document.getElementById('editBtn').disabled = false;
 
 	getInfo(active);
+	$('#addFaculty').data('formValidation').resetForm();
 }
 
 function formatPhoneNum(phone) {
@@ -28,6 +29,7 @@ function setAdminActive(active) {
 	document.getElementById('editBtn').disabled = false;
 
 	getAdminInfo(active);
+	$('#addFaculty').data('formValidation').resetForm();
 }
 
 function getInfo(selected) {
@@ -163,12 +165,14 @@ $(document).ready(function() {
 	$('#roomSelect').on('change', function() {
 		document.getElementById('editBtn').disabled = false;  		
   		getRoomInfo($(this).val());
+  		$('#addRoom').data('formValidation').resetForm();
   		disableCreate();
 	});
 
 	$('#deptSelect').on('change', function() {
 		document.getElementById('editBtn').disabled = false;
 		getDepartmentInfo($(this).val());
+		$('#addDepartment').data('formValidation').resetForm();
 		disableCreate();
 	});
 

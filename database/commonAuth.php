@@ -2,6 +2,15 @@
 	require_once("admin.php");
 	require_once("data.php");
 
+	/* THESE NEED TO BE UNCOMMENTED FOR PRODUCTION
+	$username = $_SERVER["uid"];
+	$firstName = $_SERVER['givenName'];
+	$adminDeptId = getAdminDepartment($username);
+	$accessLevel = getAccessLevel($username);
+	$allowed = isAllowed($username); */
+	
+
+	//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
 	$allowed = true;
 
 	if(!$allowed) {
@@ -10,6 +19,8 @@
 	}
 
 	function getAccessLevel($username) {
+		$database = new data;
+
 		$acct = $database->getData("SELECT accessLevel FROM Admin WHERE username=:username;", array(
 				":username"=>$username
 			));
@@ -18,6 +29,8 @@
 	}
 
 	function getAdminDepartment($username) {
+		$database = new data;
+
 		$acct = $database->getData("SELECT departmentId FROM Admin WHERE username=:username;", array(
 				":username"=>$username
 			));
@@ -26,6 +39,8 @@
 	}
 
 	function isAllowed($username) {
+		$database = new data;
+
 		$acct = $database->getData("SELECT username FROM Admin WHERE username=:username;", array(
 				":username"=>$username
 			));
@@ -39,7 +54,7 @@
 
 	function displayNav($accessLevel) {
 		$navs = "<ul class='nav nav-tabs'>";
-		$navs .= "	<li role='presentation' id='profNav'><a href='addprofessor.php'>Employees</a></li>";
+		$navs .= "	<li role='presentation' id='profNav'><a href='addEmployee.php'>Employees</a></li>";
 		$navs .= "	<li role='presentation' id='roomNav'><a href='addRoom.php'>Rooms</a></li>";
 		
 		if($accessLevel == 3) {

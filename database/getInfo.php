@@ -1,10 +1,4 @@
 <?php
-	$allowed = true;
-
-	if(!$allowed) {
-		header("Location: ../public/notAuthorized.html");
-		die("Redirecting to notAuthorized.html");
-	}
 
 	require_once("data.php");
 	require_once("admin.php");
@@ -12,9 +6,18 @@
 	require_once("employees.php");
 	require_once("room.php");
 	require_once("filters.php");
+	require_once("commonAuth.php");
 
+	//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
 	$adminDeptId = 1;
 	$accessLevel = 3;
+	$allowed = true;
+
+
+	if(!$allowed) {
+		header("Location: ../public/notAuthorized.html");
+		die("Redirecting to notAuthorized.html");
+	}
 
 	if (isset($_GET['page'])) {
 		$functionToCall = $_GET['page'];

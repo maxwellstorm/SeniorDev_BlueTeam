@@ -1,4 +1,13 @@
 <?php
+	require("data.php");
+	require("employees.php");
+	require("admin.php");
+	require("filters.php");
+	require_once("commonAuth.php");
+
+	//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
+	$adminDeptId = 1;
+	$accessLevel = 3;
 	$allowed = true;
 
 	if(!$allowed) {
@@ -6,13 +15,6 @@
 		die("Redirecting to notAuthorized.html");
 	}
 
-	require("data.php");
-	require("employees.php");
-	require("admin.php");
-	require("filters.php");
-
-	$adminDeptId = 1;
-	$accessLevel = 3;
 
 	if (isset($_GET['page'])) {
 		$functionToCall = $_GET['page'];

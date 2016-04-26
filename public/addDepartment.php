@@ -3,10 +3,10 @@
 	require("../database/department.php");
 	require_once("../database/dbException.php");
 	require("../database/filters.php");
-	require("../database/commonAuth.php");
+	require_once("../database/commonAuth.php");
 
 
-	//THESE GET REPLACED WITH SHIB-RELATED VARIABLES
+	//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
 	$adminDeptId = 1;
 	$accessLevel = 3;
 	$allowed = true;
