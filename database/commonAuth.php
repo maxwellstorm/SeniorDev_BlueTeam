@@ -54,7 +54,7 @@
 
 	function displayNav($accessLevel) {
 		$navs = "<ul class='nav nav-tabs'>";
-		$navs .= "	<li role='presentation' id='profNav'><a href='addEmployee.php'>Employees</a></li>";
+		$navs .= "	<li role='presentation' id='empNav'><a href='addEmployee.php'>Employees</a></li>";
 		$navs .= "	<li role='presentation' id='roomNav'><a href='addRoom.php'>Rooms</a></li>";
 		
 		if($accessLevel == 3) {

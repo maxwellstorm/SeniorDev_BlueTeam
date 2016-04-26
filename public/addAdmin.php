@@ -107,7 +107,7 @@
 		if($accessLevel == 3) {
 			$admins = $database->getData("SELECT fName, lName, departmentAbbr, adminId FROM Admin JOIN department ON Admin.departmentId = department.departmentId ORDER BY lName ASC;", array());
 		} else {
-			$admins = $database->getData("SELECT fName, lName, departmentAbbr, adminId FROM Admin JOIN department ON Admin.departmentId = department.departmentId WHERE Admin.departmentId=:deptId ORDER BY lName ASC;", array(
+			$admins = $database->getData("SELECT fName, lName, departmentAbbr, adminId FROM Admin JOIN department ON Admin.departmentId = department.departmentId WHERE Admin.departmentId=:deptId AND accessLevel < 3 ORDER BY lName ASC;", array(
 					":deptId"=>$adminDeptId
 				));
 		}

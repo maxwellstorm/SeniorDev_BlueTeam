@@ -44,7 +44,7 @@
 				":cleanRegexName"=>$cleanRegexName,
 			));
 		} else {
-			$results = $database->getData("SELECT fName, lName, departmentAbbr, adminId FROM Admin JOIN department ON Admin.departmentId = department.departmentId WHERE (fName LIKE :cleanRegexName OR lName LIKE :cleanRegexName OR CONCAT(fName, ' ', lName) LIKE :cleanRegexName) AND Admin.departmentId=:deptId ORDER BY lname ASC;", array(
+			$results = $database->getData("SELECT fName, lName, departmentAbbr, adminId FROM Admin JOIN department ON Admin.departmentId = department.departmentId WHERE (fName LIKE :cleanRegexName OR lName LIKE :cleanRegexName OR CONCAT(fName, ' ', lName) LIKE :cleanRegexName) AND Admin.departmentId=:deptId AND accessLevel < 3 ORDER BY lname ASC;", array(
 				":cleanRegexName"=>$cleanRegexName,
 				":cleanRegexName"=>$cleanRegexName,
 				":cleanRegexName"=>$cleanRegexName,

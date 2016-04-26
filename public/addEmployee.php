@@ -1,4 +1,5 @@
 <?php
+	//Includes & Requires
 	require_once("../database/data.php");
 	require_once("../database/employees.php");
 	require_once("../database/commonAuth.php");
@@ -8,19 +9,23 @@
 	$accessLevel = 3;
 	$allowed = true;
 
-	if(!$allowed) {
+	if(!$allowed) { //Check if user is allowed access - redirect if not in DB at all
 		header("Location: notAuthorized.html");
         die("Redirecting to notAuthorized.html");
 	}
 
-
+	/**
+	 * A function to get all employees (either in total or in a given department), and return them as a set of list items for the search column
+	 * @param $adminDeptId The department ID of the logged in administrative user
+	 * @param $accessLevel The access level of the logged in administrative user
+	 * @return HTML_Content A set of <li> that contain information about each faculty member
+	 */
 	function getAllEmps($adminDeptId, $accessLevel) {
 		$database = new data;
 
-
-		if($accessLevel == 3) {
+		if($accessLevel == 3) { //If the user is an administrator (highest auth level), allow them to see all employees
 			$emps = $database->getData("SELECT fName, lName, roomNumber, facultyId FROM Employees ORDER BY lName ASC;", array());
-		} else {
+		} else { //If the user is not an administrator, allow them to only see employees who are in their department
 			$emps = $database->getData("SELECT fName, lName, roomNumber, facultyId FROM Employees WHERE (departmentId=:deptId OR secondaryDepartmentID=:sdId) ORDER BY lName ASC;", array(
 				":deptId"=>$adminDeptId,
 				":sdId"=>$adminDeptId
@@ -32,6 +37,10 @@
 		}
 	}
 
+	/**
+	 * A function to get all rooms and return them as a set of <option>'s
+	 * @return HTML_Content A set of <option>'s each containing information about a room
+	 */
 	function getAllRooms() {
 		$database = new data;
 
@@ -42,6 +51,10 @@
 		}
 	}
 
+	/**
+	 * A function to get all departments and return them as a set of <option>'s
+	 * @return HTML_Content A set of <options>'s each containing information about a department
+	 */
 	function getAllDepartments() {
 		$database = new data;
 
@@ -74,7 +87,6 @@
 		<header class="dropShadow">
 			<div id="headerInner">
 				<h1>FACULTY DIRECTORY</h1>
-				<!-- <h3>Admin Panel</h3> -->
 				<img src="media/rit-logo.png" id="imgRIT" alt="" />
 			</div>
 		</header>
@@ -236,8 +248,8 @@
 			</div>
 		</div>
 		<script>
-			$(document).ready(function(){
-				$('#profNav').addClass('active');
+			$(document).ready(function(){ //sets tab for this page to active
+				$('#empNav').addClass('active');
 			});
 		</script>
 	</body>
