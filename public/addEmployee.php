@@ -189,13 +189,13 @@
 										<div class="col-lg-8">
 											<div class="radio">
 		 										<label>
-													<input type="radio" name="active" id="activeYes" value="activeYes" checked="" required>
+													<input type="radio" name="active" id="activeYes" value="1" checked="" required>
 													Yes
 												</label>
 											</div>
 											<div class="radio">
 												<label>
-													<input type="radio" name="active" id="activeNo" value="activeNo">
+													<input type="radio" name="active" id="activeNo" value="0">
 													No
 												</label>
 											</div>
@@ -207,13 +207,13 @@
 										<div class="col-lg-8">
 											<div class="radio">
 		 										<label>
-													<input type="radio" name="faculty" id="facultyYes" value="facYes" checked="" required>
+													<input type="radio" name="faculty" id="facultyYes" value="1" checked="" required>
 													Yes
 												</label>
 											</div>
 											<div class="radio">
 												<label>
-													<input type="radio" name="faculty" id="facultyNo" value="facNo">
+													<input type="radio" name="faculty" id="facultyNo" value="0">
 													No
 												</label>
 											</div>

@@ -70,7 +70,7 @@
 		$email = $_POST['email']; //VALIDATE EMAIL
 		$active = $_POST['active']; //VALIDATE INT
 		$faculty = $_POST['faculty']; //VALIDATE INT
-		$phone = filterString($_POST['phone']); //filterString(preg_replace("/[^0-9]/", "", $_POST['phone']));
+		$phone = filterString($_POST['phone']);
 		$about = filterString($_POST['about']);
 		$education = filterString($_POST['education']);
 		$highlights = filterString($_POST['highlights']);
@@ -78,25 +78,7 @@
 		$title = filterString($_POST['title']);
 		$depts = $_POST['depts'];
 		$primaryDept = getDepartmentId(filterString($depts[0]));
-		$secondaryDept = filterString($depts[1]);
-
-		if(strlen($secondaryDept) > 0) {
-			$secondaryDept = getDepartmentId($secondaryDept);
-		} else {
-			$secondaryDept = null;
-		}
-
-		if(strcmp($active, "activeYes") == 0) {
-			$active = 1;
-		} else {
-			$active = 0;
-		}
-
-		if(strcmp($faculty, "facYes") == 0) {
-			$faculty = 1;
-		} else {
-			$faculty = 0;
-		}
+		$secondaryDept = getDepartmentId(filterString($depts[1]));
 
 		$employee = new employees($database, null);
 		$imagePath = uploadImage($employee);
@@ -121,25 +103,7 @@
 		$title = filterString($_POST['title']);
 		$depts = $_POST['depts'];
 		$primaryDept = getDepartmentId(filterString($depts[0]));
-		$secondaryDept = filterString($depts[1]);
-
-		if(strlen($secondaryDept) > 0) {
-			$secondaryDept = getDepartmentId($secondaryDept);
-		} else {
-			$secondaryDept = null;
-		}
-
-		if(strcmp($active, "activeYes") == 0) {
-			$active = 1;
-		} else {
-			$active = 0;
-		}
-
-		if(strcmp($faculty, "facYes") == 0) {
-			$faculty = 1;
-		} else {
-			$faculty = 0;
-		}
+		$secondaryDept = getDepartmentId(filterString($depts[1]));
 
 		$employee = new employees($database, $id);
 		$employee->fetch();
@@ -149,6 +113,8 @@
 	}
 
 	function deleteEmployee() {
+		global $database;
+
 		$id = $_POST['facultyId']; //VALIDATE INT
 
 		$employee = new employees($database, $id);
