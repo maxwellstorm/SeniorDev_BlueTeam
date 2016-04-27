@@ -1,8 +1,8 @@
+// empty arrays to store professors and departments as objects
 var profArray = [];
 var deptArray = [];
-var refined = false;
-var refineLetter;
 
+// set initial time at page load (this is used for inactivity timeouts)
 var time = new Date().getTime();
 
 function init() {
@@ -45,6 +45,7 @@ function init() {
 	
 	populateGridView();
 
+	// the rest of the init function is for inactivity timeouts
 	$(document.body).bind('mousemove keypress', function(e) {
 		time = new Date().getTime();
 	});
@@ -164,30 +165,11 @@ function sortProfArray(by) {
 	}
 }
 
-function refineList(letter) {
-	refined = true;
-	refineLetter = letter;
-	resetGridView();
-
-	$('.professorCard').each(function(i) {
-		var lastInitial = $(this).attr('data-lastinitial');
-		if (lastInitial != letter) {
-			$(this).remove();
-		}
-	});
-}
-
 function filterProfessors() {
 	// set default filter values
 	var sort = 'name';
 	var view = 'grid';
 	var depts = [];
-	/*
-	$.each(deptArray, function(i, val) {
-		var deptName = val.getDeptName();
-		depts.push(deptName);
-	});
-	*/
 	var letter;
 
 	// set sort based on filter toggle
@@ -236,20 +218,18 @@ function filterProfessors() {
 	$('.professorCard').each(function(i, val) {
 		var currentProf = $(this);
 
-		/*
-		// refine by checked departments
-		var department = $(this).attr('data-dept');
-		if (!($.inArray(department, depts))) {
-			currentProf.remove();
-		}
-		*/
-
 		// refine by last initial
 		var lastInitial = $(this).attr('data-lastinitial');
 		if (letter != '') { // if the user actually selected a refine letter
 			if (lastInitial != letter) {
-				$(this).remove();
+				currentProf.remove();
 			}
+		}
+
+		// refine by department
+		var department = $(this).attr('data-dept');
+		if (depts.indexOf(department) == -1) {
+			currentProf.remove();
 		}
 	});
 }
@@ -315,10 +295,8 @@ $(document).ready(function() {
 		// slide the toggle slider
 		var selectedId = $(this).attr('id');
 		if (selectedId == "nameToggle") { // user wants to sort professors by last name
-			// sortProfArray("lname");
 			$('#sortToggle .toggleSlider').css('left', '0px');
 		} else { // user wants to sort professors by room number
-			// sortProfArray("room");
 			$('#sortToggle .toggleSlider').css('left', '50%');
 		}
 
@@ -355,7 +333,6 @@ $(document).ready(function() {
 		if ($('#refineToggle').hasClass('visible')) {
 			$('#refineToggle').slideUp(250).removeClass('visible');
 			$('.selected').removeClass('selected');
-			
 			filterProfessors();
 		} else {
 			$('#refineToggle').slideDown(250).addClass('visible');
@@ -365,14 +342,9 @@ $(document).ready(function() {
 	$('.letter').click(function() {
 		if ($(this).hasClass('selected')) {
 			$(this).removeClass('selected');
-			/*
-			refined = false;
-			resetGridView();
-			*/
 		} else {
 			$('.selected').removeClass('selected');
 			$(this).addClass('selected').addClass('roundCorners');
-			// refineList($(this).text());
 		}
 
 		filterProfessors();
