@@ -95,12 +95,12 @@ function setProfessorDepts() {
 function populateDeptFilters() {
 	$.each(deptArray, function(i, val) {
 		var filter = getDeptFilter(val);
-		$('#checks').append(filter);
+		$('#deptForm').append(filter);
 	});
 }
 
 function getDeptFilter(Department) {
-	var check = '<div class="deptCheck"><input type="checkbox" id="' + Department.getDeptName() + '" name="dept" value="' + Department.getDeptName() + '" checked="checked" /> ';
+	var check = '<div class="deptCheck"><input type="radio" id="' + Department.getDeptName() + '" name="dept" value="' + Department.getDeptName() + '" /> ';
 	check += '<label for="' + Department.getDeptName() + '">' + Department.getDeptName() + '</label>';
 	check += '</div>';
 	return check;
@@ -169,16 +169,14 @@ function filterProfessors() {
 	// set default filter values
 	var sort = 'name';
 	var view = 'grid';
-	var depts = [];
+	var dept = 'All';
 	var letter;
 
 	// set sort based on filter toggle
 	var sortSelectedId = $('#sortToggle .selectedToggle').attr('id');
 	if (sortSelectedId == "nameToggle") { // user wants to sort professors by last name
-		// sortProfArray("lname");
 		sort = 'lname';
 	} else { // user wants to sort professors by room number
-		// sortProfArray("room");
 		sort = 'room';
 	}
 
@@ -191,21 +189,13 @@ function filterProfessors() {
 	}
 
 	// set depts based on filter checkboxes
-	$('.deptCheck input').each(function(i) {
-		var selectedDept = $(this).attr('id');
-		if ($(this).attr('checked') == 'checked') {
-			depts.push(selectedDept);
-		} else {
-			depts = $.grep(depts, function(val) {
-				return val != selectedDept;
-			});
-		}
-	});
+	dept = $('.deptCheck input.checked').attr('id');
 
 	// set letter based on refine selection
 	letter = $('.letter.selected').text();
 
 	// alert(sort + ' ' + view + ' ' + depts + ' ' + letter);
+	
 	// BEGIN FILTERING BASED ON VARIABLE VALUES
 
 	// sort array
@@ -213,6 +203,18 @@ function filterProfessors() {
 
 	// repopulate the view
 	resetGridView();
+
+	if (dept != 'All') {
+		$('.professorCard').each(function(i, val) {
+			// refine by department
+			var department = $(this).attr('data-dept');
+			if (department != dept) {
+				$(this).remove();
+			}
+		});
+	} else {
+		resetGridView();
+	}
 
 	// begin removing professors from view
 	$('.professorCard').each(function(i, val) {
@@ -226,11 +228,11 @@ function filterProfessors() {
 			}
 		}
 
-		// refine by department
-		var department = $(this).attr('data-dept');
+		/*
 		if (depts.indexOf(department) == -1) {
 			currentProf.remove();
 		}
+		*/
 	});
 }
 
@@ -318,13 +320,14 @@ $(document).ready(function() {
 
 	$('.deptCheck input').click(function() {
 		var selectedId = $(this).attr('id');
-		if ($(this).attr('checked') == 'checked') {
-			// user just unchecked it
-			$(this).removeAttr('checked');
-		} else {
+		/*
+		if ($(this).attr('checked') != 'checked') {
 			// user just checked it
 			$(this).attr('checked', 'checked');
 		}
+		*/
+		$('.checked').removeClass('checked');
+		$(this).addClass('checked');
 
 		filterProfessors();
 	});
