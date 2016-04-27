@@ -199,7 +199,7 @@
 						</div>
 					</div>
 					<div class="col-lg-10">
-						<?php displayNav($accessLevel) ?>
+						<?php displayNav($accessLevel, $givenName) ?>
 						<fieldset>
 							<legend><h2>ADD A NEW ADMINISTRATOR</h2></legend>
 							<div class="col-lg-6" id="leftCol">
