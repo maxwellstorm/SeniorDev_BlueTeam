@@ -10,7 +10,6 @@
         die("Redirecting to notAuthorized.html");
 	}
 
-	if()
 
 
 
