@@ -4,7 +4,7 @@
 
 	/* THESE NEED TO BE UNCOMMENTED FOR PRODUCTION
 	$username = $_SERVER["uid"];
-	$firstName = $_SERVER['givenName'];
+	$givenName = $_SERVER['givenName'];
 	$adminDeptId = getAdminDepartment($username);
 	$accessLevel = getAccessLevel($username);
 	$allowed = isAllowed($username); */
@@ -53,7 +53,13 @@
 	}
 
 	function displayNav($accessLevel) {
-		$navs = "<ul class='nav nav-tabs'>";
+		if(isset($givenName)) {
+			$navs = "<div style='float: right'>Hello, " .  $_SERVER['givenName'] . "</div>";
+		} else {
+			$navs = "";
+		}
+
+		$navs .= "<ul class='nav nav-tabs'>";
 		$navs .= "	<li role='presentation' id='empNav'><a href='addEmployee.php'>Employees</a></li>";
 		$navs .= "	<li role='presentation' id='roomNav'><a href='addRoom.php'>Rooms</a></li>";
 		
@@ -65,7 +71,7 @@
 			$navs .= "	<li role='presentation' id='adminNav'><a href='addAdmin.php'>Admins</a></li>";
 		}
 		$navs .= "</ul>";
-		
+
 		echo($navs);
 	}
 
