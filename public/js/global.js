@@ -1,4 +1,5 @@
 var profArray = [];
+var deptArray = [];
 var refined = false;
 var refineLetter;
 
@@ -16,10 +17,30 @@ function init() {
 			// alert(dataArray);
 			$.each(parsedData, function(i,val) {
 				var professor = new Professor(val.facultyId, val.fName, val.lName, val.title, val.email, val.roomNumber, val.phone, val.departmentId, val.isActive, val.isFaculty, val.about, val.education, val.highlights, val.imageName); 
-				profArray.push(professor);
+				if (val.isActive == 1) {
+					profArray.push(professor);
+				}
 			});
 		}
 	});
+
+	/*
+	$.ajax({
+		type: 'GET',
+		url: '../database/fetch.php',
+		data: 'function=fetchDepts',
+		async: false,
+		success: function(response) {
+			var dataArray = response;
+			var parsedData = $.parseJSON(dataArray);
+			alert(dataArray);
+			$.each(parsedData, function(i,val) {
+				// var dept = new Department();
+				// deptArray.push(dept);
+			});
+		}
+	});
+	*/
 	
 	populateGridView();
 
@@ -43,7 +64,6 @@ function getProfessorCard(Professor) {
 	card += '<div class="thumb" style="background-image: url(' + Professor.getThumb() + ')"></div>';
 	card += '<div class="infoPreview">';
 	card += '<div class="professorName">' + Professor.getFullName() + '</div>';
-	// card += '<div>Room ' + Professor.getRoom() + '</div>';
 	card += '<div>' + Professor.getRoom() + '</div>';
 	card += '<div class="moreLink">More Info</div>';
 	card += '</div></div>';
@@ -132,13 +152,32 @@ function refineList(letter) {
 function updateOverlay(Professor) {
 	$('#overlayThumb').css('background-image', 'url(' + Professor.getThumb() + ')');
 	$('#overlayName').text(Professor.getFullName());
+	$('#overlayRoom').text(Professor.getRoom());
 	$('#overlayEmail').text(Professor.getEmail());
 	$('#overlayPhone').text(Professor.getPhone());
-	// $('#overlayRoom').text('Room ' + Professor.getRoom());
-	$('#overlayRoom').text(Professor.getRoom());
-	$('#overlayAbout').text(Professor.getAbout());
-	$('#overlayEducation').html(Professor.getEducation());
-	$('#overlayHighlights').text(Professor.getHighlights());
+
+	$('#deptText').text(Professor.getDepartmentId());
+
+	if (Professor.getAbout() != '') {
+		$('#overlayAbout').show();
+		$('#aboutText').html(Professor.getAbout());
+	} else {
+		$('#overlayAbout').hide();	
+	}
+
+	if (Professor.getEducation() != '') {
+		$('#overlayEducation').show();
+		$('#educationText').html(Professor.getEducation());
+	} else {
+		$('#overlayEducation').hide();	
+	}
+
+	if (Professor.getHighlights() != '') {
+		$('#overlayHighlights').show();
+		$('#highlightsText').html(Professor.getHighlights());
+	} else {
+		$('#overlayHighlights').hide();
+	}
 }
 
 function showOverlay() {

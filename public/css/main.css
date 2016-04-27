@@ -4,7 +4,6 @@ body {
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 16px;
 	font-weight: 300;
-	letter-spacing: 1px;
 	line-height: 1.5;
 	background: #E0E0E0;
 	color: #252525;
@@ -15,7 +14,6 @@ h1 {
 	font-family: Montserrat, Helvetica, Arial, sans-serif;
 	font-size: 64px;
 	font-weight: normal;
-	letter-spacing: normal;
 	margin: 0;
 }
 
@@ -23,7 +21,6 @@ h2 {
 	font-family: Montserrat, Helvetica, Arial, sans-serif;
 	font-size: 48px;
 	font-weight: normal;
-	letter-spacing: normal;
 	margin: -4px 0px 0px 0px;
 	line-height: 1;
 }
@@ -84,20 +81,32 @@ header h1 {
 }
 
 #primaryInfo {
-	display: inline;
+	display: inline-block;
 	position: relative;
 	left: 15px;
+	height: 100px;
 }
 
 #extensiveInfo {
 	display: block;
-	margin-top: 40px;
-	letter-spacing: normal;
+	width: 100%;
+	margin-top: 20px;
+	padding-top: 20px;
+	border-top: 1px solid #BBBBBB;
+	font-size: 14px;
+}
+
+#deptHeading, #aboutHeading, #educationHeading, #highlightsHeading {
+	margin-top: 20px;
+	margin-bottom: 0px;
+}
+
+#deptHeading {
+	margin-top: 0px;
 }
 
 #overlayAbout, #overlayEducation, #overlayHighlights {
-	margin-top: 20px;
-	white-space: pre-wrap;
+	white-space: pre-line;
 }
 
 #closeOverlay {
@@ -266,6 +275,10 @@ span.selectedToggle {
 	cursor: pointer;
 }
 
+#refineToggle {
+	display: none;
+}
+
 #letters {
 	margin-top: 10px;
 }
@@ -382,14 +395,12 @@ span.selectedToggle {
 
 .panel-body * {
 	font-size: 15px;
-	letter-spacing: 1px !important;
 }
 
 .panel-body legend h2 {
 	font-size: 28px;
 	padding: 10px 0px;
 	font-weight: normal;
-	letter-spacing: normal;
 }
 
 .panel-body input[type='file'] {

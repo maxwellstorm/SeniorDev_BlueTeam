@@ -88,3 +88,23 @@ class Professor {
 		return this.thumb;
 	}
 }
+
+class Department {
+	constructor(deptId, deptName, deptAbbr) {
+		this.deptId = deptId;
+		this.deptName = deptName;
+		this.deptAbbr = deptAbbr;
+	}
+
+	getDeptId() {
+		return this.deptId;
+	}
+
+	getDeptName() {
+		return this.deptName;
+	}
+
+	getDeptAbbr() {
+		return this.debtAbbr;
+	}
+}
