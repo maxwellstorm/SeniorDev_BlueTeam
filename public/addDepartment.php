@@ -18,40 +18,42 @@
 
 
 	$database = new data;
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-	if(isset($_POST['new'])) {
-		try{
-		
-			$name = filterString($_POST['deptName']);
-			$abbr = filterString($_POST['deptAbbr']);
+	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+		if(isset($_POST['new'])) {
+			try{
+				$name = filterString($_POST['deptName']);
+				$abbr = filterString($_POST['deptAbbr']);
 
-			$dept = new department($database, null);
-			$dept->postParams($name, $abbr);
-		}
-		catch(dbException $db){
-			echo $db->alert();
-		}
-	} elseif(isset($_POST['edit'])){	
-		try{
-			
-			$deptId = $_POST['deptId']; //add int validation
-			$deptName = filterString($_POST['deptName']);
-			$deptAbbr = filterString($_POST['deptAbbr']);
+				$dept = new department($database, null);
+				$dept->postParams($name, $abbr);
+				$returnMessage = alert("success", "Department successfully created");
+			}
+			catch(dbException $db){
+				echo $db->alert();
+			}
+		} elseif(isset($_POST['edit'])){	
+			try{
+				
+				$deptId = $_POST['deptId']; //add int validation
+				$deptName = filterString($_POST['deptName']);
+				$deptAbbr = filterString($_POST['deptAbbr']);
 
-			$dept = new department($database, $deptId);
-			$dept->putParams($deptName, $deptAbbr);
-		}
-		catch(dbException $db){
-			echo $db->alert();
-		}
+				$dept = new department($database, $deptId);
+				$dept->putParams($deptName, $deptAbbr);
+				$returnMessage = alert("success", "Department successfully updated");
+			}
+			catch(dbException $db){
+				echo $db->alert();
+			}
 
-	} elseif(isset($_POST['delete']) && isset($_POST['deptId'])) {
-		$id = $_POST['deptId'];
+		} elseif(isset($_POST['delete']) && isset($_POST['deptId'])) {
+			$id = $_POST['deptId'];
 
-		$dept = new department($database, $id);
-		$dept->delete();
+			$dept = new department($database, $id);
+			$dept->delete();
+			$returnMessage = alert("success", "Department successfully deleted");
+		}
 	}
-}
 
 	function getAllDepartments() {
 		$database = new data;
@@ -88,6 +90,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		</header>
 		<div class="panel panel-default">
 			<div class="panel-body">
+				<?php if(isset($returnMessage)) {
+					echo($returnMessage); 
+				} ?>
 				<form class="form-horizontal" id="addDepartment" name="addDepartment" action="addDepartment.php" method="POST">
 					<div class="col-lg-2 dropdownSelect" id="searchCol">
 						<select id="deptSelect" class="form-control">

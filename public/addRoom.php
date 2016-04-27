@@ -21,14 +21,18 @@
 	
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		if(isset($_POST['new'])) {
-
 			try{
-				$roomNum = filterString($_POST['room']);
+				if(!doesRoomExist(filterString($_POST['room']))) {
+					$roomNum = filterString($_POST['room']);
 				$map = "asdasda"; //STILL NEED TO DO MAP
 				$desc = filterString($_POST['description']);
 
 				$room = new room($database, null);	
 				$room->postParams($roomNum, $map, $desc);
+				$returnMessage = alert("success", "Room successfully created");
+				} else {
+					$returnMessage = alert("danger", "Duplicate Entry!");
+				}
 			}
 		catch(dbException $db){
 				echo $db->alert();
@@ -41,6 +45,7 @@
 
 				$room = new room($database, $roomNum);
 				$room->putParams($map, $desc);
+				$returnMessage = alert("success", "Room successfully updated");
 			}
 		catch(dbException $db){
 				echo $db->alert();
@@ -48,11 +53,13 @@
 
 		} elseif(isset($_POST['delete']) && isset($_POST['room'])) {
 			$roomNum = filterString($_POST['room']);
+			
 			if(isRoomInUse($roomNum)) {
-				echo("You can't delete a room that's in use!");
+				$returnMessage = alert("danger", "You can't delete a room that's in use!");
 			} else {
 				$room = new room($database, $roomNum);
 				$room->delete();
+				$returnMessage = alert("success", "Room successfully deleted");
 			}
 		}
 	}
@@ -71,6 +78,20 @@
 		$database = new data;
 
 		$match = $database->getData("SELECT facultyId FROM Employees WHERE roomNumber=:roomNum;", array(
+			":roomNum"=>$roomNum
+		));
+
+		if(count($match) > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function doesRoomExist($roomNum) {
+		$database = new data;
+
+		$match = $database->getData("SELECT roomNumber FROM room WHERE roomNumber=:roomNum;", array(
 			":roomNum"=>$roomNum
 		));
 
@@ -105,6 +126,9 @@
 		</header>
 		<div class="panel panel-default">
 			<div class="panel-body">
+				<?php if(isset($returnMessage)) {
+					echo($returnMessage); 
+				} ?>
 				<form class="form-horizontal" id="addRoom" name="addRoom" action="addRoom.php" method="POST">
 					<div class="col-lg-2 dropdownSelect" id="searchCol">
 						<select class="form-control" id="roomSelect">

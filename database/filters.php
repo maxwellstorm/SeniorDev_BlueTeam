@@ -27,6 +27,7 @@
 				return $int;
 			} else {
 				//throw exception, I think
+				//or should we call alert?
 			}
 		}
 	}
@@ -38,6 +39,7 @@
 			return $email;
 		} else {
 			//throw exception, I think
+			//or should we call alert?
 		}
 	}
 ?>

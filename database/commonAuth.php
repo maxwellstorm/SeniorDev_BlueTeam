@@ -92,4 +92,18 @@
 			return false;
 		}
 	}
+
+	/**
+	 * A method to return an message to provide feedback to the user in the form of an alert-dismissable box
+	 * @param $type The type of message (danger, warning, info, success, etc.) 
+	 * @param $text The text to be displayed
+	 * @return $alert a small section of formatted HTML containing the message
+	 */
+	function alert($type, $text) {
+		$alert = "<div class='alert alert-dismissible alert-$type'>";
+		$alert .= "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>";
+		$alert .= "$text</div>";
+
+		return $alert;
+	}
 ?>

@@ -25,15 +25,18 @@
 		if(isset($_POST['new'])) {
 			try {
 				if(isDuplicateName($fName, $lName, "Admin")) {
-					throw new dbException("You can't create duplicate Admins", 1);
+					$returnMessage = alert("danger", "You can't create duplicate Admins!");
+					//throw new dbException("You can't create duplicate Admins", 1);
 				} else {
 					if($accessLevel == 3) {
-					postAdmin();
+						postAdmin();
+						$returnMessage = alert("success", "Administrative user successfully created");
 					} else if($accessLevel < 3 && $adminDeptId == $department) {
 						postAdmin();
+						$returnMessage = alert("success", "Administrative user successfully created");
 					} else {
-						//RETURN ERROR MESSAGE
-						echo("You aren't authorized to do that!");
+						//RETURN ERROR MESSAGE - LOG ERROR?
+						$returnMessage = alert("danger", "You aren't authorized to do that!");
 					}
 				}
 			}
@@ -44,11 +47,13 @@
 			try {
 				if($accessLevel == 3) {
 					putAdmin();
+					$returnMessage = alert("success", "Administrative user successfully updated");
 				} else if($accessLevel < 3 && $adminDeptId == $department) {
 					putAdmin();
+					$returnMessage = alert("success", "Administrative user successfully updated");
 				} else {
-					//RETURN ERROR MESSAGE
-					echo("You aren't authorized to do that!");
+					//RETURN ERROR MESSAGE - LOG ERRROR?
+					$returnMessage = alert("danger", "You aren't authorized to do that!");
 				}
 			}
 		catch(dbException $db) {
@@ -58,13 +63,15 @@
 		} elseif(isset($_POST['delete']) && isset($_POST['adminId'])) {
 			//add try/catch?
 			if($accessLevel == 3) {
-					deleteAdmin();
-				} else if($accessLevel < 3 && $adminDeptId == $department) {
-					deleteAdmin();
-				} else {
-					//RETURN ERROR MESSAGE
-					echo("You aren't authorized to do that!");
-				}
+				deleteAdmin();
+				$returnMessage = alert("success", "Administrative user successfully deleted");
+			} else if($accessLevel < 3 && $adminDeptId == $department) {
+				deleteAdmin();
+				$returnMessage = alert("success", "Administrative user successfully deleted");
+			} else {
+				//RETURN ERROR MESSAGE - LOG ERROR?
+				$returnMessage = alert("danger", "You aren't authorized to do that!");
+			}
 		}
 	}
 
@@ -171,6 +178,9 @@
 		</header>
 		<div class="panel panel-default">
 			<div class="panel-body">
+				<?php if(isset($returnMessage)) {
+					echo($returnMessage); 
+				} ?>
 				<form class="form-horizontal" id="addAdmin" name="addAdmin" action="addAdmin.php" method="POST">
 					<div class="col-lg-2" id="searchCol">
 						<h3>SEARCH</h3>
