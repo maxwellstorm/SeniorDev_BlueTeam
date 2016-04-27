@@ -49,7 +49,7 @@ if(!$allowed) {
 	
 	public static function logMessage($path,$message){
 		$dataStamp = date('Y-m-d g:i a');
-		$file = fopen($path, "a+");
+		$file = fopen("log.txt", "w+");
 		if( $file == false ) 
             die( "Error in opening file" );
 		fwrite( $file, "$dataStamp: $message\n" );

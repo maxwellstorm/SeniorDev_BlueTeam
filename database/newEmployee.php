@@ -25,7 +25,7 @@
 
 		if(isset($_POST['new'])) {
 			try {
-				if(isDuplicateName($fName, $lName)) {
+				if(isDuplicateName($fName, $lName, "Employees")) {
 					echo("You can't create duplicate employees!");
 				} else {
 					if($accessLevel == 3) {

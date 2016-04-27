@@ -175,7 +175,7 @@ $(document).ready(function() {
 
 	applyBullets('highlights');
 	applyBullets('education');
-
+	
 	$('.form-horizontal').formValidation({
 		framework: 'bootstrap',
 

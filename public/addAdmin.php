@@ -3,7 +3,7 @@
 	require_once("../database/admin.php");
 	require_once("../database/filters.php");
 	require_once("../database/commonAuth.php");
-	//do we need to require dbException?
+	require_once("../database/dbException.php");
 
 	//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
 	$adminDeptId = 1;
@@ -24,8 +24,8 @@
 		$lName = $_POST['lastName'];
 		if(isset($_POST['new'])) {
 			try {
-				if(isDuplicateName($firstName, $lastName)) {
-					echo("You can't create duplicate Admins");
+				if(isDuplicateName($fName, $lName, "Admin")) {
+					throw new dbException("You can't create duplicate Admins", 1);
 				} else {
 					if($accessLevel == 3) {
 					postAdmin();

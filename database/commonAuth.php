@@ -69,13 +69,22 @@
 		echo($navs);
 	}
 
-	function isDuplicateName($fName, $lName) {
+	function isDuplicateName($fName, $lName, $table) {
 		$database = new data;
 
-		$match  =$database->getData("SELECT facultyId FROM Employees WHERE fName=:fName AND lName=:lName;", array(
+		if(strcmp($table, "Admin") == 0) {
+			$match  =$database->getData("SELECT adminId FROM Admin WHERE fName=:fName AND lName=:lName;", array(
 			":fName"=>$fName,
 			":lName"=>$lName
 		));
+		} else if(strcmp($table, "Employees") == 0) {
+			$match  =$database->getData("SELECT facultyId FROM Employees WHERE fName=:fName AND lName=:lName;", array(
+			":fName"=>$fName,
+			":lName"=>$lName
+		));
+		} else {
+			//throw error
+		}
 
 		if(count($match) > 0) {
 			return true;
