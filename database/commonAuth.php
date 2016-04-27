@@ -1,5 +1,4 @@
 <?php
-	require_once("admin.php");
 	require_once("data.php");
 
 	/* THESE NEED TO BE UNCOMMENTED FOR PRODUCTION
