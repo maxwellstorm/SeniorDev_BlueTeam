@@ -87,6 +87,14 @@ class Professor {
 	getThumb() {
 		return this.thumb;
 	}
+
+	setDepartment(department) {
+		this.department = department;
+	}
+
+	getDepartment() {
+		return this.department;
+	}
 }
 
 class Department {

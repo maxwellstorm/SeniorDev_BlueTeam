@@ -22,7 +22,7 @@
 	function fetchDepts() {
 		$database = new data;
 
-		$depts = $database->getData("SELECT * FROM Department;", array());
+		$depts = $database->getData("SELECT * FROM department;", array());
 
 		return json_encode($depts);
 	}

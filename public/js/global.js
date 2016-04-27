@@ -15,7 +15,7 @@ function init() {
 			var dataArray = response;
 			var parsedData = $.parseJSON(dataArray);
 			// alert(dataArray);
-			$.each(parsedData, function(i,val) {
+			$.each(parsedData, function(i, val) {
 				var professor = new Professor(val.facultyId, val.fName, val.lName, val.title, val.email, val.roomNumber, val.phone, val.departmentId, val.isActive, val.isFaculty, val.about, val.education, val.highlights, val.imageName); 
 				if (val.isActive == 1) {
 					profArray.push(professor);
@@ -24,7 +24,6 @@ function init() {
 		}
 	});
 
-	/*
 	$.ajax({
 		type: 'GET',
 		url: '../database/fetch.php',
@@ -33,14 +32,15 @@ function init() {
 		success: function(response) {
 			var dataArray = response;
 			var parsedData = $.parseJSON(dataArray);
-			alert(dataArray);
-			$.each(parsedData, function(i,val) {
-				// var dept = new Department();
-				// deptArray.push(dept);
+			// alert(dataArray);
+			$.each(parsedData, function(i, val) {
+				var dept = new Department(val.departmentId, val.departmentName, val.departmentAbbr);
+				deptArray.push(dept);
 			});
+
+			setProfessorDepts();
 		}
 	});
-	*/
 	
 	populateGridView();
 
@@ -79,6 +79,24 @@ function getProfessorFromArr(facultyId) {
 		}
 	});
 	return profToReturn;
+}
+
+function setProfessorDepts() {
+	$.each(profArray, function(i, val) {
+		var deptId = val.getDepartmentId();
+		var deptName = getDepartmentName(deptId);
+		val.setDepartment(deptName);
+	});
+}
+
+function getDepartmentName(deptId) {
+	var deptName;
+	$.each(deptArray, function(i, val) {
+		if (val.getDeptId() == deptId) {
+			deptName = val.getDeptName();
+		}
+	});
+	return deptName;
 }
 
 function populateGridView() {
@@ -156,7 +174,7 @@ function updateOverlay(Professor) {
 	$('#overlayEmail').text(Professor.getEmail());
 	$('#overlayPhone').text(Professor.getPhone());
 
-	$('#deptText').text(Professor.getDepartmentId());
+	$('#deptText').text(Professor.getDepartment());
 
 	if (Professor.getAbout() != '') {
 		$('#overlayAbout').show();
