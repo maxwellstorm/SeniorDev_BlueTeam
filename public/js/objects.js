@@ -1,3 +1,4 @@
+'use strict';
 class Professor {
 	constructor(facultyId, first, last, title, email, room, phone, departmentId, isActive, isFaculty, about, education, highlights, thumb) {
 		this.facultyId = facultyId;

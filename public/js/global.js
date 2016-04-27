@@ -39,6 +39,7 @@ function init() {
 			});
 
 			setProfessorDepts();
+			populateDeptFilters();
 		}
 	});
 	
@@ -60,7 +61,8 @@ function init() {
 }
 
 function getProfessorCard(Professor) {
-	var card = '<div id="profCard' + Professor.getFacultyId() + '" data-lastinitial="' + Professor.getLastInitial() + '" data-room="' + Professor.getRoom().replace(/\s/g, '') + '" class="professorCard dropShadow roundCorners">';
+	var card = '<div id="profCard' + Professor.getFacultyId() + '" data-lastinitial="' + Professor.getLastInitial() + '" data-room="';
+	card += Professor.getRoom().replace(/\s/g, '') + '" data-dept="' + Professor.getDepartment() + '" class="professorCard dropShadow roundCorners">';
 	card += '<div class="thumb" style="background-image: url(' + Professor.getThumb() + ')"></div>';
 	card += '<div class="infoPreview">';
 	card += '<div class="professorName">' + Professor.getFullName() + '</div>';
@@ -87,6 +89,20 @@ function setProfessorDepts() {
 		var deptName = getDepartmentName(deptId);
 		val.setDepartment(deptName);
 	});
+}
+
+function populateDeptFilters() {
+	$.each(deptArray, function(i, val) {
+		var filter = getDeptFilter(val);
+		$('#checks').append(filter);
+	});
+}
+
+function getDeptFilter(Department) {
+	var check = '<div class="deptCheck"><input type="checkbox" id="' + Department.getDeptName() + '" name="dept" value="' + Department.getDeptName() + '" checked="checked" /> ';
+	check += '<label for="' + Department.getDeptName() + '">' + Department.getDeptName() + '</label>';
+	check += '</div>';
+	return check;
 }
 
 function getDepartmentName(deptId) {
@@ -129,8 +145,8 @@ function sortProfArray(by) {
 		});
 	} else if (by == "room") { // sort by room
 		profArray.sort(function(a, b) {
-			var aRoom = a.getRoom();
-			var bRoom = b.getRoom();
+			var aRoom = a.getRoom().replace(/\s/g, '');
+			var bRoom = b.getRoom().replace(/\s/g, '');
 			if (aRoom < bRoom) {
 				return -1;
 			} else if (aRoom > bRoom) {
@@ -146,12 +162,6 @@ function sortProfArray(by) {
 			}
 		});
 	}
-	// set the view with different sort
-	if (refined) {
-		refineList(refineLetter);
-	} else {
-		resetGridView();
-	}
 }
 
 function refineList(letter) {
@@ -163,6 +173,83 @@ function refineList(letter) {
 		var lastInitial = $(this).attr('data-lastinitial');
 		if (lastInitial != letter) {
 			$(this).remove();
+		}
+	});
+}
+
+function filterProfessors() {
+	// set default filter values
+	var sort = 'name';
+	var view = 'grid';
+	var depts = [];
+	/*
+	$.each(deptArray, function(i, val) {
+		var deptName = val.getDeptName();
+		depts.push(deptName);
+	});
+	*/
+	var letter;
+
+	// set sort based on filter toggle
+	var sortSelectedId = $('#sortToggle .selectedToggle').attr('id');
+	if (sortSelectedId == "nameToggle") { // user wants to sort professors by last name
+		// sortProfArray("lname");
+		sort = 'lname';
+	} else { // user wants to sort professors by room number
+		// sortProfArray("room");
+		sort = 'room';
+	}
+
+	// set view based on filter toggle
+	var viewSelectedId = $('#viewToggle .selectedToggle').attr('id');
+	if (viewSelectedId == "gridToggle") { // user wants to view professors in a grid
+		view = 'grid';
+	} else { // user wants to view professors in a list
+		view = 'list';
+	}
+
+	// set depts based on filter checkboxes
+	$('.deptCheck input').each(function(i) {
+		var selectedDept = $(this).attr('id');
+		if ($(this).attr('checked') == 'checked') {
+			depts.push(selectedDept);
+		} else {
+			depts = $.grep(depts, function(val) {
+				return val != selectedDept;
+			});
+		}
+	});
+
+	// set letter based on refine selection
+	letter = $('.letter.selected').text();
+
+	// alert(sort + ' ' + view + ' ' + depts + ' ' + letter);
+	// BEGIN FILTERING BASED ON VARIABLE VALUES
+
+	// sort array
+	sortProfArray(sort);
+
+	// repopulate the view
+	resetGridView();
+
+	// begin removing professors from view
+	$('.professorCard').each(function(i, val) {
+		var currentProf = $(this);
+
+		/*
+		// refine by checked departments
+		var department = $(this).attr('data-dept');
+		if (!($.inArray(department, depts))) {
+			currentProf.remove();
+		}
+		*/
+
+		// refine by last initial
+		var lastInitial = $(this).attr('data-lastinitial');
+		if (letter != '') { // if the user actually selected a refine letter
+			if (lastInitial != letter) {
+				$(this).remove();
+			}
 		}
 	});
 }
@@ -228,12 +315,14 @@ $(document).ready(function() {
 		// slide the toggle slider
 		var selectedId = $(this).attr('id');
 		if (selectedId == "nameToggle") { // user wants to sort professors by last name
-			sortProfArray("lname");
+			// sortProfArray("lname");
 			$('#sortToggle .toggleSlider').css('left', '0px');
 		} else { // user wants to sort professors by room number
-			sortProfArray("room");
+			// sortProfArray("room");
 			$('#sortToggle .toggleSlider').css('left', '50%');
 		}
+
+		filterProfessors();
 	});
 
 	$('#viewToggle span').click(function() {
@@ -249,12 +338,25 @@ $(document).ready(function() {
 		}
 	});
 
+	$('.deptCheck input').click(function() {
+		var selectedId = $(this).attr('id');
+		if ($(this).attr('checked') == 'checked') {
+			// user just unchecked it
+			$(this).removeAttr('checked');
+		} else {
+			// user just checked it
+			$(this).attr('checked', 'checked');
+		}
+
+		filterProfessors();
+	});
+
 	$('#refineLink').click(function() {
 		if ($('#refineToggle').hasClass('visible')) {
 			$('#refineToggle').slideUp(250).removeClass('visible');
 			$('.selected').removeClass('selected');
-			refined = false;
-			resetGridView();
+			
+			filterProfessors();
 		} else {
 			$('#refineToggle').slideDown(250).addClass('visible');
 		}
@@ -263,12 +365,16 @@ $(document).ready(function() {
 	$('.letter').click(function() {
 		if ($(this).hasClass('selected')) {
 			$(this).removeClass('selected');
+			/*
 			refined = false;
 			resetGridView();
+			*/
 		} else {
 			$('.selected').removeClass('selected');
 			$(this).addClass('selected').addClass('roundCorners');
-			refineList($(this).text());
+			// refineList($(this).text());
 		}
+
+		filterProfessors();
 	});
 });
