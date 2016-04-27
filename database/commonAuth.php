@@ -52,7 +52,7 @@
 		}
 	}
 
-	function displayNav($accessLevel) {
+	function displayNav($accessLevel, $givenName) {
 		if(isset($givenName)) {
 			$navs = "<div style='float: right'>Hello, " .  $_SERVER['givenName'] . "</div>";
 		} else {
