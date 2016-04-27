@@ -143,7 +143,7 @@
 					</div>
 
 					<div class="col-lg-10">
-						<?php displayNav($accessLevel) ?>
+						<?php displayNav($accessLevel, $givenName) ?>
 						<fieldset>
 							<legend><h2>ADD A NEW ROOM</h2></legend>
 							<div class="form-group">
