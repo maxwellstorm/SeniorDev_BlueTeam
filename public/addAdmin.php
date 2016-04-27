@@ -9,6 +9,7 @@
 	$adminDeptId = 1;
 	$accessLevel = 3;
 	$allowed = true;
+	$givenName = "Andy";
 	
 	if($accessLevel < 2 || !$allowed) {
 		header("Location: notAuthorized.html");

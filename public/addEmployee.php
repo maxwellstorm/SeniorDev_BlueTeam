@@ -5,11 +5,17 @@
 	require_once("../database/commonAuth.php");
 	require_once("../database/filters.php");
 
+	//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
+	$adminDeptId = 1;
+	$accessLevel = 3;
+	$allowed = true;
+	$givenName = "Andy";
+	
+
 	if(!$allowed) { //Check if user is allowed access - redirect if not in DB at all
 		header("Location: notAuthorized.html");
         die("Redirecting to notAuthorized.html");
 	}
-
 
 
 
