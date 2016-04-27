@@ -16,63 +16,61 @@
 
 	$database = new data;
 
-	function main() {
-		if($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$depts = $_POST['depts'];
-			$primaryDept = getDepartmentId(filterString($depts[0]));
-			$secondaryDept = getDepartmentId(filterString($depts[1]));
-			$fName = filterString($_POST['firstName']);
-			$lName = filterString($_POST['lastName']);
+	if($_SERVER['REQUEST_METHOD'] == 'POST') {
+		$depts = $_POST['depts'];
+		$primaryDept = getDepartmentId(filterString($depts[0]));
+		$secondaryDept = getDepartmentId(filterString($depts[1]));
+		$fName = filterString($_POST['firstName']);
+		$lName = filterString($_POST['lastName']);
 
-			if(isset($_POST['new'])) {
-				try {
-					if(isDuplicateName($fName, $lName, "Employees")) {
-						$returnMessage = alert("danger", "Department successfully created");
-					} else {
-						if($accessLevel == 3) {
-							postEmployee();
-							$returnMessage = alert("success", "Employee successfully created");
-						} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
-							postEmployee();
-							$returnMessage = alert("success", "Employee successfully created");
-						} else {
-							$returnMessage = alert("danger", "You cannot create Employees outside of your department!");
-						}
-					}
-				} catch(dbException $db) {
-					echo $db->alert();
-				}
-			} elseif(isset($_POST['edit'])){
-				try {
-					if($accessLevel == 3) {
-						putEmployee();
-						$returnMessage = alert("success", "Employee successfully updated");
-					} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
-						putEmployee();
-						$returnMessage = alert("success", "Employee successfully updated");
-					} else {
-						$returnMessage = alert("danger", "You cannot edit Employees outside of your department!");
-					}
-				} catch(dbException $db) {
-					echo $db->alert();
-				}
-			} elseif(isset($_POST['delete']) && isset($_POST['facultyId'])) {
-				if($accessLevel == 3) {
-					deleteEmployee();
-					$returnMessage = alert("success", "Employee successfully deleted");
-				} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
-					deleteEmployee();
-					$returnMessage = alert("success", "Employee successfully deleted");
+		if(isset($_POST['new'])) {
+			try {
+				if(isDuplicateName($fName, $lName, "Employees")) {
+					$returnMessage = alert("danger", "Department successfully created");
 				} else {
-					$returnMessage = alert("danger", "You cannot delete Employees outside of your department!");
+					if($accessLevel == 3) {
+						postEmployee();
+						$returnMessage = alert("success", "Employee successfully created");
+					} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
+						postEmployee();
+						$returnMessage = alert("success", "Employee successfully created");
+					} else {
+						$returnMessage = alert("danger", "You cannot create Employees outside of your department!");
+					}
 				}
+			} catch(dbException $db) {
+				echo $db->alert();
+			}
+		} elseif(isset($_POST['edit'])){
+			try {
+				if($accessLevel == 3) {
+					putEmployee();
+					$returnMessage = alert("success", "Employee successfully updated");
+				} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
+					putEmployee();
+					$returnMessage = alert("success", "Employee successfully updated");
+				} else {
+					$returnMessage = alert("danger", "You cannot edit Employees outside of your department!");
+				}
+			} catch(dbException $db) {
+				echo $db->alert();
+			}
+		} elseif(isset($_POST['delete']) && isset($_POST['facultyId'])) {
+			if($accessLevel == 3) {
+				deleteEmployee();
+				$returnMessage = alert("success", "Employee successfully deleted");
+			} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
+				deleteEmployee();
+				$returnMessage = alert("success", "Employee successfully deleted");
+			} else {
+				$returnMessage = alert("danger", "You cannot delete Employees outside of your department!");
 			}
 		}
-
-		//header('Location: ../public/addEmployee.php');
-		//exit();
 	}
 
+	header('Location: ../public/addEmployee.php');
+
+	
 	function postEmployee() {
 		global $database;
 
