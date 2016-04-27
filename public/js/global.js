@@ -227,12 +227,6 @@ function filterProfessors() {
 				currentProf.remove();
 			}
 		}
-
-		/*
-		if (depts.indexOf(department) == -1) {
-			currentProf.remove();
-		}
-		*/
 	});
 }
 
@@ -320,12 +314,6 @@ $(document).ready(function() {
 
 	$('.deptCheck input').click(function() {
 		var selectedId = $(this).attr('id');
-		/*
-		if ($(this).attr('checked') != 'checked') {
-			// user just checked it
-			$(this).attr('checked', 'checked');
-		}
-		*/
 		$('.checked').removeClass('checked');
 		$(this).addClass('checked');
 
