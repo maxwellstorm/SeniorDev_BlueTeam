@@ -154,7 +154,7 @@
 							<div class="form-group">
 								<label for="floorPlan" class="control-label col-lg-2">Floor Plan</label>
 								<div class="col-lg-10">
-									<input type="file" accept="image/*" name="image" id="fpImagePath" value="Upload Image">
+									<input type="file" accept="image/*" name="image" id="fpImagePath" value="Upload Image" required>
 								</div>
 							</div>
 
