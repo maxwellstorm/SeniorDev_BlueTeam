@@ -25,18 +25,22 @@
 			try{
 				$id = $_POST['fpId']; //valdate int
 				$name = filterString($_POST['fpName']);
-
-				$fp = new floorPlan($database, null);
 				$imagePath = uploadImage();
-				$fp->postParams($imagePath, $name);
-				$returnMessage = alert("success", "Floor Plan successfully uploaded");
+
+				if(isDuplicateFile($imagePath)) {
+					$returnMessage = alert("danger", "ERROR: Duplicate Image Names Uploaded");
+				} else {
+					$fp = new floorPlan($database, null);
+					$fp->postParams($imagePath, $name);
+					$returnMessage = alert("success", "Floor Plan successfully uploaded");
+				}
 			}
 			catch(dbException $db){
 				echo $db->alert();
 			}
 		} elseif(isset($_POST['delete']) && isset($_POST['fpId'])) {
 			$fpId = $_POST['fpId'];
-			
+
 			$fp = new floorPlan($database, $fpId);
 			$fp->delete();
 			$returnMessage = alert("success", "Floor Plan Image successfully deleted");
@@ -53,13 +57,26 @@
 		}
 	}
 
+	function isDuplicateFile($imagePath) {
+		$database = new data;
+
+		$match = $database->getData("SELECT fpId FROM floorPlan WHERE imagePath=:imagePath;", array(
+			":imagePath"=>$imagePath
+		));
+
+		if(count($match) > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	/*
 	 * A method to upload an image through the admin form
 	 * The method will return the filepath of the uploaded image provided the upload was successful
 	 * otherwise, it'll return null, which will trigger an error message
 	 */
 	function uploadImage() {
-		var_dump($_FILES);
 		if(!empty($_FILES['image']) && $_FILES['image']['error'] == 0) { //If there is a file and there is no error uploading it...
 			//check size and type of file
 			$filename = basename($_FILES['image']['name']);
