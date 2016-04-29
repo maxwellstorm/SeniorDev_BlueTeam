@@ -4,7 +4,7 @@ var loadFile = function(event) {
 };
 
 
-function setActive(active) {
+function setEmployeeActive(active) {
 	$('#results li').removeClass("activeResult");
 	active.className += " activeResult";
 	document.getElementById('editBtn').disabled = false;
