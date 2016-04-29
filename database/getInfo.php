@@ -29,6 +29,8 @@
 			getEmployeeInfo();
 		} else if($functionToCall == 'room') {
 			getRoomInfo();
+		} else if($functionToCall == 'floorplan') {
+			getFloorPlanInfo();
 		}
 	}
 
@@ -117,6 +119,29 @@
 
 		$results = $database->getData("SELECT * FROM room WHERE roomNumber = :roomNum;", array(
 			":roomNum"=>$roomNum
+		));
+
+		$returnArray = array();
+
+		foreach($results as $arr) {
+			foreach($arr as $key => $value) {
+				$returnArray[$key] = $value;
+			}
+		}
+
+		echo json_encode($returnArray);
+	}
+
+	function getFloorPlanInfo() {
+		global $adminDeptId;
+		global $accessLevel;
+
+		$fpId = $_GET['fpId'];
+
+		$database = new data;
+
+		$results = $database->getData("SELECT * FROM floorPlan WHERE fpId = :fpId;", array(
+			":fpId"=>$fpId
 		));
 
 		$returnArray = array();

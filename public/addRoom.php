@@ -25,16 +25,16 @@
 			try{
 				if(!doesRoomExist(filterString($_POST['room']))) {
 					$roomNum = filterString($_POST['room']);
-				$desc = filterString($_POST['description']);
-				$posX = filterString($_POST['posX']);
-				$posY = filterString($_POST['posY']);
+					$desc = filterString($_POST['description']);
+					$posX = filterString($_POST['posX']);
+					$posY = filterString($_POST['posY']);
 
-				$room = new room($database, null);	
+					$room = new room($database, null);	
 
-				$map = uploadImage($room);
+					$map = uploadImage($room);
 
-				$room->postParams($roomNum, $map, $desc, $posX, $posY);
-				$returnMessage = alert("success", "Room successfully created");
+					$room->postParams($roomNum, $map, $desc, $posX, $posY);
+					$returnMessage = alert("success", "Room successfully created");
 				} else {
 					$returnMessage = alert("danger", "Duplicate Entry!");
 				}
@@ -189,6 +189,7 @@
 
 					<div class="col-lg-10">
 						<?php displayNav($accessLevel, $givenName) ?>
+						<a href="addFloorplan.php">Add a new Floor Plan</a>
 						<fieldset>
 							<legend><h2>ADD A NEW ROOM</h2></legend>
 							<div class="form-group">

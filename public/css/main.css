@@ -410,6 +410,10 @@ span.selectedToggle {
 	width: 90px !important;
 }
 
+#fpImagePath {
+	width: 100% !important;
+}
+
 label {
 	font-weight: 300 !important;
 }

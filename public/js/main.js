@@ -138,6 +138,19 @@ function getDepartmentInfo(selectedVal) {
 	})
 }
 
+function getfpInfo(selectedVal) {
+	$.ajax({
+		method: "GET",
+		url: "../database/getInfo.php",
+		data: {fpId : selectedVal, page : "floorplan"}
+	}).done(function(response) {
+		var infoResponse = JSON.parse(response);
+		console.log(infoResponse);
+		$('#fpId').val(infoResponse['fpId']);
+		$('#fpName').val(infoResponse['name']);
+	})
+}
+
 $(document).ready(function() {
 	$("#filter").keyup(function() {
 		var searchKeyword = $(this).val();
@@ -182,6 +195,11 @@ $(document).ready(function() {
 		$('#addDepartment').data('formValidation').resetForm();
 		disableCreate();
 	});
+
+	$('#fpSelect').on('change', function() {
+		getfpInfo($(this).val());
+		$('#addFloorplan').data('formValidation').resetForm();
+	})
 
 	applyBullets('highlights');
 	applyBullets('education');
@@ -352,6 +370,14 @@ $(document).ready(function() {
 				validators: {
 					notEmpty: {
 						message: "A department is required"
+					}
+				}
+			},
+
+			fpName: {
+				validators: {
+					notEmpty: {
+						message: "A name is required"
 					}
 				}
 			}
