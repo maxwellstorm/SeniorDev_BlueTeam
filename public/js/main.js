@@ -199,7 +199,20 @@ $(document).ready(function() {
 	$('#fpSelect').on('change', function() {
 		getfpInfo($(this).val());
 		$('#addFloorplan').data('formValidation').resetForm();
-	})
+	});
+
+	$('#planSelect').on('change', function() {
+		var imgPath = $(this).val();
+
+		var img = $(document.createElement('img'));
+		img.attr('src', $(this).val());
+		var width = img[0].naturalWidth;
+		var height = img[0].naturalHeight;
+
+
+
+		$('#svgContainer').replaceWith("<div id='svgContainer'><svg id='floorPlan' width='" + width + "' height='" + height + "'><image xlink:href='" + imgPath + "' src='" + imgPath + "' width='" + width + "' height='" + height + "'/></svg></div>");
+	});
 
 	applyBullets('highlights');
 	applyBullets('education');

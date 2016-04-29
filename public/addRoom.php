@@ -111,39 +111,16 @@
 		}
 	}
 
-	/*
-	 * A method to upload an image through the admin form
-	 * The method will return the filepath of the uploaded image provided the upload was successful
-	 * otherwise, it'll return null, which will trigger an error message
-	 */
-	function uploadImage($room) {
-		if(!empty($_FILES['image']) && $_FILES['image']['error'] == 0) { //If there is a file and there is no error uploading it...
-			//check size and type of file
-			$filename = basename($_FILES['image']['name']);
-			$ext = substr($filename, strrpos($filename, '.') + 1);
+	function getAllFloorplans() {
+		$database = new data;
 
-			//only accept files and MIMETypes that are images - jpg, jpeg, png, & gif
-			if(($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'gif') && ($_FILES['image']['type'] == 'image/jpeg' || $_FILES['image']['type'] == 'image/pjpeg' || $_FILES['image']['type'] == 'image/png' || $_FILES['image']['type'] == 'image/gif')) {
-				
-				$newname = "./../public/media/floorplans/$filename";
+		$fps = $database->getData("SELECT imagePath, name FROM floorPlan;", array());
 
-				//if the moving of the file is successful
-				if(move_uploaded_file($_FILES['image']['tmp_name'], $newname)) {
-					chmod($newname, 0644);
-				}
+		var_dump($fps);
 
-				return $newname;
-			} else { //return null if it is the wrong file extension
-				//alert('danger', "Only image files are accpeted for upload");
-				//return null;
-				//echo("wrong file extension");
-			}
-		} else if(empty($_FILES['image']['type']) && $room->getRoomMap() != null) { 
-			return $room->getRoomMap();
-		} else { //return null if the file is empty or there's an error
-		    //return null;
-		//echo("null or error");
-	    }
+		foreach($fps as $arr) {
+			echo"<option value='" . $arr['imagePath'] . "'>" . $arr['name'] . "</option>";
+		}
 	}
 ?>
 <html lang="en">
@@ -174,7 +151,7 @@
 				<?php if(isset($returnMessage)) {
 					echo($returnMessage); 
 				} ?>
-				<form class="form-horizontal" id="addRoom" enctype="multipart/form-data" name="addRoom" action="addRoom.php" method="POST">
+				<form class="form-horizontal" id="addRoom" name="addRoom" action="addRoom.php" method="POST">
 					<div class="col-lg-2 dropdownSelect" id="searchCol">
 						<select class="form-control" id="roomSelect">
 							<option value="" disabled selected>Select a Room</option>
@@ -185,6 +162,12 @@
 						<input type="submit" value="Update" name="edit" id="editBtn" class="btn btn-primary" disabled>
 						<input type="submit" value="Create New" name="new" id="newBtn" class="btn btn-primary">
 						<input type="submit" value="Delete" name="delete" id="deleteBtn" class="btn btn-primary">
+						<br />
+						<select class="form-control" id="planSelect">
+							<option value="" disabled selected>Select a Floor Plan</option>
+							<?php getAllFloorplans() ?>
+						</select>
+
 					</div>
 
 					<div class="col-lg-10">
@@ -206,22 +189,22 @@
 								</div>
 							</div>
 
+							<input type="hidden" id="imgSrc" name="imgSrc">
 							<input type="hidden" id="posX" name="posX">
 							<input type="hidden" id="posY" name="posY">
+						</fieldset>
 
-							<div class="form-group">
-								<label for="floorPlan" class="control-label col-lg-2">Room Map</label>
-								<div class="col-lg-10">
-									<input type="file" accept="image/*" name="image" value="Upload Image">
-									<div>
-										<!--<div style="float: left; background-color: yellow; width: 50px; height:20px;position:absolute;" id="tip">tip</div>-->
-										<svg id="floorPlan" width="720" height="536">
-										    <image xlink:href="media/floorplans/golisano-2nd-floor-large.png" src="media/floorplans/golisano-2nd-floor-large.png" width="720" height="536"/>
-										</svg>
-									</div>
+						<div class="form-group">
+							<label for="floorPlan" class="control-label col-lg-2">Room Map</label>
+							<div class="col-lg-10">
+								<div id="svgContainer">
+									<!--<div style="float: left; background-color: yellow; width: 50px; height:20px;position:absolute;" id="tip">tip</div>-->
+									<svg id="floorPlan" width="720" height="536">
+									    <image xlink:href="media/floorplans/golisano-2nd-floor-large.png" src="media/floorplans/golisano-2nd-floor-large.png" width="720" height="536"/>
+									</svg>
 								</div>
 							</div>
-						</fieldset>
+						</div>
 					</div>
 				</form>
 			</div>
