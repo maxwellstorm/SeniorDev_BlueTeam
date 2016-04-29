@@ -25,11 +25,15 @@
 			try{
 				if(!doesRoomExist(filterString($_POST['room']))) {
 					$roomNum = filterString($_POST['room']);
-				$map = "asdasda"; //STILL NEED TO DO MAP
 				$desc = filterString($_POST['description']);
+				$posX = filterString($_POST['posX']);
+				$posY = filterString($_POST['posY']);
 
 				$room = new room($database, null);	
-				$room->postParams($roomNum, $map, $desc);
+
+				$map = uploadImage($room);
+
+				$room->postParams($roomNum, $map, $desc, $posX, $posY);
 				$returnMessage = alert("success", "Room successfully created");
 				} else {
 					$returnMessage = alert("danger", "Duplicate Entry!");
@@ -41,11 +45,15 @@
 		} elseif(isset($_POST['edit'])){	
 			try{
 				$roomNum = filterString($_POST['room']);
-				$map = "asdas"; //STILL NEED TO DO MAP
 				$desc = filterString($_POST['description']);
+				$posX = filterString($_POST['posX']);
+				$posY = filterString($_POST['posY']);
 
 				$room = new room($database, $roomNum);
-				$room->putParams($map, $desc);
+				$room->fetch();
+				$map = uploadImage($room);
+
+				$room->putParams($map, $desc, $posX, $posY);
 				$returnMessage = alert("success", "Room successfully updated");
 			}
 		catch(dbException $db){
@@ -102,6 +110,41 @@
 			return false;
 		}
 	}
+
+	/*
+	 * A method to upload an image through the admin form
+	 * The method will return the filepath of the uploaded image provided the upload was successful
+	 * otherwise, it'll return null, which will trigger an error message
+	 */
+	function uploadImage($room) {
+		if(!empty($_FILES['image']) && $_FILES['image']['error'] == 0) { //If there is a file and there is no error uploading it...
+			//check size and type of file
+			$filename = basename($_FILES['image']['name']);
+			$ext = substr($filename, strrpos($filename, '.') + 1);
+
+			//only accept files and MIMETypes that are images - jpg, jpeg, png, & gif
+			if(($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'gif') && ($_FILES['image']['type'] == 'image/jpeg' || $_FILES['image']['type'] == 'image/pjpeg' || $_FILES['image']['type'] == 'image/png' || $_FILES['image']['type'] == 'image/gif')) {
+				
+				$newname = "./../public/media/floorplans/$filename";
+
+				//if the moving of the file is successful
+				if(move_uploaded_file($_FILES['image']['tmp_name'], $newname)) {
+					chmod($newname, 0644);
+				}
+
+				return $newname;
+			} else { //return null if it is the wrong file extension
+				//alert('danger', "Only image files are accpeted for upload");
+				//return null;
+				//echo("wrong file extension");
+			}
+		} else if(empty($_FILES['image']['type']) && $room->getRoomMap() != null) { 
+			return $room->getRoomMap();
+		} else { //return null if the file is empty or there's an error
+		    //return null;
+		//echo("null or error");
+	    }
+	}
 ?>
 <html lang="en">
 	<head>
@@ -115,6 +158,7 @@
 		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script type="text/javascript" src="js/formvalidation/js/formValidation.min.js"></script>
 		<script type="text/javascript" src="js/formvalidation/js/framework/bootstrap.js"></script>
+		<script type="text/javascript" src="js/snap-svg-min.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 	</head>
 	<body class="admin">
@@ -130,7 +174,7 @@
 				<?php if(isset($returnMessage)) {
 					echo($returnMessage); 
 				} ?>
-				<form class="form-horizontal" id="addRoom" name="addRoom" action="addRoom.php" method="POST">
+				<form class="form-horizontal" id="addRoom" enctype="multipart/form-data" name="addRoom" action="addRoom.php" method="POST">
 					<div class="col-lg-2 dropdownSelect" id="searchCol">
 						<select class="form-control" id="roomSelect">
 							<option value="" disabled selected>Select a Room</option>
@@ -161,9 +205,20 @@
 								</div>
 							</div>
 
+							<input type="hidden" id="posX" name="posX">
+							<input type="hidden" id="posY" name="posY">
+
 							<div class="form-group">
-								<!--Will be required-->
-								<p>Room Image uploading will go here, but idk exactly what form that'll take.</p>
+								<label for="floorPlan" class="control-label col-lg-2">Room Map</label>
+								<div class="col-lg-10">
+									<input type="file" accept="image/*" name="image" value="Upload Image">
+									<div>
+										<!--<div style="float: left; background-color: yellow; width: 50px; height:20px;position:absolute;" id="tip">tip</div>-->
+										<svg id="floorPlan" width="720" height="536">
+										    <image xlink:href="media/floorplans/golisano-2nd-floor-large.png" src="media/floorplans/golisano-2nd-floor-large.png" width="720" height="536"/>
+										</svg>
+									</div>
+								</div>
 							</div>
 						</fieldset>
 					</div>
@@ -173,6 +228,73 @@
 		<script>
 			$(document).ready(function(){
 				$('#roomNav').addClass('active');
+				$('#tip').hide();
+			});
+
+			var s = Snap("#floorPlan");
+
+			// Creation of red "You are here" dot:
+			var youAreHere = s.circle(562, 340, 5);
+			var t1 = s.text(523, 355, "You are here");
+
+			youAreHere.attr({
+				fill: "red"
+			});
+
+			$('body').bind('touchstart', function() {}); //makes touchscreen taps behave like hover
+
+			//Need to update based on whether or not the've clicked in the past
+			var clicked = false;
+			var newCircle;
+
+
+			$('#floorPlan').click(function(e) {
+				if(!clicked) {
+					var parentOffset = $(this).parent().offset(); 
+
+				   var relX = e.pageX - parentOffset.left;
+				   var relY = e.pageY - parentOffset.top;
+
+				   console.log(relX);
+				   console.log(relY);
+
+				   newCircle = s.circle(relX, relY, 5);
+				   newCircle.attr('id', 'officeLocation');
+				   $('#posX').val(relX);
+				   	$('#posY').val(relY);
+				   //Proof of concept for setting CSS - $('#test').css('fill', '#ff0000');
+				   
+
+				   var moveFunc = function (dx, dy, posx, posy) {
+				   		var parentOffset = $(this).parent().offset(); 
+
+						this.attr( { cx: relX+dx , cy: relY+dy } );
+					};
+
+				   newCircle.drag(moveFunc, function() {}, function() {
+				   		var thisBox = this.getBBox();
+				   		$('#posX').val(thisBox.x);
+				   		$('#posY').val(thisBox.y);
+				   		//do these need the deltas from the matrix? I don't think so...
+				   });
+				   clicked = true;
+
+
+					newCircle.hover( function(){
+				        //$("#tip").show();
+				        //var xpos = e.pageX - parentOffset.left;
+				   		//var ypos = e.pageY - parentOffset.top;                 
+
+				   		var thisBox = this.getBBox();
+				   		console.log(thisBox.x);
+				   		console.log(thisBox.y);
+				        //$("#tip").css("left", thisBox.x );
+				        //$("#tip").css("top" , thisBox.y - 25 );
+				        
+				    }, function(){
+				       // $("#tip").hide();
+				    });
+				}
 			});
 		</script>
 	</body>

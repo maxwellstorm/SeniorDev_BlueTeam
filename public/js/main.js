@@ -37,6 +37,8 @@ function getInfo(selected) {
 		url: "../database/getInfo.php",
 		data: {facultyId : facId, page : "employee"}
 	}).done(function(response) {
+		console.log(response);
+
 		var infoResponse = JSON.parse(response);
 		console.log(infoResponse);
 		$('#facultyId').val(infoResponse["facultyId"]);
@@ -93,7 +95,6 @@ function getAdminInfo(selected) {
 		$('#adminId').val(infoResponse["AdminId"]);
 		$('#firstName').val(infoResponse["fName"]);
 		$('#lastName').val(infoResponse["lName"]);
-		//Accomodate for Title?
 		$('#username').val(infoResponse["username"]);
 		$('#accessLevel').val(infoResponse["accessLevel"]);
 		$('#department').val(infoResponse["departmentName"]);
@@ -110,7 +111,16 @@ function getRoomInfo(selectedVal) {
 		console.log(infoResponse);
 		$('#room').val(infoResponse["roomNumber"]);
 		$('#description').val(infoResponse["description"]);
-		//STILL NEED TO DO ROOM IMAGE STUFF
+		$('#posX').val(infoResponse['posX']);
+		$('#posY').val(infoResponse['posY']);
+
+
+		var imagePath = infoResponse['roomMap'];
+		if(imagePath) {
+			$('#userImage').attr("src", imagePath);
+		} else {
+			$('#userImage').attr("src", 'media/no-preview.png');
+		}
 	})
 }
 
