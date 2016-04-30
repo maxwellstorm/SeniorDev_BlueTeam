@@ -2,4 +2,12 @@
     <string name="app_name">Faculty Directory</string>
     <color name="white">#FFFFFF</color>
     <color name="rit_orange">#F36E21</color>
+
+    <string-array name="buildings">
+        <item>-Select-</item>
+        <item>EAS</item>
+        <item>GOL</item>
+        <item>LAC</item>
+        <item>SIH</item>
+    </string-array>
 </resources>

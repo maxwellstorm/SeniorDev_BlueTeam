@@ -5,6 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+/**
+ * @author Blue Team
+ * @version 1.0.0
+ * @since 2016-05-03
+ */
+
 
 public class FacultyDetails extends Activity{
 
@@ -20,6 +26,7 @@ public class FacultyDetails extends Activity{
 
     private String[] departments;
 
+    //Called when view first loads to populate details based off faculty clicked
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -31,6 +38,7 @@ public class FacultyDetails extends Activity{
         setData();
     }
 
+    //sets the texts accordingly
     public void setData(){
         facultyNameData = getIntent().getStringExtra("name");
         facultyName.setText(facultyNameData);

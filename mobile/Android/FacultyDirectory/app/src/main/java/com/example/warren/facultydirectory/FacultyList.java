@@ -24,20 +24,22 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Objects;
 
+/**
+ * @author Blue Team
+ * @version 1.0.0
+ * @since 2016-05-03
+ */
+
 public class FacultyList extends Activity {
 
     private ListView listView = null;
     private EditText search;
     private ArrayAdapter<String> arrayAdapter = null;
-    private String[] facultyList;
-    private String[] roomList;
-    private String[] departments;
-    private String[] departmentIds;
-    private String[] departmentId2;
-
+    private String[] facultyList,roomList, departments, departmentIds, departmentId2;
     private String departmentId = "";
+    private String building;
 
-
+    //Called when view first loads to populate list accordingly
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +47,9 @@ public class FacultyList extends Activity {
 
         departments = getIntent().getStringArrayExtra("departments");
         departmentId = getIntent().getStringExtra("department");
+        building = getIntent().getStringExtra("building");
 
+        //list view listener activated when a faculty is selected
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -58,6 +62,7 @@ public class FacultyList extends Activity {
             }
         });
 
+        //search bar listener
         search = (EditText) findViewById(R.id.editText);
         search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -80,6 +85,7 @@ public class FacultyList extends Activity {
         new AsyncHttpTask().execute(url);
     }
 
+    //Start explicit activity to go to faculty details
     public void startExplicitActivation(String faculty, String room, String dept1, String dept2){
         Intent explicitIntent = new Intent(FacultyList.this,FacultyDetails.class);
         explicitIntent.putExtra("name", faculty);
@@ -90,8 +96,8 @@ public class FacultyList extends Activity {
         startActivity(explicitIntent);
     }
 
+    //Accesses the php file that returns the database in json format
     public class AsyncHttpTask extends AsyncTask<String, Void, Integer> {
-
         @Override
         protected Integer doInBackground(String... params) {
             InputStream is = null;
@@ -124,6 +130,7 @@ public class FacultyList extends Activity {
             return result; //Failed to fetch data
         }
 
+        //set the UI up
         protected void onPostExecute(Integer result) {
             //Update UI
             if (result == 1) {
@@ -134,6 +141,7 @@ public class FacultyList extends Activity {
             }
         }
 
+        //Reads through the bufferedInputStream and turns to string
         private String convertInputStreamToString(InputStream is) throws IOException {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
             String line = "";
@@ -148,6 +156,7 @@ public class FacultyList extends Activity {
             return result;
         }
 
+        //parses json and converts data to populate faculty details
         private void parseResult(String result) {
             try {
                 JSONObject response = new JSONObject(result);
@@ -157,8 +166,14 @@ public class FacultyList extends Activity {
                 int count2 = 0;
                 for(int i=0;i<faculty.length();i++){
                     JSONObject fac = faculty.optJSONObject(i);
-                    if(fac.optString("departmentId").equalsIgnoreCase(departmentId)){
-                        count++;
+                    if(departmentId.equals("none")){
+                        if(fac.optString("roomNumber").substring(0,3).equalsIgnoreCase(building)){
+                            count++;
+                        }
+                    }else{
+                        if(fac.optString("departmentId").equalsIgnoreCase(departmentId)){
+                            count++;
+                        }
                     }
                 }
                 facultyList = new String[count];
@@ -166,22 +181,41 @@ public class FacultyList extends Activity {
                 departmentIds = new String[count];
                 departmentId2 = new String[count];
 
+                Log.e("log_tag","List length: " + count);
+
                 for (int i = 0; i < faculty.length(); i++) {
                     JSONObject fac = faculty.optJSONObject(i);
-                    if(fac.optString("departmentId").equalsIgnoreCase(departmentId) || fac.optString("secondaryDepartmentId").equalsIgnoreCase(departmentId)){
-                        String name = fac.optString("fName") + " " + fac.optString("lName");
-                        facultyList[count2] = name;
-                        String room = fac.optString("roomNumber");
-                        roomList[count2] = room;
-                        String deptId = fac.optString("departmentId");
-                        departmentIds[count2] = deptId;
-                        if(fac.optString("secondaryDepartmentId").equalsIgnoreCase("null")){
-                            departmentId2[count2] = "None";
-                        }else{
-                            departmentId2[count2] = fac.optString("secondaryDepartmentId");
+                    if(departmentId.equals("none")){
+                        if(fac.optString("roomNumber").substring(0,3).equalsIgnoreCase(building)){
+                            String name = fac.optString("fName") + " " + fac.optString("lName");
+                            facultyList[count2] = name;
+                            String room = fac.optString("roomNumber");
+                            roomList[count2] = room;
+                            String deptId = fac.optString("departmentId");
+                            departmentIds[count2] = deptId;
+                            if (fac.optString("secondaryDepartmentId").equalsIgnoreCase("null")) {
+                                departmentId2[count2] = "None";
+                            } else {
+                                departmentId2[count2] = fac.optString("secondaryDepartmentId");
+                            }
+                            count2++;
                         }
-                        count2++;
-                    };
+                    }else {
+                        if (fac.optString("departmentId").equalsIgnoreCase(departmentId) || fac.optString("secondaryDepartmentId").equalsIgnoreCase(departmentId)) {
+                            String name = fac.optString("fName") + " " + fac.optString("lName");
+                            facultyList[count2] = name;
+                            String room = fac.optString("roomNumber");
+                            roomList[count2] = room;
+                            String deptId = fac.optString("departmentId");
+                            departmentIds[count2] = deptId;
+                            if (fac.optString("secondaryDepartmentId").equalsIgnoreCase("null")) {
+                                departmentId2[count2] = "None";
+                            } else {
+                                departmentId2[count2] = fac.optString("secondaryDepartmentId");
+                            }
+                            count2++;
+                        };
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();

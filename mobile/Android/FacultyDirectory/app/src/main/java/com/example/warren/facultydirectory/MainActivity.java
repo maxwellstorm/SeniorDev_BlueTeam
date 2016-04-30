@@ -2,6 +2,8 @@ package com.example.warren.facultydirectory;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,7 +14,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,12 +30,23 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * @author Blue Team
+ * @version 1.0.0
+ * @since 2016-05-03
+ */
+
 public class MainActivity extends Activity {
 
     private ArrayAdapter<String> arrayAdapter = null;
-    private String[] departments, deptId;
+    private String[] departments, deptId, buildingLabel;
     private Button button1, button2, button3;
+    private String choice;
+    private boolean sortByRoom = false;
+    private Spinner building;
+    private ImageView image;
 
+    //Called when app is opened
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,18 +55,53 @@ public class MainActivity extends Activity {
         button1 = (Button) findViewById(R.id.button1);
         button2 = (Button) findViewById(R.id.button2);
         button3 = (Button) findViewById(R.id.button3);
+        buildingLabel = getResources().getStringArray(R.array.buildings);
+        building = (Spinner) findViewById(R.id.buildingSpinner);
+        building.setSelection(0);
+        sortByRoom = false;
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.buildings, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        building.setAdapter(adapter);
+        building.setOnItemSelectedListener(new MyOnItemSelectedListener());
 
         final String url = "https://people.rit.edu/wrg1932/database/deptjson.php";
         new AsyncHttpTask().execute(url);
     }
 
-    public void startExplicitActivation(String department){
+    //Listener for building spinner
+    class MyOnItemSelectedListener implements OnItemSelectedListener{
+        @Override
+        public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id){
+            int index = parentView.getSelectedItemPosition();
+            if(index == 0) {
+            }else {
+                choice = buildingLabel[index];
+                sortByRoom = true;
+                startExplicitActivation(choice);
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> view){
+        }
+    }
+
+    //Start explicit activity to go to faculty list
+    public void startExplicitActivation(String option){
         Intent explicitIntent = new Intent(MainActivity.this,FacultyList.class);
-        explicitIntent.putExtra("department", department);
+        if(sortByRoom){
+            explicitIntent.putExtra("building", option);
+            explicitIntent.putExtra("department", "none");
+        }else{
+            explicitIntent.putExtra("building", "none");
+            explicitIntent.putExtra("department", option);
+        }
         explicitIntent.putExtra("departments", departments);
         startActivity(explicitIntent);
     }
 
+    //Accesses the php file that returns the database in json format
     public class AsyncHttpTask extends AsyncTask<String, Void, Integer> {
 
         @Override
@@ -83,6 +135,7 @@ public class MainActivity extends Activity {
             return result; //Failed to fetch data
         }
 
+        //set the UI up
         protected void onPostExecute(Integer result) {
             //Update UI
             if (result == 1) {
@@ -90,6 +143,7 @@ public class MainActivity extends Activity {
                 button1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        sortByRoom = false;
                         startExplicitActivation(deptId[0]);
                     }
                 });
@@ -98,6 +152,7 @@ public class MainActivity extends Activity {
                 button2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        sortByRoom = false;
                         startExplicitActivation(deptId[1]);
                     }
                 });
@@ -106,6 +161,7 @@ public class MainActivity extends Activity {
                 button3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        sortByRoom = false;
                         startExplicitActivation(deptId[2]);
                     }
                 });
@@ -114,6 +170,7 @@ public class MainActivity extends Activity {
             }
         }
 
+        //Reads through the bufferedInputStream and turns to string
         private String convertInputStreamToString(InputStream is) throws IOException {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
             String line = "";
@@ -128,6 +185,7 @@ public class MainActivity extends Activity {
             return result;
         }
 
+        //parses json and converts data to populate list view of faculty
         private void parseResult(String result) {
             try {
                 JSONObject response = new JSONObject(result);
