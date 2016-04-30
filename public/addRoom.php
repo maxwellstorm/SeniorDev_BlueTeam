@@ -199,9 +199,9 @@
 							<div class="col-lg-10">
 								<div id="svgContainer">
 									<!--<div style="float: left; background-color: yellow; width: 50px; height:20px;position:absolute;" id="tip">tip</div>-->
-									<svg id="floorPlan" width="720" height="536">
+									<!--<svg id="floorPlan" width="720" height="536">
 									    <image xlink:href="media/floorplans/golisano-2nd-floor-large.png" src="media/floorplans/golisano-2nd-floor-large.png" width="720" height="536"/>
-									</svg>
+									</svg>-->
 								</div>
 							</div>
 						</div>
@@ -212,10 +212,10 @@
 		<script>
 			$(document).ready(function(){
 				$('#roomNav').addClass('active');
-				$('#tip').hide();
+				//$('#tip').hide();
 			});
 
-			var s = Snap("#floorPlan");
+			/*var s = Snap("#floorPlan");
 
 			// Creation of red "You are here" dot:
 			var youAreHere = s.circle(562, 340, 5);
@@ -279,7 +279,7 @@
 				       // $("#tip").hide();
 				    });
 				}
-			});
+			});*/
 		</script>
 	</body>
 </html>

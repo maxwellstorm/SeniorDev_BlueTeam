@@ -202,16 +202,79 @@ $(document).ready(function() {
 	});
 
 	$('#planSelect').on('change', function() {
+		//SVG Creation & Form Population
 		var imgPath = $(this).val();
-
 		var img = $(document.createElement('img'));
-		img.attr('src', $(this).val());
+		img.attr('src', imgPath);
 		var width = img[0].naturalWidth;
 		var height = img[0].naturalHeight;
-
-
-
+		document.getElementById("imgSrc").value = imgPath;
 		$('#svgContainer').replaceWith("<div id='svgContainer'><svg id='floorPlan' width='" + width + "' height='" + height + "'><image xlink:href='" + imgPath + "' src='" + imgPath + "' width='" + width + "' height='" + height + "'/></svg></div>");
+		
+		/*var s = Snap("#floorPlan");
+		$('body').bind('touchstart', function() {}); //makes touchscreen taps behave like hover
+		//end common creation
+
+		//Custom define move function so we can custom define drag function
+		var moveFunc = function (dx, dy, posx, posy) {
+	   		var parentOffset = $(this).parent().offset(); 
+
+			this.attr( { cx: relX+dx , cy: relY+dy } );
+		};
+
+			
+		if($('#posX').val() != "" && $('#posY').val() != "") {
+			var clicked = true;
+			var newCircle = s.circle($('#posX').val(), $('#posY').val(), 5);
+		} else {
+			var clicked = false;
+			var newCircle;
+		}
+
+		newCircle.attr('id', 'officeLocation');
+
+		$('#floorPlan').click(function(e) {
+			if(!clicked) {
+				var parentOffset = $(this).parent().offset(); 
+
+				var relX = e.pageX - parentOffset.left;
+				var relY = e.pageY - parentOffset.top;
+
+				console.log(relX);
+				console.log(relY);
+
+				newCircle = s.circle(relX, relY, 5);
+				$('#posX').val(relX);
+				$('#posY').val(relY);
+			}
+
+			newCircle.attr('id', 'officeLocation');
+			//Proof of concept for setting CSS - $('#test').css('fill', '#ff0000');
+
+		   	newCircle.drag(moveFunc, function() {}, function() {
+	   			var thisBox = this.getBBox();
+		   		$('#posX').val(thisBox.x);
+		   		$('#posY').val(thisBox.y);
+		   		//do these need the deltas from the matrix? I don't think so...
+		   });
+		   clicked = true;
+
+
+			newCircle.hover( function(){
+		        //$("#tip").show();
+		        //var xpos = e.pageX - parentOffset.left;
+		   		//var ypos = e.pageY - parentOffset.top;                 
+
+		   		var thisBox = this.getBBox();
+		   		console.log(thisBox.x);
+		   		console.log(thisBox.y);
+		        //$("#tip").css("left", thisBox.x );
+		        //$("#tip").css("top" , thisBox.y - 25 );
+		        
+		    }, function(){
+		       // $("#tip").hide();
+		    });
+		});*/
 	});
 
 	applyBullets('highlights');
