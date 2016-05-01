@@ -2,7 +2,7 @@
 	require("../database/data.php");
 	require("../database/department.php");
 	require_once("../database/dbException.php");
-	require("../database/util.php");
+	require_once("../database/util.php");
 	require_once("../database/commonAuth.php");
 
 
