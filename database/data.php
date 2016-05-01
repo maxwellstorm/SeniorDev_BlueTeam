@@ -1,21 +1,22 @@
 <?php
+require_once("dbException.php");
 require_once("commonAuth.php");
-require_once("configuration.php");
+
+
+
 
 //REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
-$allowed = true;
+//$allowed = true;
 
-if(!$allowed) {
-	header("Location: ../public/notAuthorized.html");
-    die("Redirecting to notAuthorized.html");
-}
+
 
 class data{
-	
-	private $server = DB_HOST;
-	private $username = DB_USER;
-	private $password = DB_PASSWORD;
-	private $DBName = DB_DATABASE;
+
+
+	private $server = "facultydb.cdh6zybsklle.us-east-1.rds.amazonaws.com";
+	private $username = "maxwellsweikert";
+	private $password = "M3312140m";
+	private $DBName = "facultyDb";
 	private $conn;
 	
 	function __construct(){
@@ -26,13 +27,15 @@ class data{
 	function connect(){
 		try {
 			$conn = new PDO('mysql:host='.$this->server.';dbname='.$this->DBName, $this->username, $this->password);
-	
 			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			//echo "Connected successfully <br/>"; 
+		
 			$this->conn = $conn;
 			}
 		catch(PDOException $e) {
-			echo "Connection failed: " . $e->getMessage();
+			throw new dbException("Connection failed: " . $e->getMessage(),0);
+		}
+		catch(Exception $e){
+			throw new dbException("An unexpected error occured while connecting to the datbase" . $e->getMessage(),0);
 		}
 		
 	}
@@ -43,22 +46,30 @@ class data{
 	
 	//return back data used for select statments only
 	function getData($sql,$params){
-		$stmt = $this->conn->prepare($sql);
-		$stmt->execute($params);
-		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		try{
+			$stmt = $this->conn->prepare($sql);
+			$stmt->execute($params);
+			return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		}
+		catch(Exception $e){
+			throw new dbException("Get Data Failed " . $e->getMessage(),0);
+		}
 	}
 	
 	
 	function setData($sql,$params){
-		$stmt = $this->conn->prepare($sql);
-		$stmt->execute($params);
+		try{
+			$stmt = $this->conn->prepare($sql);
+			$stmt->execute($params);
+		}
+		catch(Exception $e){
+			throw new dbException("Set Data Failed " . $e->getMessage(),0);
+		}
 	}
 	
 
 	
-	function validateLogin($userame,$pass){
-		//implement this if no shibo
-	}
+
 	
 	function startTransaction(){
 		$this->conn->beginTransaction();

@@ -1,15 +1,12 @@
 <?php
 //REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
-$allowed = true;
+//$allowed = true;
 
 
 require_once("commonAuth.php");
 require_once("util.php");
 
-if(!$allowed) {
-	header("Location: ../public/notAuthorized.html");
-    die("Redirecting to notAuthorized.html");
-}
+
 
  const THROW_ONLY_ALPHA    = 1;
  const THROW_ROOM_INNCORRECT_FORMAT    = 2;
@@ -20,7 +17,7 @@ class dbException extends Exception
     // Redefine the exception so message isn't optional
     public function __construct($message, $code = 0, Exception $previous = null) {
         parent::__construct($message, $code, $previous);
-		util::logMessage("../log/testLog.txt",$message);
+		util::logMessage("../log/exceptionLog.txt",$message);
     }
 
     

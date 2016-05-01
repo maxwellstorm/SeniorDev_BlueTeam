@@ -1,14 +1,11 @@
 <?php
 //REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
-$allowed = true;
+//$allowed = true;
 
-require_once("dbException.php");
-require_once("commonAuth.php");
+/*require_once("dbException.php");
+require_once("commonAuth.php");*/
 
-if(!$allowed) {
-	header("Location: ../public/notAuthorized.html");
-		die("Redirecting to notAuthorized.html");
-}
+
 
  class util{
 	 
@@ -47,14 +44,20 @@ if(!$allowed) {
 		return true;
 	}
 	
-	public static function logMessage($path,$message){
-		$dataStamp = date('Y-m-d g:i a');
-		$file = fopen($path, "a+");
-		if( $file == false ) 
-            die( "Error in opening file" );
-		fwrite( $file, "$dataStamp: $message\n" );
-		fclose( $file );
-         
+	public function logMessage($path,$message){
+	
+		try{
+			echo "  attemoting to log excpetion";
+			$dataStamp = date('Y-m-d g:i a');
+			$file = fopen($path, "a+");
+			if( $file == false ) 
+				die( "Error in opening file" );
+			fwrite( $file, "$dataStamp: $message\n" );
+			fclose( $file );
+		}
+		catch(Exception $e){
+			echo "ERROR LOGGING EXCPTION IN UTIL";
+		}
 		
 	}
 	
