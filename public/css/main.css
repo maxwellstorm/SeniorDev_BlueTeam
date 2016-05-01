@@ -384,6 +384,22 @@ span.selectedToggle {
 }
 
 /* ADMIN-SPECIFIC STYLES BEGIN BELOW */
+#fpLink {
+	padding-left: 3px;
+}
+
+#fpLink:hover {
+	text-decoration: none;
+}
+
+#fpLink:visited {
+	color: #337ab7;
+}
+
+#planSelect {
+	margin-top: 10px;
+}
+
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
 	background: #F36E21;
 }

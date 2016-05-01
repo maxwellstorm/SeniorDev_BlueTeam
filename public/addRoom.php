@@ -161,16 +161,15 @@
 						<input type="submit" value="Create New" name="new" id="newBtn" class="btn btn-primary">
 						<input type="submit" value="Delete" name="delete" id="deleteBtn" class="btn btn-primary">
 						<br />
+						<a href="addFloorplan.php" id="fpLink">Add a new Floor Plan</a>
 						<select class="form-control" id="planSelect">
 							<option value="" disabled selected>Select a Floor Plan</option>
 							<?php getAllFloorplans() ?>
 						</select>
-
 					</div>
 
 					<div class="col-lg-10">
 						<?php displayNav($accessLevel, $givenName) ?>
-						<a href="addFloorplan.php">Add a new Floor Plan</a>
 						<fieldset>
 							<legend><h2>ADD A NEW ROOM</h2></legend>
 							<div class="form-group">
