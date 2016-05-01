@@ -179,8 +179,11 @@ function getfpInfo(selectedVal) {
 function makePoint(xPos, yPos, s) {
 	$('circle').remove();
 
+	var mapWidth = document.getElementById('floorPlan').clientWidth;
+	var mapHeight = document.getElementById('floorPlan').clientHeight;
+
 	if (xPos != null && yPos != null) {
-		var newCircle = s.circle(xPos, yPos, 5);
+		var newCircle = s.circle(xPos*mapWidth, yPos*mapHeight, 5);
 		newCircle.attr('id', 'officeLocation');
 	}
 }
@@ -195,11 +198,14 @@ function prepMap(s, radius) {
 		//console.log(relX);
 		//console.log(relY);
 
+		var mapWidth = document.getElementById('floorPlan').clientWidth;
+		var mapHeight = document.getElementById('floorPlan').clientHeight;
+
 		if($('circle').length == 0) {
 			newCircle = s.circle(relX, relY, radius);
 			newCircle.attr('id', 'officeLocation');
-			$('#posX').val(relX);
-			$('#posY').val(relY);
+			$('#posX').val(relX/mapWidth);
+			$('#posY').val(relY/mapHeight);
 		} else {
 			var oldX = $('circle').attr('cx');
 			var oldY = $('circle').attr('cy');
@@ -221,13 +227,12 @@ function prepMap(s, radius) {
 
 		newCircle.drag(moveFunc, start, function() {
 				var thisBox = this.getBBox();
-				$('#posX').val(thisBox.x+radius);
-				$('#posY').val(thisBox.y+radius);
+				$('#posX').val((thisBox.x+radius)/mapWidth);
+				$('#posY').val((thisBox.y+radius)/mapHeight);
 				$('circle').attr('cx', thisBox.x+radius);
 				$('circle').attr('cy', thisBox.y+radius);
 				console.log(thisBox.x);
 				console.log(thisBox.y);
-				//do these need the deltas from the matrix? I don't think so...
 		});
 	});
 }
