@@ -116,8 +116,6 @@
 
 		$fps = $database->getData("SELECT imagePath, name FROM floorPlan;", array());
 
-		var_dump($fps);
-
 		foreach($fps as $arr) {
 			echo"<option value='" . $arr['imagePath'] . "'>" . $arr['name'] . "</option>";
 		}
@@ -189,7 +187,7 @@
 								</div>
 							</div>
 
-							<input type="hidden" id="imgSrc" name="imgSrc">
+							<input type="hidden" id="imgSrc" name="imgSrc" value="./../public/media/floorplans/golisano-2nd-floor-large.png">
 							<input type="hidden" id="posX" name="posX">
 							<input type="hidden" id="posY" name="posY">
 						</fieldset>
@@ -199,9 +197,9 @@
 							<div class="col-lg-10">
 								<div id="svgContainer">
 									<!--<div style="float: left; background-color: yellow; width: 50px; height:20px;position:absolute;" id="tip">tip</div>-->
-									<!--<svg id="floorPlan" width="720" height="536">
+									<svg id="floorPlan" width="720" height="536">
 									    <image xlink:href="media/floorplans/golisano-2nd-floor-large.png" src="media/floorplans/golisano-2nd-floor-large.png" width="720" height="536"/>
-									</svg>-->
+									</svg>
 								</div>
 							</div>
 						</div>
@@ -212,74 +210,40 @@
 		<script>
 			$(document).ready(function(){
 				$('#roomNav').addClass('active');
-				//$('#tip').hide();
+				var s = Snap("#floorPlan");
+				$('body').bind('touchstart', function() {}); //makes touchscreen taps behave like hover
+
+				prepMap(s, 5);
 			});
-
-			/*var s = Snap("#floorPlan");
-
+			
+			/*
 			// Creation of red "You are here" dot:
 			var youAreHere = s.circle(562, 340, 5);
 			var t1 = s.text(523, 355, "You are here");
-
 			youAreHere.attr({
 				fill: "red"
 			});
+			//note that you can set stuff with .css
 
 			$('body').bind('touchstart', function() {}); //makes touchscreen taps behave like hover
 
-			//Need to update based on whether or not the've clicked in the past
-			var clicked = false;
-			var newCircle;
-
-
+			//Hover example
 			$('#floorPlan').click(function(e) {
-				if(!clicked) {
-					var parentOffset = $(this).parent().offset(); 
+				newCircle.hover( function(){
+			        //$("#tip").show();
+			        //var xpos = e.pageX - parentOffset.left;
+			   		//var ypos = e.pageY - parentOffset.top;                 
 
-				   var relX = e.pageX - parentOffset.left;
-				   var relY = e.pageY - parentOffset.top;
-
-				   console.log(relX);
-				   console.log(relY);
-
-				   newCircle = s.circle(relX, relY, 5);
-				   newCircle.attr('id', 'officeLocation');
-				   $('#posX').val(relX);
-				   	$('#posY').val(relY);
-				   //Proof of concept for setting CSS - $('#test').css('fill', '#ff0000');
-				   
-
-				   var moveFunc = function (dx, dy, posx, posy) {
-				   		var parentOffset = $(this).parent().offset(); 
-
-						this.attr( { cx: relX+dx , cy: relY+dy } );
-					};
-
-				   newCircle.drag(moveFunc, function() {}, function() {
-				   		var thisBox = this.getBBox();
-				   		$('#posX').val(thisBox.x);
-				   		$('#posY').val(thisBox.y);
-				   		//do these need the deltas from the matrix? I don't think so...
-				   });
-				   clicked = true;
-
-
-					newCircle.hover( function(){
-				        //$("#tip").show();
-				        //var xpos = e.pageX - parentOffset.left;
-				   		//var ypos = e.pageY - parentOffset.top;                 
-
-				   		var thisBox = this.getBBox();
-				   		console.log(thisBox.x);
-				   		console.log(thisBox.y);
-				        //$("#tip").css("left", thisBox.x );
-				        //$("#tip").css("top" , thisBox.y - 25 );
-				        
-				    }, function(){
-				       // $("#tip").hide();
-				    });
-				}
-			});*/
+			   		var thisBox = this.getBBox();
+			   		console.log(thisBox.x);
+			   		console.log(thisBox.y);
+			        //$("#tip").css("left", thisBox.x );
+			        //$("#tip").css("top" , thisBox.y - 25 );
+			        
+			    }, function(){
+			       // $("#tip").hide();
+			    });
+			}*/
 		</script>
 	</body>
 </html>

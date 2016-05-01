@@ -32,7 +32,7 @@
 		if(isset($_POST['new'])) {
 			try {
 				if(isDuplicateName($fName, $lName, "Employees")) {
-					$returnMessage = alert("danger", "Department successfully created");
+					$returnMessage = alert("danger", "ERROR: Duplicate Entry");
 				} else {
 					if($accessLevel == 3) {
 						postEmployee();

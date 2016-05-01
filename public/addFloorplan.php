@@ -29,6 +29,8 @@
 
 				if(isDuplicateFile($imagePath)) {
 					$returnMessage = alert("danger", "ERROR: Duplicate Image Names Uploaded");
+				} else if(strlen($imagePath) == 0) {
+					$returnMessage = alert("danger", "Please upload an image");
 				} else {
 					$fp = new floorPlan($database, null);
 					$fp->postParams($imagePath, $name);

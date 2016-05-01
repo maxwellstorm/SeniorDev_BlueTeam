@@ -121,6 +121,10 @@ function getRoomInfo(selectedVal) {
 		} else {
 			$('#userImage').attr("src", 'media/no-preview.png');
 		}
+
+		var s = Snap("#floorPlan");
+		makePoint(infoResponse['posX'], infoResponse['posY'], s);
+		prepMap(s, 5);
 	})
 }
 
@@ -149,6 +153,62 @@ function getfpInfo(selectedVal) {
 		$('#fpId').val(infoResponse['fpId']);
 		$('#fpName').val(infoResponse['name']);
 	})
+}
+
+function makePoint(xPos, yPos, s) {
+	$('circle').remove();
+
+	if (xPos != null && yPos != null) {
+		var newCircle = s.circle(xPos, yPos, 5);
+		newCircle.attr('id', 'officeLocation');
+	}
+}
+
+function prepMap(s, radius) {
+	$('#floorPlan').click(function(e)  {
+		var parentOffset = $(this).parent().offset(); 
+
+		var relX = e.pageX - parentOffset.left;
+		var relY = e.pageY - parentOffset.top;
+
+		//console.log(relX);
+		//console.log(relY);
+
+		if($('circle').length == 0) {
+			newCircle = s.circle(relX, relY, radius);
+			newCircle.attr('id', 'officeLocation');
+			$('#posX').val(relX);
+			$('#posY').val(relY);
+		} else {
+			var oldX = $('circle').attr('cx');
+			var oldY = $('circle').attr('cy');
+			$('circle').remove();
+			var newCircle = s.circle(oldX, oldY, radius);
+		}
+
+		//console.log(newCircle);
+
+		var moveFunc = function (dx, dy) {
+			this.attr({
+				transform: this.data('origTransform') + (this.data('origTransform') ? "T" : "t") + [dx, dy]
+			});
+		};
+
+		var start = function() {
+			this.data('origTransform', this.transform().local);
+		}
+
+		newCircle.drag(moveFunc, start, function() {
+				var thisBox = this.getBBox();
+				$('#posX').val(thisBox.x+radius);
+				$('#posY').val(thisBox.y+radius);
+				$('circle').attr('cx', thisBox.x+radius);
+				$('circle').attr('cy', thisBox.y+radius);
+				console.log(thisBox.x);
+				console.log(thisBox.y);
+				//do these need the deltas from the matrix? I don't think so...
+		});
+	});
 }
 
 $(document).ready(function() {
@@ -204,77 +264,30 @@ $(document).ready(function() {
 	$('#planSelect').on('change', function() {
 		//SVG Creation & Form Population
 		var imgPath = $(this).val();
+		console.log(imgPath);
+
 		var img = $(document.createElement('img'));
-		img.attr('src', imgPath);
-		var width = img[0].naturalWidth;
-		var height = img[0].naturalHeight;
-		document.getElementById("imgSrc").value = imgPath;
+		console.log(img);
+
+		img.attr('src', imgPath).on('load', function() {
+			width = img[0].naturalWidth;
+			var height = img[0].naturalHeight;
+			console.log(width);
+			console.log(height);
+			document.getElementById("imgSrc").value = imgPath;
 		$('#svgContainer').replaceWith("<div id='svgContainer'><svg id='floorPlan' width='" + width + "' height='" + height + "'><image xlink:href='" + imgPath + "' src='" + imgPath + "' width='" + width + "' height='" + height + "'/></svg></div>");
-		
-		/*var s = Snap("#floorPlan");
-		$('body').bind('touchstart', function() {}); //makes touchscreen taps behave like hover
-		//end common creation
 
-		//Custom define move function so we can custom define drag function
-		var moveFunc = function (dx, dy, posx, posy) {
-	   		var parentOffset = $(this).parent().offset(); 
-
-			this.attr( { cx: relX+dx , cy: relY+dy } );
-		};
-
-			
-		if($('#posX').val() != "" && $('#posY').val() != "") {
-			var clicked = true;
-			var newCircle = s.circle($('#posX').val(), $('#posY').val(), 5);
-		} else {
-			var clicked = false;
-			var newCircle;
-		}
-
-		newCircle.attr('id', 'officeLocation');
-
-		$('#floorPlan').click(function(e) {
-			if(!clicked) {
-				var parentOffset = $(this).parent().offset(); 
-
-				var relX = e.pageX - parentOffset.left;
-				var relY = e.pageY - parentOffset.top;
-
-				console.log(relX);
-				console.log(relY);
-
-				newCircle = s.circle(relX, relY, 5);
-				$('#posX').val(relX);
-				$('#posY').val(relY);
+			var s = Snap("#floorPlan");
+			$('body').bind('touchstart', function() {}); //makes touchscreen taps behave like hover
+			//end common creation
+				
+			if($('#posX').val() != "" && $('#posY').val() != "") {
+				var newCircle = s.circle($('#posX').val(), $('#posY').val(), 5);
+				newCircle.attr('id', 'officeLocation');
 			}
 
-			newCircle.attr('id', 'officeLocation');
-			//Proof of concept for setting CSS - $('#test').css('fill', '#ff0000');
-
-		   	newCircle.drag(moveFunc, function() {}, function() {
-	   			var thisBox = this.getBBox();
-		   		$('#posX').val(thisBox.x);
-		   		$('#posY').val(thisBox.y);
-		   		//do these need the deltas from the matrix? I don't think so...
-		   });
-		   clicked = true;
-
-
-			newCircle.hover( function(){
-		        //$("#tip").show();
-		        //var xpos = e.pageX - parentOffset.left;
-		   		//var ypos = e.pageY - parentOffset.top;                 
-
-		   		var thisBox = this.getBBox();
-		   		console.log(thisBox.x);
-		   		console.log(thisBox.y);
-		        //$("#tip").css("left", thisBox.x );
-		        //$("#tip").css("top" , thisBox.y - 25 );
-		        
-		    }, function(){
-		       // $("#tip").hide();
-		    });
-		});*/
+			prepMap(s, 5);
+		});
 	});
 
 	applyBullets('highlights');
