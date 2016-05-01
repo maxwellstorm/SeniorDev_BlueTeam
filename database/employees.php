@@ -190,10 +190,10 @@ public function setSecDeptId($secDeptId){
 
 public function putParams($fname,$lname,$email,$active,$faculty,$phone,$about,$edu,$highlights,$deptId,$roomNum,$title,$secDeptId, $imageName){
 	//update
-	util::checkRoom($roomNum);
-	util::checkName($fname);
-	util::checkName($lname);
-	util::checkEmail($email);
+	checkRoom($roomNum);
+	checkName($fname);
+	checkName($lname);
+	checkEmail($email);
 	$this->conn->setData("UPDATE Employees SET fName=:fname, lName=:lname, email=:email, isActive=:active, isFaculty=:faculty, phone=:phone, about=:about, education=:edu, highlights=:highlights, departmentId=:deptId, roomNumber=:roomNum, title=:title, secondaryDepartmentId=:secDeptId, imageName=:imageName  WHERE facultyId = :id",array(
 	":fname"=>$fname,
 	":lname"=>$lname,
@@ -215,10 +215,10 @@ public function putParams($fname,$lname,$email,$active,$faculty,$phone,$about,$e
 }
 
 public function put(){
-	util::checkRoom($this->roomNumber);
-	util::checkName($this->fname);
-	util::checkName($this->lname);
-	util::checkEmail($this->email);
+	checkRoom($this->roomNumber);
+	checkName($this->fname);
+	checkName($this->lname);
+	checkEmail($this->email);
 	$this->conn->setData("UPDATE Employees SET fName=:fname, lName=:lname, email=:email, isActive=:active, isFaculty=:faculty, phone=:phone, about=:about, education=:edu, highlights=:highlights, departmentId=:deptId, roomNumber=:roomNum, title=:title, secondaryDepartmentId=:secDeptId, imageName=:imageName  WHERE facultyId = :id",array(
 	":fname"=>$this->fname,
 	":lname"=>$this->lname,
@@ -241,10 +241,10 @@ public function put(){
 
 public function postParams($fname,$lname,$email,$active,$faculty,$phone,$about,$edu,$highlights,$deptId,$roomNum,$title,$secDeptId, $imageName){
 	//insert
-	util::checkName($fname);
-	util::checkName($lname);
-	util::checkEmail($email);
-	util::checkRoom($roomNum);
+	checkName($fname);
+	checkName($lname);
+	checkEmail($email);
+	checkRoom($roomNum);
 	$this->conn->setData("INSERT into Employees (facultyId,fName,lName,email,isActive,isFaculty,phone,about,education,highlights,departmentId,roomNumber,title,secondaryDepartmentId, imageName) values (DEFAULT,:fname,:lname,:email,:active,:faculty,:phone,:about,:edu,:highlights,:deptId,:roomNum,:title,:secDeptId, :imageName)",array(
 	":fname"=>$fname,
 	":lname"=>$lname,
@@ -264,10 +264,10 @@ public function postParams($fname,$lname,$email,$active,$faculty,$phone,$about,$
 }
 
 public function post(){
-	util::checkRoom($this->roomNumber);
-	util::checkName($this->fname);
-	util::checkName($this->lname);
-	util::checkEmail($this->email);
+	checkRoom($this->roomNumber);
+	checkName($this->fname);
+	checkName($this->lname);
+	checkEmail($this->email);
 	$this->conn->setData("INSERT into Employees (facultyId,fName,lName,email,isActive,isFaculty,phone,about,education,highlights,departmentId,roomNumber,title,secondaryDepartmentId, imageName) values (DEFAULT, :fname,:lname,:email,:active,:faculty,:phone,:about,:edu,:highlights,:deptId,:roomNum,:title,:secDeptId, :imageName)",array(
 	":fname"=>$this->fname,
 	":lname"=>$this->lname,

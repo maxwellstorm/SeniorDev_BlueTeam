@@ -3,7 +3,7 @@
 	require_once("../database/data.php");
 	require_once("../database/employees.php");
 	require_once("../database/commonAuth.php");
-	require_once("../database/filters.php");
+	require_once("../database/util.php");
 
 	//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
 	$adminDeptId = 1;

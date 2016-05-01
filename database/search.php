@@ -2,7 +2,7 @@
 	require_once("data.php");
 	require("employees.php");
 	require_once("admin.php");
-	require("filters.php");
+	require_once("util.php");
 	require_once("commonAuth.php");
 
 	//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
@@ -85,7 +85,7 @@
 		}
 
 		foreach($results as $arr) {
-			echo "<li onclick='setActive(this);'><span class='fId' style='display: none'>" . $arr['facultyId'] . "</span><strong>" . $arr['lName'] . ", " . $arr['fName'] . "</strong><br /><span class='rmNum initialism'>" . $arr['roomNumber'] . "</span><hr /></li>";
+			echo "<li onclick='setEmployeeActive(this);'><span class='fId' style='display: none'>" . $arr['facultyId'] . "</span><strong>" . $arr['lName'] . ", " . $arr['fName'] . "</strong><br /><span class='rmNum initialism'>" . $arr['roomNumber'] . "</span><hr /></li>";
 		}
 	}
 

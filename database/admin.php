@@ -1,5 +1,5 @@
 <?php
-
+require_once("util.php");
 //REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT 
 $allowed = true;
 
@@ -8,7 +8,6 @@ if(!$allowed) {
        die("Redirecting to notAuthorized.html");
 }
 
-require_once("util.php");
 class admin{
 
 	private $adminId = "";
@@ -95,8 +94,8 @@ public function setDeptId($dId){
 
 function putParams($fname,$lname,$user,$accessLvl,$deptId){
 	//update
-	util::checkName($fname);
-	util::checkName($lname);
+	checkName($fname);
+	checkName($lname);
 	$this->conn->setData("UPDATE Admin SET fName=:fname, lName=:lname, username=:user, accessLevel=:accessLvl, departmentId=:deptId WHERE adminId = :id;",array(
 	":fname"=>$fname,
 	":lname"=>$lname,
@@ -109,8 +108,8 @@ function putParams($fname,$lname,$user,$accessLvl,$deptId){
 
 function put(){
 	//update
-	util::checkName($this->fname);
-	util::checkName($this->lname);
+	checkName($this->fname);
+	checkName($this->lname);
 	$this->conn->setData("UPDATE Admin SET fName=:fname, lName=:lname, username=:user, accessLevel=:accessLvl, departmentId=:deptId WHERE adminId = :id;",array(
 	":fname"=>$this->fname,
 	":lname"=>$this->lname,
@@ -123,8 +122,8 @@ function put(){
 
 public function postParams($fname,$lname,$user,$accessLvl,$deptId){
 	//insert
-	util::checkName($fname);
-	util::checkName($lname);
+	checkName($fname);
+	checkName($lname);
 	$this->conn->setData("INSERT into Admin (adminId,fName,lName,username,accessLevel,departmentId) values (DEFAULT,:fname,:lname,:user,:accessLvl,:deptId)",array(
 	":fname"=>$fname,
 	":lname"=>$lname,
@@ -136,8 +135,8 @@ public function postParams($fname,$lname,$user,$accessLvl,$deptId){
 
 public function post(){
 	//insert
-	util::checkName($this->fname);
-	util::checkName($this->lname);
+	checkName($this->fname);
+	checkName($this->lname);
 	$this->conn->setData("INSERT into Admin (adminId,fName,lName,username,accessLevel,departmentId) values (DEFAULT,:fname,:lname,:user,:accessLvl,:deptId)",array(
 	":fname"=>$this->fname,
 	":lname"=>$this->lname,

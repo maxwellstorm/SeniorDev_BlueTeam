@@ -87,7 +87,7 @@ public function setPosY($posY) {
 
 public function putParams($map, $desc, $posX, $posY){
 	//update
-	util::checkRoom($this->roomNumber);
+	checkRoom($this->roomNumber);
 	$this->conn->setData("UPDATE room SET roomMap=:map, description=:roomDesc, posX=:posX, posY=:posY WHERE roomNumber = :num",array(
 	":map"=>$map,
 	":roomDesc"=>$desc,
@@ -99,7 +99,7 @@ public function putParams($map, $desc, $posX, $posY){
 
 public function put(){
 	//update
-	util::checkRoom($this->roomNumber);
+	checkRoom($this->roomNumber);
 	$this->conn->setData("UPDATE room SET roomMap=:map, description=:roomDesc, posX=:posX, posY=:posY WHERE roomNumber = :num",array(
 	":map"=>$this->roomMap, 
 	":roomDesc"=>$this->description,
@@ -111,7 +111,7 @@ public function put(){
 
 public function postParams($num, $map, $desc, $posX, $posY){
 	//insert
-	util::checkRoom($num);
+	checkRoom($num);
 	$this->conn->setData("INSERT into room (roomNumber,roomMap,description, posX, posY) values (:num,:map,:rDesc, :posX, :posY)",array(
 	":num"=>$num,
 	":map"=>$map,
@@ -123,7 +123,7 @@ public function postParams($num, $map, $desc, $posX, $posY){
 
 public function post(){
 	//insert
-	util::checkRoom($this->roomNumber);
+	checkRoom($this->roomNumber);
 	$this->conn->setData("INSERT into room (roomNumber, roomMap, description, posX, posY) values (:num, :map, :rDesc, :posX, :posY);",array(
 	":num"=>$this->roomNumber,
 	":map"=>$this->roomMap,

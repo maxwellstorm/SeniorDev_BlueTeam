@@ -3,7 +3,7 @@
 	require("../database/data.php");
 	require("../database/room.php");
 	require_once("../database/dbException.php");
-	require("../database/filters.php");
+	require("../database/util.php");
 	require_once("../database/commonAuth.php");
 
 
@@ -28,10 +28,9 @@
 					$desc = filterString($_POST['description']);
 					$posX = filterString($_POST['posX']);
 					$posY = filterString($_POST['posY']);
+					$map = $_POST['imgSrc'];
 
 					$room = new room($database, null);	
-
-					$map = uploadImage($room);
 
 					$room->postParams($roomNum, $map, $desc, $posX, $posY);
 					$returnMessage = alert("success", "Room successfully created");
@@ -48,10 +47,10 @@
 				$desc = filterString($_POST['description']);
 				$posX = filterString($_POST['posX']);
 				$posY = filterString($_POST['posY']);
+				$map = $_POST['imgSrc'];
 
 				$room = new room($database, $roomNum);
 				$room->fetch();
-				$map = uploadImage($room);
 
 				$room->putParams($map, $desc, $posX, $posY);
 				$returnMessage = alert("success", "Room successfully updated");
