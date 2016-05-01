@@ -38,75 +38,87 @@
 		global $adminDeptId;
 		global $accessLevel;
 
-		$adminId = $_GET['adminId']; //VALIDATE INT
+		if(is_numeric($_GET['adminId'])) {
+			$adminId = $_GET['adminId'];
 
-		$database = new data;
+			$database = new data;
 
-		$results = $database->getData("SELECT * FROM Admin JOIN department ON Admin.departmentId = department.departmentID WHERE adminId=:adminId;", array(
-			":adminId"=>$adminId
-		));
+			$results = $database->getData("SELECT * FROM Admin JOIN department ON Admin.departmentId = department.departmentID WHERE adminId=:adminId;", array(
+				":adminId"=>$adminId
+			));
 
-		$returnArray = array();
+			$returnArray = array();
 
-		foreach($results as $arr) {
-			foreach($arr as $key => $value) {
-				$returnArray[$key] = $value;
+			foreach($results as $arr) {
+				foreach($arr as $key => $value) {
+					$returnArray[$key] = $value;
+				}
 			}
-		}
 
-		echo json_encode($returnArray);
+			echo json_encode($returnArray);
+		} else {
+			echo json_encode(alert("danger", "INT ERROR"));
+		}
 	}
 
 	function getDepartmentInfo() {
 		global $adminDeptId;
 		global $accessLevel;
 
-		$deptId = $_GET['deptId']; //Validate Int
+		if(is_numeric($_GET['deptId'])) {
+			$deptId = $_GET['deptId'];
 
-		$database = new data;
+			$database = new data;
 
-		$results = $database->getData("SELECT * FROM department WHERE departmentId = :deptId;", array(
-			":deptId"=>$deptId
-		));
+			$results = $database->getData("SELECT * FROM department WHERE departmentId = :deptId;", array(
+				":deptId"=>$deptId
+			));
 
-		$returnArray = array();
+			$returnArray = array();
 
-		foreach($results as $arr) {
-			foreach($arr as $key => $value) {
-				$returnArray[$key] = $value;
+			foreach($results as $arr) {
+				foreach($arr as $key => $value) {
+					$returnArray[$key] = $value;
+				}
 			}
-		}
 
-		echo json_encode($returnArray);
+			echo json_encode($returnArray);
+		} else {
+			echo json_encode(alert("danger", "INT ERROR"));
+		}
 	}
 
 	function getEmployeeInfo() {
 		global $adminDeptId;
 		global $accessLevel;
 
-		$facultyId = $_GET['facultyId']; //VALIDATE INT
+		if(is_numeric($_GET['facultyId'])) {
+			$facultyId = $_GET['facultyId'];
 
-		$database = new data;
+			$database = new data;
 
-		$results = $database->getData("SELECT * FROM Employees JOIN department ON Employees.departmentId = department.departmentID WHERE facultyId=:facultyId;", array(
-				":facultyId"=>$facultyId
-			));
-		$results2 = $database->getData("SELECT secondaryDepartmentID, departmentName FROM Employees JOIN department on Employees.secondaryDepartmentID = department.departmentID WHERE facultyId=:facultyId;", array(
-				":facultyId"=>$facultyId
-			));
+			$results = $database->getData("SELECT * FROM Employees JOIN department ON Employees.departmentId = department.departmentID WHERE facultyId=:facultyId;", array(
+					":facultyId"=>$facultyId
+				));
+			$results2 = $database->getData("SELECT secondaryDepartmentID, departmentName FROM Employees JOIN department on Employees.secondaryDepartmentID = department.departmentID WHERE facultyId=:facultyId;", array(
+					":facultyId"=>$facultyId
+				));
 
-		//$array[] = $returnArray;
-		$returnArray = array();
+			//$array[] = $returnArray;
+			$returnArray = array();
 
-		foreach($results as $arr) {
-			foreach($arr as $key => $value) {
-				$returnArray[$key] = $value;
+			foreach($results as $arr) {
+				foreach($arr as $key => $value) {
+					$returnArray[$key] = $value;
+				}
 			}
+
+			$returnArray["secondaryDepartmentName"] = $results2[0]['departmentName'];
+
+			echo json_encode($returnArray);
+		} else {
+			echo json_encode(alert("danger", "INT ERROR"));
 		}
-
-		$returnArray["secondaryDepartmentName"] = $results2[0]['departmentName'];
-
-		echo json_encode($returnArray);
 	}
 
 	function getRoomInfo() {
@@ -136,22 +148,26 @@
 		global $adminDeptId;
 		global $accessLevel;
 
-		$fpId = $_GET['fpId'];
+		if(is_numeric($_GET['fpId'])) {
+			$fpId = $_GET['fpId'];
 
-		$database = new data;
+			$database = new data;
 
-		$results = $database->getData("SELECT * FROM floorPlan WHERE fpId = :fpId;", array(
-			":fpId"=>$fpId
-		));
+			$results = $database->getData("SELECT * FROM floorPlan WHERE fpId = :fpId;", array(
+				":fpId"=>$fpId
+			));
 
-		$returnArray = array();
+			$returnArray = array();
 
-		foreach($results as $arr) {
-			foreach($arr as $key => $value) {
-				$returnArray[$key] = $value;
+			foreach($results as $arr) {
+				foreach($arr as $key => $value) {
+					$returnArray[$key] = $value;
+				}
 			}
-		}
 
-		echo json_encode($returnArray);
+			echo json_encode($returnArray);
+		} else {
+			echo json_encode(alert("danger", "INT ERROR"));
+		}
 	}
 ?>

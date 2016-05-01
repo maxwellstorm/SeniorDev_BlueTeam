@@ -18,28 +18,4 @@
 
 		return $newString;
 	}
-
-	function validateInt($int) {
-		if(!filter_var($int, FILTER_VALIDATE_INT) === false) {
-			return $int;
-		} else {
-			if(filter_var($int, FILTER_VALIDATE_INT) === 0) {
-				return $int;
-			} else {
-				//throw exception, I think
-				//or should we call alert?
-			}
-		}
-	}
-
-	function validateEmail($email) {
-		$newEmail = filter_var($email, FILTER_SANITIZE_EMAIL);
-
-		if(!filter_var($newEmail, FILTER_VALIDATE_EMAIL) === false) {
-			return $email;
-		} else {
-			//throw exception, I think
-			//or should we call alert?
-		}
-	}
 ?>

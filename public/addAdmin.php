@@ -82,7 +82,13 @@
 		$fName = filterString($_POST['firstName']);
 		$lName = filterString($_POST['lastName']);
 		$username = filterString($_POST['username']);
-		$accessLevel = $_POST['accessLevel']; //verify int
+
+		if(is_numeric($_POST['accessLevel'])) {
+			$accessLevel = $_POST['accessLevel'];
+		} else {
+			$accessLevel = 1;
+		}
+
 		$department = getDepartmentId(filterString($_POST['department']));
 
 		$admin = new admin($database, null);	
@@ -92,16 +98,26 @@
 	function putAdmin() {
 		global $database;
 
-		$adminId = $_POST['adminId']; //int validate
-		$fName = filterString($_POST['firstName']);
-		$lName = filterString($_POST['lastName']);
-		$username = filterString($_POST['username']);
-		$accessLevel = $_POST['accessLevel']; //verify int
-		$department = getDepartmentId(filterString($_POST['department']));
+		if(is_numeric($_POST['adminId'])) {
+			$adminId = $_POST['adminId'];
+			$fName = filterString($_POST['firstName']);
+			$lName = filterString($_POST['lastName']);
+			$username = filterString($_POST['username']);
 
-		$admin = new admin($database, $adminId);
-		$admin->fetch(); //Do I need to fetch?
-		$admin->putParams($fName, $lName, $username, $accessLevel, $department);
+			if(is_numeric($_POST['accessLevel'])) {
+				$accessLevel = $_POST['accessLevel'];
+			} else {
+				$accessLevel = 1;
+			}
+
+			$department = getDepartmentId(filterString($_POST['department']));
+
+			$admin = new admin($database, $adminId);
+			$admin->fetch(); //Do I need to fetch?
+			$admin->putParams($fName, $lName, $username, $accessLevel, $department);
+		} else {
+			$returnMessage = alert("danger", "INT ERROR");
+		}
 	}
 
 	function deleteAdmin() {

@@ -37,49 +37,58 @@ function getInfo(selected) {
 		url: "../database/getInfo.php",
 		data: {facultyId : facId, page : "employee"}
 	}).done(function(response) {
-		console.log(response);
-
 		var infoResponse = JSON.parse(response);
 		console.log(infoResponse);
-		$('#facultyId').val(infoResponse["facultyId"]);
-		$('#firstName').val(infoResponse["fName"]);
-		$('#lastName').val(infoResponse["lName"]);
-		$('#title').val(infoResponse["title"]);
-		$('#email').val(infoResponse["email"]);
-		$('#phone').val(infoResponse["phone"]);
-		$('#room').selectpicker('val', infoResponse["roomNumber"]);
-		$('#depts').selectpicker('val', [infoResponse["departmentName"], infoResponse["secondaryDepartmentName"]]);
-		
-		var isActive = infoResponse['isActive'];
-		var isFaculty = infoResponse['isFaculty'];
-		if(isActive == 0) {
-			document.getElementById('activeNo').checked = true;
-			document.getElementById('activeYes').checked = false;
-		} else { //isActive == 1
-			document.getElementById('activeNo').checked = false;
-			document.getElementById('activeYes').checked = true;
-		}
-
-		if(isFaculty == 0) {
-			document.getElementById('facultyNo').checked = true;
-			document.getElementById('facultyYes').checked = false;
-		} else { //isActive == 1
-			document.getElementById('facultyNo').checked = false;
-			document.getElementById('facultyYes').checked = true;
-		}
-
-		$('#about').val(infoResponse["about"]);
-		$('#education').val(infoResponse["education"]);
-		$('#highlights').val(infoResponse["highlights"]);
-
-		var imagePath = infoResponse['imageName'];
-		if(imagePath) {
-			$('#userImage').attr("src", imagePath);
+		if(checkAJAXError(response)) {
+			$('.form-horizontal').before(infoResponse);
 		} else {
-			$('#userImage').attr("src", 'media/no-preview.png');
-		}
+			$('#facultyId').val(infoResponse["facultyId"]);
+			$('#firstName').val(infoResponse["fName"]);
+			$('#lastName').val(infoResponse["lName"]);
+			$('#title').val(infoResponse["title"]);
+			$('#email').val(infoResponse["email"]);
+			$('#phone').val(infoResponse["phone"]);
+			$('#room').selectpicker('val', infoResponse["roomNumber"]);
+			$('#depts').selectpicker('val', [infoResponse["departmentName"], infoResponse["secondaryDepartmentName"]]);
+			
+			var isActive = infoResponse['isActive'];
+			var isFaculty = infoResponse['isFaculty'];
+			if(isActive == 0) {
+				document.getElementById('activeNo').checked = true;
+				document.getElementById('activeYes').checked = false;
+			} else { //isActive == 1
+				document.getElementById('activeNo').checked = false;
+				document.getElementById('activeYes').checked = true;
+			}
 
+			if(isFaculty == 0) {
+				document.getElementById('facultyNo').checked = true;
+				document.getElementById('facultyYes').checked = false;
+			} else { //isActive == 1
+				document.getElementById('facultyNo').checked = false;
+				document.getElementById('facultyYes').checked = true;
+			}
+
+			$('#about').val(infoResponse["about"]);
+			$('#education').val(infoResponse["education"]);
+			$('#highlights').val(infoResponse["highlights"]);
+
+			var imagePath = infoResponse['imageName'];
+			if(imagePath) {
+				$('#userImage').attr("src", imagePath);
+			} else {
+				$('#userImage').attr("src", 'media/no-preview.png');
+			}
+		}
 	})
+}
+
+function checkAJAXError(response) {
+	if(response.indexOf("<div class='alert alert-dismissible") >= 0) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 function getAdminInfo(selected) {
@@ -92,12 +101,16 @@ function getAdminInfo(selected) {
 	}).done(function(response) {
 		var infoResponse = JSON.parse(response);
 		console.log(infoResponse);
-		$('#adminId').val(infoResponse["AdminId"]);
-		$('#firstName').val(infoResponse["fName"]);
-		$('#lastName').val(infoResponse["lName"]);
-		$('#username').val(infoResponse["username"]);
-		$('#accessLevel').val(infoResponse["accessLevel"]);
-		$('#department').val(infoResponse["departmentName"]);
+		if(checkAJAXError(response)) {
+			$('.form-horizontal').before(infoResponse);
+		} else {
+			$('#adminId').val(infoResponse["AdminId"]);
+			$('#firstName').val(infoResponse["fName"]);
+			$('#lastName').val(infoResponse["lName"]);
+			$('#username').val(infoResponse["username"]);
+			$('#accessLevel').val(infoResponse["accessLevel"]);
+			$('#department').val(infoResponse["departmentName"]);
+		}
 	})
 }
 
@@ -136,9 +149,13 @@ function getDepartmentInfo(selectedVal) {
 	}).done(function(response) {
 		var infoResponse = JSON.parse(response);
 		console.log(infoResponse);
-		$('#deptId').val(infoResponse["departmentId"]);
-		$('#deptName').val(infoResponse["departmentName"]);
-		$('#deptAbbr').val(infoResponse["departmentAbbr"]);
+		if(checkAJAXError(response)) {
+			$('.form-horizontal').before(infoResponse);
+		} else {
+			$('#deptId').val(infoResponse["departmentId"]);
+			$('#deptName').val(infoResponse["departmentName"]);
+			$('#deptAbbr').val(infoResponse["departmentAbbr"]);
+		}
 	})
 }
 
@@ -150,8 +167,12 @@ function getfpInfo(selectedVal) {
 	}).done(function(response) {
 		var infoResponse = JSON.parse(response);
 		console.log(infoResponse);
-		$('#fpId').val(infoResponse['fpId']);
-		$('#fpName').val(infoResponse['name']);
+		if(checkAJAXError(response)) {
+			$('.form-horizontal').before(infoResponse);
+		} else {
+			$('#fpId').val(infoResponse['fpId']);
+			$('#fpName').val(infoResponse['name']);
+		}
 	})
 }
 

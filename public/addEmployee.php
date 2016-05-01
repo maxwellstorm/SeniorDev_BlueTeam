@@ -20,7 +20,7 @@
 
 
 	/* THIS IS ESSENTIALLY THE CONTENTS OF NEWEMPLOYEE.PHP, IT'LL GET CHANGED BACK WHEN I FIGURE OUT HOW TO CARRY THE RETURN MESSAGE THROUGH THE PAGES*/
-	$database = new data;
+	/*$database = new data;
 
 	if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$depts = $_POST['depts'];
@@ -139,7 +139,7 @@
 	 * The method will return the filepath of the uploaded image provided the upload was successful
 	 * otherwise, it'll return null, which will trigger an error message
 	 */
-	function uploadImage($emp) {
+	/*function uploadImage($emp) {
 		if(!empty($_FILES['image']) && $_FILES['image']['error'] == 0) { //If there is a file and there is no error uploading it...
 			//check size and type of file
 			$filename = basename($_FILES['image']['name']);
@@ -179,10 +179,8 @@
 				return $arr['departmentId'];
 			}
 		}
-	}
-	/*END NEWEMPLOYEE.PHP BULLSHIT HACK CODE*/
-
-
+	}*/
+	//END NEWEMPLOYEE.PHP BULLSHIT HACK CODE
 
 
 
@@ -267,7 +265,7 @@
 				<?php if(isset($returnMessage)) {
 					echo($returnMessage); 
 				} ?>
-				<form class="form-horizontal" id="addEmployee" name="addEmployee" enctype="multipart/form-data" action="addEmployee.php" method="POST" onsubmit="removeOnlyBullets('highlights'); removeOnlyBullets('education')">
+				<form class="form-horizontal" id="addEmployee" name="addEmployee" enctype="multipart/form-data" action="../database/newEmployee.php" method="POST" onsubmit="removeOnlyBullets('highlights'); removeOnlyBullets('education')">
 					<div class="col-lg-2" id="searchCol">
 						<h3>SEARCH</h3>
 						<div class="form-group">

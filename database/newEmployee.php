@@ -77,8 +77,19 @@
 		$fName = filterString($_POST['firstName']);
 		$lName = filterString($_POST['lastName']);
 		$email = $_POST['email']; //VALIDATE EMAIL
-		$active = $_POST['active']; //VALIDATE INT
-		$faculty = $_POST['faculty']; //VALIDATE INT
+		
+		if(is_numeric($_POST['active'])) {
+			$active = $_POST['active'];
+		} else {
+			$active = 1;
+		}
+
+		if(is_numeric($_POST['faculty'])) {
+			$faculty = $_POST['faculty'];
+		} else {
+			$faculty = 1;
+		}
+
 		$phone = filterString($_POST['phone']);
 		$about = filterString($_POST['about']);
 		$education = filterString($_POST['education']);
@@ -98,12 +109,22 @@
 	function putEmployee() {
 		global $database;
 
-		$id = $_POST['facultyId']; //Validate Int
+		$id = $_POST['facultyId'];
 		$fName = filterString($_POST['firstName']);
 		$lName = filterString($_POST['lastName']);
 		$email = $_POST['email']; //Validate Email
-		$active = $_POST['active']; //validate int
-		$faculty = $_POST['faculty']; //validate int
+
+		if(is_numeric($_POST['active'])) {
+			$active = $_POST['active'];
+		} else {
+			$active = 1;
+		}
+
+		if(is_numeric($_POST['faculty'])) {
+			$faculty = $_POST['faculty'];
+		} else {
+			$faculty = 1;
+		}
 		$phone = filterString($_POST['phone']);
 		$about = filterString($_POST['about']);
 		$education = filterString($_POST['education']);
