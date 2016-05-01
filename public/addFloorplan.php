@@ -148,7 +148,7 @@
 
 					<div class="col-lg-10">
 						<!--<?php displayNav($accessLevel, $givenName) ?>-->
-						<a href="addRoom.php">Go back to Room</a>
+						<a href="addRoom.php">&laquo; Go back to Room</a>
 						<fieldset>
 							<legend><h2>ADD A NEW FLOOR PLAN</h2></legend>
 							<input type="hidden" id="fpId" name="fpId">
