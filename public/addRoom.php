@@ -175,8 +175,8 @@
 							</div>
 
 							<input type="hidden" id="imgSrc" name="imgSrc" value="./../public/media/floorplans/golisano-2nd-floor-large.png">
-							<input type="text" id="posX" name="posX">
-							<input type="text" id="posY" name="posY">
+							<input type="hidden" id="posX" name="posX">
+							<input type="hidden" id="posY" name="posY">
 						</fieldset>
 
 						<div class="form-group">
