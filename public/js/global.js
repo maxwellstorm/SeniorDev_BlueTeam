@@ -140,8 +140,16 @@ function sortProfArray(by) {
 			var bLast = b.getLast();
 			if (aLast < bLast) {
 				return -1;
-			} else {
+			} else if (aLast > bLast) {
 				return 1;
+			} else { // professors have the same last name, decide on room number
+				var aRoom = a.getRoom().replace(/\s/g, '');
+				var bRoom = b.getRoom().replace(/\s/g, '');
+				if (aRoom < bRoom) {
+					return -1;
+				} else {
+					return 1;
+				}
 			}
 		});
 	} else if (by == "room") { // sort by room
@@ -322,11 +330,13 @@ $(document).ready(function() {
 
 	$('#refineLink').click(function() {
 		if ($('#refineToggle').hasClass('visible')) {
-			$('#refineToggle').slideUp(250).removeClass('visible');
+			$('#refineTriangle').removeClass('rotated');
+			$('#refineToggle').stop().slideUp(250).removeClass('visible');
 			$('.selected').removeClass('selected');
 			filterProfessors();
 		} else {
-			$('#refineToggle').slideDown(250).addClass('visible');
+			$('#refineTriangle').addClass('rotated');
+			$('#refineToggle').stop().slideDown(250).addClass('visible');
 		}
 	});
 
