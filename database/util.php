@@ -178,4 +178,18 @@ function getDepartmentId($deptName) {
 		}
 	}
 }
+
+/**
+ * A function to get all rooms and return them as a set of <option>'s
+ * @return HTML_Content A set of <option>'s each containing information about a room
+ */
+function getAllRooms() {
+	$database = new data;
+
+	$rooms = $database->getData("SELECT roomNumber FROM room;", array());
+
+	foreach($rooms as $arr) {
+		echo "<option>" . $arr['roomNumber'] . "</option>";
+	}
+}
 ?>

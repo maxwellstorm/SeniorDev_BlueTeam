@@ -39,20 +39,6 @@
 			echo "<li onclick='setEmployeeActive(this); disableCreate();'><span class='fId' style='display: none'>" . $arr['facultyId'] . "</span><strong>" . $arr['lName'] . ", " . $arr['fName'] . "</strong><br /><span class='rmNum initialism'>" . $arr['roomNumber'] . "</span><hr /></li>";
 		}
 	}
-
-	/**
-	 * A function to get all rooms and return them as a set of <option>'s
-	 * @return HTML_Content A set of <option>'s each containing information about a room
-	 */
-	function getAllRooms() {
-		$database = new data;
-
-		$rooms = $database->getData("SELECT roomNumber FROM room", array());
-
-		foreach($rooms as $arr) {
-			echo "<option>" . $arr['roomNumber'] . "</option>";
-		}
-	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
