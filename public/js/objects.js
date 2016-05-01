@@ -117,3 +117,33 @@ class Department {
 		return this.debtAbbr;
 	}
 }
+
+class Room {
+	constructor(roomNumber, roomMap, roomDesc, posX, posY) {
+		this.roomNumber = roomNumber;
+		this.roomMap = roomMap;
+		this.roomDesc = roomDesc;
+		this.posX = posX;
+		this.posY = posY;
+	}
+
+	getRoomNumber() {
+		return this.roomNumber;
+	}
+
+	getRoomMap() {
+		return this.roomMap;
+	}
+
+	getRoomDesc() {
+		return this.roomDesc;
+	}
+
+	getPosX() {
+		return this.posX;
+	}
+
+	getPosY() {
+		return this.posY;
+	}
+}

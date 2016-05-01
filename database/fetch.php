@@ -8,7 +8,9 @@
 			echo fetchAll();
 		} else if ($functionToCall == 'fetchDepts') {
 			echo fetchDepts();
-		}
+		} else if ($functionToCall == 'fetchRooms') {
+			echo fetchRooms();
+		} 
 	}
 
 	function fetchAll() {
@@ -25,5 +27,13 @@
 		$depts = $database->getData("SELECT * FROM department;", array());
 
 		return json_encode($depts);
+	}
+
+	function fetchRooms() {
+		$database = new data;
+
+		$rooms = $database->getData("SELECT * FROM room;", array());
+
+		return json_encode($rooms);
 	}
 ?>

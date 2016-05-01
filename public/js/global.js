@@ -1,11 +1,13 @@
 // empty arrays to store professors and departments as objects
 var profArray = [];
 var deptArray = [];
+var roomArray = [];
 
 // set initial time at page load (this is used for inactivity timeouts)
 var time = new Date().getTime();
 
 function init() {
+	// AJAX call to pull professor information
 	$.ajax({
 		type: 'GET',
 		url: '../database/fetch.php',
@@ -17,13 +19,14 @@ function init() {
 			// alert(dataArray);
 			$.each(parsedData, function(i, val) {
 				var professor = new Professor(val.facultyId, val.fName, val.lName, val.title, val.email, val.roomNumber, val.phone, val.departmentId, val.isActive, val.isFaculty, val.about, val.education, val.highlights, val.imageName); 
-				if (val.isActive == 1) {
+				if (professor.checkActive()) {
 					profArray.push(professor);
 				}
 			});
 		}
 	});
 
+	// AJAX call to pull department information
 	$.ajax({
 		type: 'GET',
 		url: '../database/fetch.php',
@@ -40,6 +43,23 @@ function init() {
 
 			setProfessorDepts();
 			populateDeptFilters();
+		}
+	});
+
+	// AJAX call to pull room information
+	$.ajax({
+		type: 'GET',
+		url: '../database/fetch.php',
+		data: 'function=fetchRooms',
+		async: false,
+		success: function(response) {
+			var dataArray = response;
+			var parsedData = $.parseJSON(dataArray);
+			// alert(dataArray);
+			$.each(parsedData, function(i, val) {
+				var room = new Room(val.roomNumber, val.roomMap, val.description, val.posX, val.posY);
+				roomArray.push(room);
+			});
 		}
 	});
 	
@@ -83,6 +103,16 @@ function getProfessorFromArr(facultyId) {
 		}
 	});
 	return profToReturn;
+}
+
+function getRoomFromArr(roomNumber) {
+	var roomToReturn;
+	$.each(roomArray, function(i, val) {
+		if (val.getRoomNumber() == roomNumber) {
+			roomToReturn = val;
+		}
+	});
+	return roomToReturn;
 }
 
 function setProfessorDepts() {
@@ -228,7 +258,7 @@ function filterProfessors() {
 	});
 }
 
-function updateOverlay(Professor) {
+function updateOverlay(Professor, Room) {
 	$('#overlayThumb').css('background-image', 'url(' + Professor.getThumb() + ')');
 	$('#overlayName').text(Professor.getFullName());
 	$('#overlayRoom').text(Professor.getRoom());
@@ -257,6 +287,29 @@ function updateOverlay(Professor) {
 	} else {
 		$('#overlayHighlights').hide();
 	}
+
+	// update map image
+	$('#floorMap').css('background-image', 'url(' + Room.getRoomMap() + ')');
+
+	// get floormap dimensions on page
+	var stretchedWidth = $('#mapOverlay').outerWidth() * 0.75 - 30;
+	var stretchedHeight = $('#mapOverlay').height() - 30;
+
+	// get floormap dimensions from database (hard-coded for now)
+	var initialWidth = 720;
+	var initialHeight = 536;
+
+	// create ratios
+	var ratioX = Room.getPosX() / initialWidth;
+	var ratioY = Room.getPosY() / initialHeight;
+
+	// multiply ratios by stretched dimensions to find point coordinates for the page
+	var xValue = ratioX * stretchedWidth;
+	var yValue = ratioY * stretchedHeight;
+
+	$('#pin').css('top', yValue + 'px');
+	$('#pin').css('left', xValue + 'px');
+	// alert(Room.getPosX() + ', ' + Room.getPosY());
 }
 
 function showOverlay() {
@@ -273,7 +326,8 @@ $(document).ready(function() {
 	$('#gridView').on('click', 'div.professorCard', function() {
 		var selectedId = $(this).attr("id").substring(8);
 		var professor = getProfessorFromArr(selectedId);
-		updateOverlay(professor);
+		var room = getRoomFromArr(professor.getRoom());
+		updateOverlay(professor, room);
 
 		showOverlay();
 	});
