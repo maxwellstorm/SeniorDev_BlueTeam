@@ -156,4 +156,14 @@ function alert($type, $text) {
 
 	return $alert;
 }
+
+function getAllDepartments() {
+	$database = new data;
+
+	$depts = $database->getData("SELECT departmentName FROM department", array());
+
+	foreach($depts as $arr) {
+		echo "<option>" . $arr['departmentName'] . "</option>";
+	}
+}
 ?>

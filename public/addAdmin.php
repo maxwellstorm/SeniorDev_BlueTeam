@@ -144,16 +144,6 @@
 			echo "<li onclick='setAdminActive(this); disableCreate();'><span class='aId' style='display: none'>" . $arr['adminId'] . "</span><strong>" . $arr['lName'] . ", " . $arr['fName'] . "</strong><br /><span class='rmNum initialism'>" . $arr['departmentAbbr'] . "</span><hr /></li>";
 		}
 	}
-	
-	function getAllDepartments() {
-		$database = new data;
-
-		$depts = $database->getData("SELECT departmentName FROM department", array());
-
-		foreach($depts as $arr) {
-			echo "<option>" . $arr['departmentName'] . "</option>";
-		}
-	}
 
 	function getDepartmentId($deptName) {
 		$database = new data;

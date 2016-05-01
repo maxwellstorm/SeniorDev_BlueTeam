@@ -55,7 +55,7 @@
 		}
 	}
 
-	function getAllDepartments() {
+	function getAllDepartmentsId() {
 		$database = new data;
 
 		$depts = $database->getData("SELECT departmentId, departmentName FROM department", array());
@@ -97,7 +97,7 @@
 					<div class="col-lg-2 dropdownSelect" id="searchCol">
 						<select id="deptSelect" class="form-control">
 							<option value="" disabled selected>Select a Department</option>
-							<?php getAllDepartments() ?>
+							<?php getAllDepartmentsId() ?>
 						</select>
 						<br />
 
