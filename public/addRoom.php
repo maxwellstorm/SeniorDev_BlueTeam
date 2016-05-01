@@ -4,7 +4,6 @@
 	require("../database/room.php");
 	require_once("../database/dbException.php");
 	require_once("../database/util.php");
-	require_once("../database/commonAuth.php");
 
 
 	//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT

@@ -2,7 +2,6 @@
 	require_once("../database/data.php");
 	require_once("../database/admin.php");
 	require_once("../database/util.php");
-	require_once("../database/commonAuth.php");
 	require_once("../database/dbException.php");
 
 	//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT

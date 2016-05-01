@@ -6,7 +6,7 @@ require_once("employees.php");
 require_once("room.php");
 require_once("util.php");
 
-util::checkRoom("GOL-12341");
+checkRoom("GOL-12341");
 
 /*$testDb = new data; //connects to database in constructor/*
 

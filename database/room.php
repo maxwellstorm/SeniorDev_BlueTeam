@@ -1,7 +1,6 @@
 <?php
 
 require_once("util.php");
-require_once("commonAuth.php");
 
 //REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
 $allowed = true;

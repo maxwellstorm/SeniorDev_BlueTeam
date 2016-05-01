@@ -1,6 +1,5 @@
 <?php
 require_once("dbException.php");
-require_once("commonAuth.php");
 
 
 
