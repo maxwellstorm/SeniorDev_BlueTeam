@@ -131,13 +131,16 @@ header h1 {
 	margin: 15px;
 	width: calc(100% - 30px);
 	height: calc(100% - 30px);
-	background-image: url("../media/floorplans/lowenthal-1st-floor.png");
+	/* background-image: url("../media/floorplans/golisano-2nd-floor-large.png"); */
 	background-size: 100% 100%;
 	position: relative;
 }
 
 #pin {
 	position: absolute;
+	width: 48px;
+	height: 48px;
+	background-image: url("../media/pin.png");
 }
 
 #professorsContainer {

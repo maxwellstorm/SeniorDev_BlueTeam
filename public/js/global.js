@@ -295,21 +295,14 @@ function updateOverlay(Professor, Room) {
 	var stretchedWidth = $('#mapOverlay').outerWidth() * 0.75 - 30;
 	var stretchedHeight = $('#mapOverlay').height() - 30;
 
-	// get floormap dimensions from database (hard-coded for now)
-	var initialWidth = 720;
-	var initialHeight = 536;
+	var xValue = Room.getPosX() * stretchedWidth;
+	var yValue = Room.getPosY() * stretchedHeight;
 
-	// create ratios
-	var ratioX = Room.getPosX() / initialWidth;
-	var ratioY = Room.getPosY() / initialHeight;
+	var pinWidth = $('#pin').width();
+	var pinHeight = $('#pin').height();
 
-	// multiply ratios by stretched dimensions to find point coordinates for the page
-	var xValue = ratioX * stretchedWidth;
-	var yValue = ratioY * stretchedHeight;
-
-	$('#pin').css('top', yValue + 'px');
-	$('#pin').css('left', xValue + 'px');
-	// alert(Room.getPosX() + ', ' + Room.getPosY());
+	$('#pin').css('top', yValue - pinHeight + 'px');
+	$('#pin').css('left', xValue - (pinWidth / 2) + 'px');
 }
 
 function showOverlay() {
