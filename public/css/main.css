@@ -206,6 +206,23 @@ header h1 {
 	color: #F36E21;
 }
 
+/* LIST STYLES BEGIN BELOW */
+#gridView.showLess .thumb {
+	display: none;
+}
+
+#gridView.showLess .infoPreview {
+	float: left;
+	width: 100%;
+}
+
+#gridView.showLess .professorCard {
+	height: auto;
+	background: none;
+	/* border-bottom: 1px solid #A4A4A4; */
+	border-left: 1px solid #A4A4A4;
+}
+
 #filtersContainer {
 	float: right;
 	background: #F8F7ED;
@@ -217,7 +234,7 @@ header h1 {
 
 #toggles {
 	font-weight: normal;
-	margin: 20px 0px;
+	margin: 25px 0px 20px 0px;
 	width: 80%;
 	position: relative;
 	display: block;

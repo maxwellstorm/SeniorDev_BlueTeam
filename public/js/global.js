@@ -44,6 +44,7 @@ function init() {
 	});
 	
 	populateGridView();
+	filterProfessors();
 
 	// the rest of the init function is for inactivity timeouts
 	$(document.body).bind('mousemove keypress', function(e) {
@@ -175,8 +176,7 @@ function sortProfArray(by) {
 
 function filterProfessors() {
 	// set default filter values
-	var sort = 'name';
-	var view = 'grid';
+	var sort = 'lname';
 	var dept = 'All';
 	var letter;
 
@@ -188,21 +188,11 @@ function filterProfessors() {
 		sort = 'room';
 	}
 
-	// set view based on filter toggle
-	var viewSelectedId = $('#viewToggle .selectedToggle').attr('id');
-	if (viewSelectedId == "gridToggle") { // user wants to view professors in a grid
-		view = 'grid';
-	} else { // user wants to view professors in a list
-		view = 'list';
-	}
-
 	// set depts based on filter checkboxes
 	dept = $('.deptCheck input.checked').attr('id');
 
 	// set letter based on refine selection
 	letter = $('.letter.selected').text();
-
-	// alert(sort + ' ' + view + ' ' + depts + ' ' + letter);
 	
 	// BEGIN FILTERING BASED ON VARIABLE VALUES
 
@@ -305,19 +295,6 @@ $(document).ready(function() {
 		}
 
 		filterProfessors();
-	});
-
-	$('#viewToggle span').click(function() {
-		$('#viewToggle .selectedToggle').removeClass('selectedToggle');
-		$(this).addClass('selectedToggle');
-
-		// slide the toggle slider
-		var selectedId = $(this).attr('id');
-		if (selectedId == "gridToggle") {
-			$('#viewToggle .toggleSlider').css('left', '0px');
-		} else {
-			$('#viewToggle .toggleSlider').css('left', '50%');
-		}
 	});
 
 	$('.deptCheck input').click(function() {
