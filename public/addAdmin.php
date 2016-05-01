@@ -144,18 +144,6 @@
 			echo "<li onclick='setAdminActive(this); disableCreate();'><span class='aId' style='display: none'>" . $arr['adminId'] . "</span><strong>" . $arr['lName'] . ", " . $arr['fName'] . "</strong><br /><span class='rmNum initialism'>" . $arr['departmentAbbr'] . "</span><hr /></li>";
 		}
 	}
-
-	function getDepartmentId($deptName) {
-		$database = new data;
-
-		$depts = $database->getData("SELECT departmentId, departmentName FROM department", array());
-
-		foreach($depts as $arr) {
-			if(strcmp($deptName, $arr['departmentName']) == 0) {
-				return $arr['departmentId'];
-			}
-		}
-	}
 ?>
 <!DOCTYPE html>
 <html lang="en">

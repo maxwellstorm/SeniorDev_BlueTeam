@@ -185,16 +185,4 @@
 		//echo("null or error");
 	    }
 	}
-
-	function getDepartmentId($deptName) {
-		$database = new data;
-
-		$depts = $database->getData("SELECT departmentId, departmentName FROM department", array());
-
-		foreach($depts as $arr) {
-			if(strcmp($deptName, $arr['departmentName']) == 0) {
-				return $arr['departmentId'];
-			}
-		}
-	}
 ?>
