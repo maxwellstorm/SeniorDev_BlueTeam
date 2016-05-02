@@ -31,38 +31,32 @@
 				$dept = new department($database, null);
 				$dept->postParams($name, $abbr);
 				$returnMessage = alert("success", "$name Department successfully created");
-			}
-			catch(dbException $db){
+			} catch(dbException $db) {
 				$returnMessage = $db->alert();
 			}
 		} elseif(isset($_POST['edit'])){ //If the user is editing an existing deparmtent	
 			try{
-				
 				$deptId = $_POST['deptId'];
 				$deptAbbr = filterString($_POST['deptAbbr']);
 
 				$dept = new department($database, $deptId);
 				$dept->putParams($name, $deptAbbr);
 				$returnMessage = alert("success", "$name Department successfully updated");
-			}
-			catch(dbException $db){
+			} catch(dbException $db){
 				$returnMessage = $db->alert();
 			}
-
-		} elseif(isset($_POST['delete']) && isset($_POST['deptId'])) { //If the user is deleting an existing department
-			
+		} elseif(isset($_POST['delete']) && isset($_POST['deptId'])) { //If the user is deleting an existing department		
 			try{
-			$id = $_POST['deptId'];
+				$id = $_POST['deptId'];
 
-			if(doesHaveMembers($id)) { //Departments that contain Employees or Admins cannot be deleted
-				$returnMessage = alert("danger", "You can't delete the $name Department because it has employees or administrators in it");
-			} else {
-				$dept = new department($database, $id);
-				$dept->delete();
-				$returnMessage = alert("success", "$name Department successfully deleted");
-			}
+				if(doesHaveMembers($id)) { //Departments that contain Employees or Admins cannot be deleted
+					$returnMessage = alert("danger", "You can't delete the $name Department because it has employees or administrators in it");
+				} else {
+					$dept = new department($database, $id);
+					$dept->delete();
+					$returnMessage = alert("success", "$name Department successfully deleted");
 				}
-			catch(dbException $db){
+			} catch(dbException $db){
 				$returnMessage = $db->alert();
 			}
 		}
@@ -81,10 +75,9 @@
 			foreach($depts as $arr) {
 				echo "<option value='" . $arr['departmentId'] . "'>" . $arr['departmentName'] ."</option>";
 			}
-				}
-		catch(dbException $db){
-				echo $db->alert();
-			}
+		} catch(dbException $db){
+			echo $db->alert();
+		}
 	}
 
 	/**
@@ -94,26 +87,25 @@
 	 */
 	function doesHaveMembers($deptId) {
 		try{
-		$database = new data;
+			$database = new data;
 
-		$empMatch = $database->getData("SELECT facultyId FROM Employees WHERE departmentId=:departmentId;", array(
-			":departmentId"=>$deptId
-		));
+			$empMatch = $database->getData("SELECT facultyId FROM Employees WHERE departmentId=:departmentId;", array(
+				":departmentId"=>$deptId
+			));
 
-		$adminMatch = $database->getData("SELECT adminId FROM Admin WHERE departmentId=:departmentId;", array(
-			":departmentId"=>$deptId
-		));
+			$adminMatch = $database->getData("SELECT adminId FROM Admin WHERE departmentId=:departmentId;", array(
+				":departmentId"=>$deptId
+			));
 
-		if(count($empMatch) > 0 || count($adminMatch) > 0) { //If any ID numbers (representing department members) are returned, return true
-			return true;
-		} else {
-			return false;
-		}
-			}
-			catch(dbException $db){
-				echo $db->alert();
+			if(count($empMatch) > 0 || count($adminMatch) > 0) { //If any ID numbers (representing department members) are returned, return true
+				return true;
+			} else {
 				return false;
 			}
+		} catch(dbException $db){
+			echo $db->alert();
+			return false;
+		}
 	}
 ?>
 <!DOCTYPE html>

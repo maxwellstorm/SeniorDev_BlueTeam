@@ -41,8 +41,7 @@
 						$returnMessage = alert("danger", "You cannot create administrators outside of your department");
 					}
 				}
-			}
-		catch(dbException $db) {
+			} catch(dbException $db) {
 				echo $db->alert();
 			}
 		} elseif(isset($_POST['edit'])){ //If the user is editing a current Admin
@@ -57,13 +56,11 @@
 					//RETURN ERROR MESSAGE - LOG ERRROR?
 					$returnMessage = alert("danger", "You cannot edit administrators outside of your department");
 				}
-			}
-		catch(dbException $db) {
+			} catch(dbException $db) {
 				echo $db->alert();
 			}		
 
 		} elseif(isset($_POST['delete']) && isset($_POST['adminId'])) { //If the user is deleting an administrator
-			//add try/catch?
 			if($accessLevel == 3) { //User must be either a system administrator...
 				deleteAdmin();
 				$returnMessage = alert("success", "$fName $lName successfully deleted");
@@ -71,7 +68,6 @@
 				deleteAdmin();
 				$returnMessage = alert("success", "$fName $lName successfully deleted");
 			} else {
-				//RETURN ERROR MESSAGE - LOG ERROR?
 				$returnMessage = alert("danger", "You cannot delete administrators outside of your department");
 			}
 		}
@@ -82,43 +78,13 @@
 	 */
 	function postAdmin() {
 		try{
-		global $database;
+			global $database;
 
-		$fName = filterString($_POST['firstName']);
-		$lName = filterString($_POST['lastName']);
-		$username = filterString($_POST['username']);
-
-		if(is_numeric($_POST['accessLevel'])) { //Validate that the accessLevel is an integer
-			$accessLevel = $_POST['accessLevel'];
-		} else {
-			$accessLevel = 1;
-		}
-
-		$department = getDepartmentId(filterString($_POST['department']));
-
-		$admin = new admin($database, null);	
-		$admin->postParams($fName, $lName, $username, $accessLevel, $department);
-		}
-			catch(dbException $db){
-				echo $db->alert();
-				
-			}
-	}
-
-	/**
-	 * A function to update a currently existing administrator
-	 */
-	function putAdmin() {
-		try{
-		global $database;
-
-		if(is_numeric($_POST['adminId'])) {
-			$adminId = $_POST['adminId'];
 			$fName = filterString($_POST['firstName']);
 			$lName = filterString($_POST['lastName']);
 			$username = filterString($_POST['username']);
 
-			if(is_numeric($_POST['accessLevel'])) { //Validate the the access level is an integer
+			if(is_numeric($_POST['accessLevel'])) { //Validate that the accessLevel is an integer
 				$accessLevel = $_POST['accessLevel'];
 			} else {
 				$accessLevel = 1;
@@ -126,18 +92,43 @@
 
 			$department = getDepartmentId(filterString($_POST['department']));
 
-			$admin = new admin($database, $adminId);
-			$admin->fetch();
-			$admin->putParams($fName, $lName, $username, $accessLevel, $department);
-		} else {
-			$returnMessage = alert("danger", "Please input a numerical ID");
+			$admin = new admin($database, null);	
+			$admin->postParams($fName, $lName, $username, $accessLevel, $department);
+		} catch(dbException $db){
+			echo $db->alert();
 		}
-		
+	}
+
+	/**
+	 * A function to update a currently existing administrator
+	 */
+	function putAdmin() {
+		try{
+			global $database;
+
+			if(is_numeric($_POST['adminId'])) {
+				$adminId = $_POST['adminId'];
+				$fName = filterString($_POST['firstName']);
+				$lName = filterString($_POST['lastName']);
+				$username = filterString($_POST['username']);
+
+				if(is_numeric($_POST['accessLevel'])) { //Validate the the access level is an integer
+					$accessLevel = $_POST['accessLevel'];
+				} else {
+					$accessLevel = 1;
+				}
+
+				$department = getDepartmentId(filterString($_POST['department']));
+
+				$admin = new admin($database, $adminId);
+				$admin->fetch();
+				$admin->putParams($fName, $lName, $username, $accessLevel, $department);
+			} else {
+				$returnMessage = alert("danger", "Please input a numerical ID");
 			}
-			catch(dbException $db){
-				$returnMessage =  $db->alert();
-				
-			}
+		} catch(dbException $db){
+			$returnMessage =  $db->alert();	
+		}
 	}
 
 	/**
@@ -145,17 +136,15 @@
 	 */
 	function deleteAdmin() {
 		try{
-		global $database;
+			global $database;
 
-		$adminId = $_POST['adminId'];
+			$adminId = $_POST['adminId'];
 
-		$admin = new admin($database, $adminId);
-		$admin->delete();
+			$admin = new admin($database, $adminId);
+			$admin->delete();
+		} catch(dbException $db){
+				echo $db->alert();		
 		}
-			catch(dbException $db){
-				echo $db->alert();
-				
-			}
 	}
 
 	/**
@@ -165,26 +154,24 @@
 	 * @return html_content A set of <li> tags containing the names & ID's of each admin user
 	 */
 	function getAllAdmins($adminDeptId, $accessLevel) {
-		try{
-		$database = new data;
+		try {
+			$database = new data;
 
 
-		if($accessLevel == 3) { //If the current user is a System Administrator, they can see all administrators in the database
-			$admins = $database->getData("SELECT fName, lName, departmentAbbr, adminId FROM Admin JOIN department ON Admin.departmentId = department.departmentId ORDER BY lName ASC;", array());
-		} else { //If they are not a System Administrator, they can only see admins from their department (and not system administrators)
-			$admins = $database->getData("SELECT fName, lName, departmentAbbr, adminId FROM Admin JOIN department ON Admin.departmentId = department.departmentId WHERE Admin.departmentId=:deptId AND accessLevel < 3 ORDER BY lName ASC;", array(
-					":deptId"=>$adminDeptId
-				));
-		}
-
-		foreach($admins as $arr) {
-			echo "<li onclick='setAdminActive(this); disableCreate();'><span class='aId' style='display: none'>" . $arr['adminId'] . "</span><strong>" . $arr['lName'] . ", " . $arr['fName'] . "</strong><br /><span class='rmNum initialism'>" . $arr['departmentAbbr'] . "</span><hr /></li>";
-		}
-		}
-			catch(dbException $db){
-				echo $db->alert();
-				
+			if($accessLevel == 3) { //If the current user is a System Administrator, they can see all administrators in the database
+				$admins = $database->getData("SELECT fName, lName, departmentAbbr, adminId FROM Admin JOIN department ON Admin.departmentId = department.departmentId ORDER BY lName ASC;", array());
+			} else { //If they are not a System Administrator, they can only see admins from their department (and not system administrators)
+				$admins = $database->getData("SELECT fName, lName, departmentAbbr, adminId FROM Admin JOIN department ON Admin.departmentId = department.departmentId WHERE Admin.departmentId=:deptId AND accessLevel < 3 ORDER BY lName ASC;", array(
+						":deptId"=>$adminDeptId
+					));
 			}
+
+			foreach($admins as $arr) {
+				echo "<li onclick='setAdminActive(this); disableCreate();'><span class='aId' style='display: none'>" . $arr['adminId'] . "</span><strong>" . $arr['lName'] . ", " . $arr['fName'] . "</strong><br /><span class='rmNum initialism'>" . $arr['departmentAbbr'] . "</span><hr /></li>";
+			}
+		} catch(dbException $db){
+				echo $db->alert();
+		}
 	}
 ?>
 <!DOCTYPE html>

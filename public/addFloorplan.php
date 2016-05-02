@@ -23,38 +23,35 @@
 	//Handle Form Submission
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		try{
-		$name = filterString($_POST['fpName']);
+			$name = filterString($_POST['fpName']);
 
-		if(isset($_POST['new'])) { //If the user submits a new floor plan
-			try{
-				$id = $_POST['fpId'];
-				$imagePath = uploadImage();
+			if(isset($_POST['new'])) { //If the user submits a new floor plan
+				try{
+					$id = $_POST['fpId'];
+					$imagePath = uploadImage();
 
-				if(isDuplicateFileOrName($imagePath, $name)) { //Check for duplicate file name or title associated with the image
-					$returnMessage = alert("danger", "Please select a different name. That one is already in use.");
-				} else if(strlen($imagePath) == 0) { //require the user to upload an image
-					$returnMessage = alert("danger", "Please upload an image");
-				} else {
-					$fp = new floorPlan($database, null);
-					$fp->postParams($imagePath, $name);
-					$returnMessage = alert("success", "Floor Plan for $name successfully uploaded");
+					if(isDuplicateFileOrName($imagePath, $name)) { //Check for duplicate file name or title associated with the image
+						$returnMessage = alert("danger", "Please select a different name. That one is already in use.");
+					} else if(strlen($imagePath) == 0) { //require the user to upload an image
+						$returnMessage = alert("danger", "Please upload an image");
+					} else {
+						$fp = new floorPlan($database, null);
+						$fp->postParams($imagePath, $name);
+						$returnMessage = alert("success", "Floor Plan for $name successfully uploaded");
+					}
+				} catch(dbException $db){
+					echo $db->alert();
 				}
-			}
-			catch(dbException $db){
-				echo $db->alert();
-			}
-		} elseif(isset($_POST['delete']) && isset($_POST['fpId'])) { //If the user deletes a floor plan
-			$fpId = $_POST['fpId'];
+			} elseif(isset($_POST['delete']) && isset($_POST['fpId'])) { //If the user deletes a floor plan
+				$fpId = $_POST['fpId'];
 
-			$fp = new floorPlan($database, $fpId);
-			$fp->delete();
-			$returnMessage = alert("success", "Floor Plan for $name successfully deleted");
+				$fp = new floorPlan($database, $fpId);
+				$fp->delete();
+				$returnMessage = alert("success", "Floor Plan for $name successfully deleted");
+			}
+		} catch(dbException $db){
+			$returnMessage = $db->alert();
 		}
-			}
-			catch(dbException $db){
-				$returnMessage = $db->alert();
-				
-			}
 	}
 
 	/**
@@ -63,17 +60,16 @@
 	 */
 	function getAllFloorPlans() {
 		try{
-		$database = new data;
+			$database = new data;
 
-		$fps = $database->getData("SELECT fpId, name FROM floorPlan ORDER BY name ASC;", array());
+			$fps = $database->getData("SELECT fpId, name FROM floorPlan ORDER BY name ASC;", array());
 
-		foreach($fps as $arr) {
-			echo "<option value='" . $arr['fpId'] . "'>" . $arr['name'] ."</option>";
+			foreach($fps as $arr) {
+				echo "<option value='" . $arr['fpId'] . "'>" . $arr['name'] ."</option>";
+			}
+		} catch(dbException $db){
+			echo $db->alert();
 		}
-			}
-			catch(dbException $db){
-				echo $db->alert();
-			}
 	}
 
 	/**
@@ -84,23 +80,22 @@
 	 */
 	function isDuplicateFileOrName($imagePath, $name) {
 		try{
-		$database = new data;
+			$database = new data;
 
-		$match = $database->getData("SELECT fpId FROM floorPlan WHERE imagePath=:imagePath OR name=:name;", array(
-			":imagePath"=>$imagePath,
-			":name"=>$name
-		));
+			$match = $database->getData("SELECT fpId FROM floorPlan WHERE imagePath=:imagePath OR name=:name;", array(
+				":imagePath"=>$imagePath,
+				":name"=>$name
+			));
 
-		if(count($match) > 0) { //Return true if at least one ID is returned, indicating that a floor plan in the database already uses that name/image path
-			return true;
-		} else {
-			return false;
-		}
-			}
-			catch(dbException $db){
-				echo $db->alert();
+			if(count($match) > 0) { //Return true if at least one ID is returned, indicating that a floor plan in the database already uses that name/image path
+				return true;
+			} else {
 				return false;
 			}
+		} catch(dbException $db){
+			echo $db->alert();
+			return false;
+		}
 	}
 
 	/**

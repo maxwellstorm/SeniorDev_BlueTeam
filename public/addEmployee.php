@@ -21,62 +21,61 @@
 	//Handling Form Submission
 	if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		try{
-		$depts = $_POST['depts'];
-		$primaryDept = getDepartmentId(filterString($depts[0]));
-		$secondaryDept = getDepartmentId(filterString($depts[1]));
-		$fName = filterString($_POST['firstName']);
-		$lName = filterString($_POST['lastName']);
+			$depts = $_POST['depts'];
+			$primaryDept = getDepartmentId(filterString($depts[0]));
+			$secondaryDept = getDepartmentId(filterString($depts[1]));
+			$fName = filterString($_POST['firstName']);
+			$lName = filterString($_POST['lastName']);
 
-		if(isset($_POST['new'])) { //If the user creates a new Employee (clicks the "Create New" button)
-			try {
-				if(isDuplicateName($fName, $lName, "Employees")) { //Verify that the submitted name is not already in use
-					$returnMessage = alert("danger", "$fName $lName already exists as an Employee");
-				} else {
-					if($accessLevel == 3) { //Allow the user to post if they are a system administrator
-						postEmployee();
-						$returnMessage = alert("success", "$fName $lName successfully created");
-					//Allow the user to post if they are an office staff member or student worker of the same department as the new employee
-					} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
-						postEmployee();
-						$returnMessage = alert("success", "$fName $lName successfully created");
+			if(isset($_POST['new'])) { //If the user creates a new Employee (clicks the "Create New" button)
+				try {
+					if(isDuplicateName($fName, $lName, "Employees")) { //Verify that the submitted name is not already in use
+						$returnMessage = alert("danger", "$fName $lName already exists as an Employee");
 					} else {
-						$returnMessage = alert("danger", "You cannot create Employees outside of your department");
+						if($accessLevel == 3) { //Allow the user to post if they are a system administrator
+							postEmployee();
+							$returnMessage = alert("success", "$fName $lName successfully created");
+						//Allow the user to post if they are an office staff member or student worker of the same department as the new employee
+						} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
+							postEmployee();
+							$returnMessage = alert("success", "$fName $lName successfully created");
+						} else {
+							$returnMessage = alert("danger", "You cannot create Employees outside of your department");
+						}
 					}
+				} catch(dbException $db) {
+					$returnMessage = $db->alert();
 				}
-			} catch(dbException $db) {
-				$returnMessage = $db->alert();
-			}
-		} elseif(isset($_POST['edit'])){ //If the user edits an existing employee
-			try {
-				if($accessLevel == 3) { //Allow editing if the user is a system administrator
-					putEmployee();
-					$returnMessage = alert("success", "$fName $lName successfully updated");
-				//Allow the user to edit if they are an office staff member or student worker of the same department as the employee
+			} elseif(isset($_POST['edit'])){ //If the user edits an existing employee
+				try {
+					if($accessLevel == 3) { //Allow editing if the user is a system administrator
+						putEmployee();
+						$returnMessage = alert("success", "$fName $lName successfully updated");
+					//Allow the user to edit if they are an office staff member or student worker of the same department as the employee
+					} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
+						putEmployee();
+						$returnMessage = alert("success", "$fName $lName successfully updated");
+					} else {
+						$returnMessage = alert("danger", "You cannot edit Employees outside of your department");
+					}
+				} catch(dbException $db) {
+					$returnMessage = $db->alert();
+				}
+			} elseif(isset($_POST['delete']) && isset($_POST['facultyId'])) { //If the user deletes an existing employee
+				if($accessLevel == 3) { //Allow deletion for system administrators
+					deleteEmployee();
+					$returnMessage = alert("success", "$fName $lName successfully deleted");
+				//Allow deletion if the user is an office staff member or student worker of the same department as the employee
 				} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
-					putEmployee();
-					$returnMessage = alert("success", "$fName $lName successfully updated");
+					deleteEmployee();
+					$returnMessage = alert("success", "$fName $lName successfully deleted");
 				} else {
-					$returnMessage = alert("danger", "You cannot edit Employees outside of your department");
+					$returnMessage = alert("danger", "You cannot delete Employees outside of your department");
 				}
-			} catch(dbException $db) {
-				$returnMessage = $db->alert();
 			}
-		} elseif(isset($_POST['delete']) && isset($_POST['facultyId'])) { //If the user deletes an existing employee
-			if($accessLevel == 3) { //Allow deletion for system administrators
-				deleteEmployee();
-				$returnMessage = alert("success", "$fName $lName successfully deleted");
-			//Allow deletion if the user is an office staff member or student worker of the same department as the employee
-			} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
-				deleteEmployee();
-				$returnMessage = alert("success", "$fName $lName successfully deleted");
-			} else {
-				$returnMessage = alert("danger", "You cannot delete Employees outside of your department");
-			}
+		} catch(dbException $db){
+			$returnMessage = $db->alert();
 		}
-			}
-			catch(dbException $db){
-				$returnMessage = $db->alert();
-			}
 	}
 	
 	/**
@@ -84,43 +83,41 @@
 	 */
 	function postEmployee() {
 		try{
-		global $database;
+			global $database;
 
-		$fName = filterString($_POST['firstName']);
-		$lName = filterString($_POST['lastName']);
-		$email = $_POST['email'];
-		
-		if(is_numeric($_POST['active'])) { //Validate that the active status is numeric (otherwise default to active)
-			$active = $_POST['active'];
-		} else {
-			$active = 1;
-		}
-
-		if(is_numeric($_POST['faculty'])) { //Validate that the active status is numeric (otherwise default to faculty)
-			$faculty = $_POST['faculty'];
-		} else {
-			$faculty = 1;
-		}
-
-		$phone = filterString($_POST['phone']);
-		$about = filterString($_POST['about']);
-		$education = filterString($_POST['education']);
-		$highlights = filterString($_POST['highlights']);
-		$roomNum = filterString($_POST['room']);
-		$title = filterString($_POST['title']);
-		$depts = $_POST['depts'];
-		$primaryDept = getDepartmentId(filterString($depts[0]));
-		$secondaryDept = getDepartmentId(filterString($depts[1]));
-
-		$employee = new employees($database, null);
-		$imagePath = uploadImage($employee);
-
-		$employee->postParams($fName, $lName, $email, $active, $faculty, $phone, $about, $education, $highlights, $primaryDept, $roomNum, $title, $secondaryDept, $imagePath);
-		}
-			catch(dbException $db){
-				echo $db->alert();
+			$fName = filterString($_POST['firstName']);
+			$lName = filterString($_POST['lastName']);
+			$email = $_POST['email'];
+			
+			if(is_numeric($_POST['active'])) { //Validate that the active status is numeric (otherwise default to active)
+				$active = $_POST['active'];
+			} else {
+				$active = 1;
 			}
-	
+
+			if(is_numeric($_POST['faculty'])) { //Validate that the active status is numeric (otherwise default to faculty)
+				$faculty = $_POST['faculty'];
+			} else {
+				$faculty = 1;
+			}
+
+			$phone = filterString($_POST['phone']);
+			$about = filterString($_POST['about']);
+			$education = filterString($_POST['education']);
+			$highlights = filterString($_POST['highlights']);
+			$roomNum = filterString($_POST['room']);
+			$title = filterString($_POST['title']);
+			$depts = $_POST['depts'];
+			$primaryDept = getDepartmentId(filterString($depts[0]));
+			$secondaryDept = getDepartmentId(filterString($depts[1]));
+
+			$employee = new employees($database, null);
+			$imagePath = uploadImage($employee);
+
+			$employee->postParams($fName, $lName, $email, $active, $faculty, $phone, $about, $education, $highlights, $primaryDept, $roomNum, $title, $secondaryDept, $imagePath);
+		} catch(dbException $db) {
+				echo $db->alert();
+		}
 	}
 
 	/** 
@@ -128,44 +125,42 @@
 	 */
 	function putEmployee() {
 		try{
-		global $database;
+			global $database;
 
-		$id = $_POST['facultyId'];
-		$fName = filterString($_POST['firstName']);
-		$lName = filterString($_POST['lastName']);
-		$email = $_POST['email'];
+			$id = $_POST['facultyId'];
+			$fName = filterString($_POST['firstName']);
+			$lName = filterString($_POST['lastName']);
+			$email = $_POST['email'];
 
-		if(is_numeric($_POST['active'])) { //Validate that the active status is numeric (otherwise default to active)
-			$active = $_POST['active'];
-		} else {
-			$active = 1;
-		}
-
-		if(is_numeric($_POST['faculty'])) { //Validate that the active status is numeric (otherwise default to faculty)
-			$faculty = $_POST['faculty'];
-		} else {
-			$faculty = 1;
-		}
-		$phone = filterString($_POST['phone']);
-		$about = filterString($_POST['about']);
-		$education = filterString($_POST['education']);
-		$highlights = filterString($_POST['highlights']);
-		$roomNum = filterString($_POST['room']);
-		$title = filterString($_POST['title']);
-		$depts = $_POST['depts'];
-		$primaryDept = getDepartmentId(filterString($depts[0]));
-		$secondaryDept = getDepartmentId(filterString($depts[1]));
-
-		$employee = new employees($database, $id);
-		$employee->fetch();
-		$imagePath = uploadImage($employee);
-
-		$employee->putParams($fName,$lName,$email,$active,$faculty,$phone,$about,$education,$highlights,$primaryDept,$roomNum,$title,$secondaryDept, $imagePath);
-		
+			if(is_numeric($_POST['active'])) { //Validate that the active status is numeric (otherwise default to active)
+				$active = $_POST['active'];
+			} else {
+				$active = 1;
 			}
-			catch(dbException $db){
-				echo $db->alert();
+
+			if(is_numeric($_POST['faculty'])) { //Validate that the active status is numeric (otherwise default to faculty)
+				$faculty = $_POST['faculty'];
+			} else {
+				$faculty = 1;
 			}
+			$phone = filterString($_POST['phone']);
+			$about = filterString($_POST['about']);
+			$education = filterString($_POST['education']);
+			$highlights = filterString($_POST['highlights']);
+			$roomNum = filterString($_POST['room']);
+			$title = filterString($_POST['title']);
+			$depts = $_POST['depts'];
+			$primaryDept = getDepartmentId(filterString($depts[0]));
+			$secondaryDept = getDepartmentId(filterString($depts[1]));
+
+			$employee = new employees($database, $id);
+			$employee->fetch();
+			$imagePath = uploadImage($employee);
+
+			$employee->putParams($fName,$lName,$email,$active,$faculty,$phone,$about,$education,$highlights,$primaryDept,$roomNum,$title,$secondaryDept, $imagePath);
+		} catch(dbException $db) {
+			echo $db->alert();
+		}
 	}
 
 	/**
@@ -173,17 +168,15 @@
 	 */
 	function deleteEmployee() {
 		try{
-		global $database;
+			global $database;
 
-		$id = $_POST['facultyId'];
+			$id = $_POST['facultyId'];
 
-		$employee = new employees($database, $id);
-		$employee->delete();
+			$employee = new employees($database, $id);
+			$employee->delete();
+		} catch(dbException $db){
+			echo $db->alert();
 		}
-			}
-			catch(dbException $db){
-				echo $db->alert();
-			}
 	}
 
 
@@ -234,24 +227,23 @@
 	 */
 	function getAllEmps($adminDeptId, $accessLevel) {
 		try{
-		$database = new data;
+			$database = new data;
 
-		if($accessLevel == 3) { //If the user is an administrator (highest auth level), allow them to see all employees
-			$emps = $database->getData("SELECT fName, lName, roomNumber, facultyId FROM Employees ORDER BY lName ASC;", array());
-		} else { //If the user is not an administrator, allow them to only see employees who are in their department
-			$emps = $database->getData("SELECT fName, lName, roomNumber, facultyId FROM Employees WHERE (departmentId=:deptId OR secondaryDepartmentID=:sdId) ORDER BY lName ASC;", array(
-				":deptId"=>$adminDeptId,
-				":sdId"=>$adminDeptId
-			));
-		}
+			if($accessLevel == 3) { //If the user is an administrator (highest auth level), allow them to see all employees
+				$emps = $database->getData("SELECT fName, lName, roomNumber, facultyId FROM Employees ORDER BY lName ASC;", array());
+			} else { //If the user is not an administrator, allow them to only see employees who are in their department
+				$emps = $database->getData("SELECT fName, lName, roomNumber, facultyId FROM Employees WHERE (departmentId=:deptId OR secondaryDepartmentID=:sdId) ORDER BY lName ASC;", array(
+					":deptId"=>$adminDeptId,
+					":sdId"=>$adminDeptId
+				));
+			}
 
-		foreach($emps as $arr) {
-			echo "<li onclick='setEmployeeActive(this); disableCreate();'><span class='fId' style='display: none'>" . $arr['facultyId'] . "</span><strong>" . $arr['lName'] . ", " . $arr['fName'] . "</strong><br /><span class='rmNum initialism'>" . $arr['roomNumber'] . "</span><hr /></li>";
+			foreach($emps as $arr) {
+				echo "<li onclick='setEmployeeActive(this); disableCreate();'><span class='fId' style='display: none'>" . $arr['facultyId'] . "</span><strong>" . $arr['lName'] . ", " . $arr['fName'] . "</strong><br /><span class='rmNum initialism'>" . $arr['roomNumber'] . "</span><hr /></li>";
+			}
+		} catch(dbException $db){
+			echo $db->alert();
 		}
-			}
-			catch(dbException $db){
-				echo $db->alert();
-			}
 	}
 ?>
 <!DOCTYPE html>

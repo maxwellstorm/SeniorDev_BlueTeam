@@ -40,8 +40,7 @@
 				} else {
 					$returnMessage = alert("danger", "$roomNum already exists as a room");
 				}
-			}
-		catch(dbException $db){
+			} catch(dbException $db){
 				echo $db->alert();
 			}
 		} elseif(isset($_POST['edit'])){ //If the user is editing an existing room
@@ -56,13 +55,11 @@
 
 				$room->putParams($map, $desc, $posX, $posY);
 				$returnMessage = alert("success", "$roomNum successfully updated");
-			}
-		catch(dbException $db){
+			} catch(dbException $db){
 				echo $db->alert();
 			}		
 
 		} elseif(isset($_POST['delete']) && isset($_POST['room'])) { //If the user is deleting a room
-			
 			if(isRoomInUse($roomNum)) { //A room cannot be deleted if it has occupants
 				//Get the occupants of the room to display in the error message
 				$occupants = getOccupants($roomNum);
@@ -101,30 +98,29 @@
 	 */
 	function getOccupants($roomNum) {
 		try{
-		$database = new data;
+			$database = new data;
 
-		$occupants = $database->getData("SELECT fName, lName FROM Employees WHERE roomNumber=:roomNum;", array(
-			":roomNum"=>$roomNum
-		));
+			$occupants = $database->getData("SELECT fName, lName FROM Employees WHERE roomNumber=:roomNum;", array(
+				":roomNum"=>$roomNum
+			));
 
-		$rawString = "";
+			$rawString = "";
 
-		foreach($occupants as $arr) { //Append each name to a string in the form "[first name] [last name], "
-			$rawString .= $arr['fName'] . " " . $arr['lName'] . ", ";
-		}
-
-		if(strlen($rawString) > 3) { //If there are any names on the list, remove the ending comma
-			$returnString = substr($rawString, 0, -2);
-		} else {
-			$returnString = $rawString;
-		}
-
-		return $returnString;
-		}
-			catch(dbException $db){
-				echo $db->alert();
-				return;
+			foreach($occupants as $arr) { //Append each name to a string in the form "[first name] [last name], "
+				$rawString .= $arr['fName'] . " " . $arr['lName'] . ", ";
 			}
+
+			if(strlen($rawString) > 3) { //If there are any names on the list, remove the ending comma
+				$returnString = substr($rawString, 0, -2);
+			} else {
+				$returnString = $rawString;
+			}
+
+			return $returnString;
+		} catch(dbException $db) {
+			echo $db->alert();
+			return;
+		}
 	}
 
 	/**
@@ -134,23 +130,21 @@
 	 */
 	function doesRoomExist($roomNum) {
 		try{
-		$database = new data;
+			$database = new data;
 
-		$match = $database->getData("SELECT roomNumber FROM room WHERE roomNumber=:roomNum;", array(
-			":roomNum"=>$roomNum
-		));
+			$match = $database->getData("SELECT roomNumber FROM room WHERE roomNumber=:roomNum;", array(
+				":roomNum"=>$roomNum
+			));
 
-		if(count($match) > 0) { //If a number is returned from the query, the room exists
-			return true;
-		} else {
-			return false;
-		}
-		}
-			}
-			catch(dbException $db){
-				echo $db->alert();
+			if(count($match) > 0) { //If a number is returned from the query, the room exists
+				return true;
+			} else {
 				return false;
 			}
+		} catch(dbException $db){
+			echo $db->alert();
+			return false;
+		}
 	}
 
 	/**
@@ -159,17 +153,16 @@
 	 */
 	function getAllFloorplans() {
 		try{
-		$database = new data;
+			$database = new data;
 
-		$fps = $database->getData("SELECT imagePath, name FROM floorPlan ORDER BY name ASC;", array());
+			$fps = $database->getData("SELECT imagePath, name FROM floorPlan ORDER BY name ASC;", array());
 
-		foreach($fps as $arr) {
-			echo"<option value='" . $arr['imagePath'] . "'>" . $arr['name'] . "</option>";
+			foreach($fps as $arr) {
+				echo"<option value='" . $arr['imagePath'] . "'>" . $arr['name'] . "</option>";
+			}
+		} catch(dbException $db){
+			echo $db->alert();
 		}
-			}
-			catch(dbException $db){
-				echo $db->alert();
-			}
 	}
 ?>
 <html lang="en">

@@ -43,8 +43,7 @@ class dbException extends Exception
 	public function alert() {
 		/*$alert = "<div class='alert alert-dismissible'>";
 		$alert .= "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>";
-		$alert .= $this->message."</div>";
-*/
+		$alert .= $this->message."</div>";*/
 		return "alert('danger','A database error has occurred');";
 	}
 }
