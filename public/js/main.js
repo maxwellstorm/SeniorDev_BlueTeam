@@ -213,6 +213,8 @@ function prepMap(s, radius) {
 			var newCircle = s.circle(oldX, oldY, radius);
 		}
 
+		newCircle.attr({fill: "#F36E21"});
+
 		//console.log(newCircle);
 
 		var moveFunc = function (dx, dy) {
