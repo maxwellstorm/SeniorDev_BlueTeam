@@ -33,7 +33,7 @@
 				$returnMessage = alert("success", "$name Department successfully created");
 			}
 			catch(dbException $db){
-				echo $db->alert();
+				$returnMessage = $db->alert();
 			}
 		} elseif(isset($_POST['edit'])){ //If the user is editing an existing deparmtent	
 			try{
@@ -46,10 +46,12 @@
 				$returnMessage = alert("success", "$name Department successfully updated");
 			}
 			catch(dbException $db){
-				echo $db->alert();
+				$returnMessage = $db->alert();
 			}
 
 		} elseif(isset($_POST['delete']) && isset($_POST['deptId'])) { //If the user is deleting an existing department
+			
+			try{
 			$id = $_POST['deptId'];
 
 			if(doesHaveMembers($id)) { //Departments that contain Employees or Admins cannot be deleted
@@ -59,6 +61,10 @@
 				$dept->delete();
 				$returnMessage = alert("success", "$name Department successfully deleted");
 			}
+				}
+			catch(dbException $db){
+				$returnMessage = $db->alert();
+			}
 		}
 	}
 
@@ -67,13 +73,18 @@
 	 * @return html_content A set of <li> tags to be placed inside a <select>
 	 */
 	function getAllDepartmentsId() {
-		$database = new data;
+		try{
+			$database = new data;
 
-		$depts = $database->getData("SELECT departmentId, departmentName FROM department", array());
+			$depts = $database->getData("SELECT departmentId, departmentName FROM department", array());
 
-		foreach($depts as $arr) {
-			echo "<option value='" . $arr['departmentId'] . "'>" . $arr['departmentName'] ."</option>";
-		}
+			foreach($depts as $arr) {
+				echo "<option value='" . $arr['departmentId'] . "'>" . $arr['departmentName'] ."</option>";
+			}
+				}
+		catch(dbException $db){
+				echo $db->alert();
+			}
 	}
 
 	/**
@@ -82,6 +93,7 @@
 	 * @return true/false A boolean indicating whether or not the department has members assigned to it
 	 */
 	function doesHaveMembers($deptId) {
+		try{
 		$database = new data;
 
 		$empMatch = $database->getData("SELECT facultyId FROM Employees WHERE departmentId=:departmentId;", array(
@@ -97,6 +109,11 @@
 		} else {
 			return false;
 		}
+			}
+			catch(dbException $db){
+				echo $db->alert();
+				return false;
+			}
 	}
 ?>
 <!DOCTYPE html>

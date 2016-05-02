@@ -20,6 +20,7 @@
 
 	//Handling Form Submission
 	if($_SERVER['REQUEST_METHOD'] == 'POST') {
+		try{
 		$depts = $_POST['depts'];
 		$primaryDept = getDepartmentId(filterString($depts[0]));
 		$secondaryDept = getDepartmentId(filterString($depts[1]));
@@ -43,7 +44,7 @@
 					}
 				}
 			} catch(dbException $db) {
-				echo $db->alert();
+				$returnMessage = $db->alert();
 			}
 		} elseif(isset($_POST['edit'])){ //If the user edits an existing employee
 			try {
@@ -58,7 +59,7 @@
 					$returnMessage = alert("danger", "You cannot edit Employees outside of your department");
 				}
 			} catch(dbException $db) {
-				echo $db->alert();
+				$returnMessage = $db->alert();
 			}
 		} elseif(isset($_POST['delete']) && isset($_POST['facultyId'])) { //If the user deletes an existing employee
 			if($accessLevel == 3) { //Allow deletion for system administrators
@@ -72,12 +73,17 @@
 				$returnMessage = alert("danger", "You cannot delete Employees outside of your department");
 			}
 		}
+			}
+			catch(dbException $db){
+				$returnMessage = $db->alert();
+			}
 	}
 	
 	/**
 	 * A method to create a new employee in the database
 	 */
 	function postEmployee() {
+		try{
 		global $database;
 
 		$fName = filterString($_POST['firstName']);
@@ -110,12 +116,18 @@
 		$imagePath = uploadImage($employee);
 
 		$employee->postParams($fName, $lName, $email, $active, $faculty, $phone, $about, $education, $highlights, $primaryDept, $roomNum, $title, $secondaryDept, $imagePath);
+		}
+			catch(dbException $db){
+				echo $db->alert();
+			}
+	
 	}
 
 	/** 
 	 * A method to edit an existing employee in the database
 	 */
 	function putEmployee() {
+		try{
 		global $database;
 
 		$id = $_POST['facultyId'];
@@ -149,18 +161,29 @@
 		$imagePath = uploadImage($employee);
 
 		$employee->putParams($fName,$lName,$email,$active,$faculty,$phone,$about,$education,$highlights,$primaryDept,$roomNum,$title,$secondaryDept, $imagePath);
+		
+			}
+			catch(dbException $db){
+				echo $db->alert();
+			}
 	}
 
 	/**
 	 * A method to delete an employee from the database
 	 */
 	function deleteEmployee() {
+		try{
 		global $database;
 
 		$id = $_POST['facultyId'];
 
 		$employee = new employees($database, $id);
 		$employee->delete();
+		}
+			}
+			catch(dbException $db){
+				echo $db->alert();
+			}
 	}
 
 
@@ -210,6 +233,7 @@
 	 * @return HTML_Content A set of <li> that contain information about each faculty member
 	 */
 	function getAllEmps($adminDeptId, $accessLevel) {
+		try{
 		$database = new data;
 
 		if($accessLevel == 3) { //If the user is an administrator (highest auth level), allow them to see all employees
@@ -224,6 +248,10 @@
 		foreach($emps as $arr) {
 			echo "<li onclick='setEmployeeActive(this); disableCreate();'><span class='fId' style='display: none'>" . $arr['facultyId'] . "</span><strong>" . $arr['lName'] . ", " . $arr['fName'] . "</strong><br /><span class='rmNum initialism'>" . $arr['roomNumber'] . "</span><hr /></li>";
 		}
+			}
+			catch(dbException $db){
+				echo $db->alert();
+			}
 	}
 ?>
 <!DOCTYPE html>

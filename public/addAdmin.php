@@ -81,6 +81,7 @@
 	 * A function to insert a new Administrator into the database
 	 */
 	function postAdmin() {
+		try{
 		global $database;
 
 		$fName = filterString($_POST['firstName']);
@@ -97,12 +98,18 @@
 
 		$admin = new admin($database, null);	
 		$admin->postParams($fName, $lName, $username, $accessLevel, $department);
+		}
+			catch(dbException $db){
+				echo $db->alert();
+				
+			}
 	}
 
 	/**
 	 * A function to update a currently existing administrator
 	 */
 	function putAdmin() {
+		try{
 		global $database;
 
 		if(is_numeric($_POST['adminId'])) {
@@ -125,18 +132,30 @@
 		} else {
 			$returnMessage = alert("danger", "Please input a numerical ID");
 		}
+		
+			}
+			catch(dbException $db){
+				$returnMessage =  $db->alert();
+				
+			}
 	}
 
 	/**
 	 * A function to remove an existing administrator from the database
 	 */
 	function deleteAdmin() {
+		try{
 		global $database;
 
 		$adminId = $_POST['adminId'];
 
 		$admin = new admin($database, $adminId);
 		$admin->delete();
+		}
+			catch(dbException $db){
+				echo $db->alert();
+				
+			}
 	}
 
 	/**
@@ -146,6 +165,7 @@
 	 * @return html_content A set of <li> tags containing the names & ID's of each admin user
 	 */
 	function getAllAdmins($adminDeptId, $accessLevel) {
+		try{
 		$database = new data;
 
 
@@ -160,6 +180,11 @@
 		foreach($admins as $arr) {
 			echo "<li onclick='setAdminActive(this); disableCreate();'><span class='aId' style='display: none'>" . $arr['adminId'] . "</span><strong>" . $arr['lName'] . ", " . $arr['fName'] . "</strong><br /><span class='rmNum initialism'>" . $arr['departmentAbbr'] . "</span><hr /></li>";
 		}
+		}
+			catch(dbException $db){
+				echo $db->alert();
+				
+			}
 	}
 ?>
 <!DOCTYPE html>

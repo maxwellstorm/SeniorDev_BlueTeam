@@ -22,6 +22,7 @@
 
 	//Handle Form Submission
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		try{
 		$name = filterString($_POST['fpName']);
 
 		if(isset($_POST['new'])) { //If the user submits a new floor plan
@@ -49,6 +50,11 @@
 			$fp->delete();
 			$returnMessage = alert("success", "Floor Plan for $name successfully deleted");
 		}
+			}
+			catch(dbException $db){
+				$returnMessage = $db->alert();
+				
+			}
 	}
 
 	/**
@@ -56,6 +62,7 @@
 	 * @return html_content A set of <option> tags, each containing the floor plan's ID and name
 	 */
 	function getAllFloorPlans() {
+		try{
 		$database = new data;
 
 		$fps = $database->getData("SELECT fpId, name FROM floorPlan ORDER BY name ASC;", array());
@@ -63,6 +70,10 @@
 		foreach($fps as $arr) {
 			echo "<option value='" . $arr['fpId'] . "'>" . $arr['name'] ."</option>";
 		}
+			}
+			catch(dbException $db){
+				echo $db->alert();
+			}
 	}
 
 	/**
@@ -72,6 +83,7 @@
 	 * @return true/false Whether or not a duplicate name exists
 	 */
 	function isDuplicateFileOrName($imagePath, $name) {
+		try{
 		$database = new data;
 
 		$match = $database->getData("SELECT fpId FROM floorPlan WHERE imagePath=:imagePath OR name=:name;", array(
@@ -84,6 +96,11 @@
 		} else {
 			return false;
 		}
+			}
+			catch(dbException $db){
+				echo $db->alert();
+				return false;
+			}
 	}
 
 	/**

@@ -100,6 +100,7 @@
 	 * @return $returnString The list of occupants
 	 */
 	function getOccupants($roomNum) {
+		try{
 		$database = new data;
 
 		$occupants = $database->getData("SELECT fName, lName FROM Employees WHERE roomNumber=:roomNum;", array(
@@ -119,6 +120,11 @@
 		}
 
 		return $returnString;
+		}
+			catch(dbException $db){
+				echo $db->alert();
+				return;
+			}
 	}
 
 	/**
@@ -127,6 +133,7 @@
 	 * @return true/false Whether or not the room exists
 	 */
 	function doesRoomExist($roomNum) {
+		try{
 		$database = new data;
 
 		$match = $database->getData("SELECT roomNumber FROM room WHERE roomNumber=:roomNum;", array(
@@ -138,6 +145,12 @@
 		} else {
 			return false;
 		}
+		}
+			}
+			catch(dbException $db){
+				echo $db->alert();
+				return false;
+			}
 	}
 
 	/**
@@ -145,6 +158,7 @@
 	 * @return html_content A set of <option> tags, each containing the image path and name of a floor plan
 	 */
 	function getAllFloorplans() {
+		try{
 		$database = new data;
 
 		$fps = $database->getData("SELECT imagePath, name FROM floorPlan ORDER BY name ASC;", array());
@@ -152,6 +166,10 @@
 		foreach($fps as $arr) {
 			echo"<option value='" . $arr['imagePath'] . "'>" . $arr['name'] . "</option>";
 		}
+			}
+			catch(dbException $db){
+				echo $db->alert();
+			}
 	}
 ?>
 <html lang="en">
