@@ -46,20 +46,16 @@
 			}
 		} elseif(isset($_POST['edit'])){ //If the user is editing an existing room
 			try{
-				if(!doesRoomExist(filterString($roomNum))) { //If there are no rooms with the same number (prevent duplicate rooms)
-					$desc = filterString($_POST['description']);
-					$posX = filterString($_POST['posX']);
-					$posY = filterString($_POST['posY']);
-					$map = $_POST['imgSrc'];
+				$desc = filterString($_POST['description']);
+				$posX = filterString($_POST['posX']);
+				$posY = filterString($_POST['posY']);
+				$map = $_POST['imgSrc'];
 
-					$room = new room($database, $roomNum);
-					$room->fetch();
+				$room = new room($database, $roomNum);
+				$room->fetch();
 
-					$room->putParams($map, $desc, $posX, $posY);
-					$returnMessage = alert("success", "$roomNum successfully updated");
-				} else {
-					$returnMessage = alert("danger", "$roomNum already exists as a room");
-				}
+				$room->putParams($map, $desc, $posX, $posY);
+				$returnMessage = alert("success", "$roomNum successfully updated");
 			}
 		catch(dbException $db){
 				echo $db->alert();

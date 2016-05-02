@@ -47,19 +47,15 @@
 			}
 		} elseif(isset($_POST['edit'])){ //If the user is editing a current Admin
 			try {
-				if(isDuplicateName($fName, $lName, "Admin")) {
-					$returnMessage = alert("danger", "$fName $lName already exists as an Admin");
+				if($accessLevel == 3) { //User must be either a system administrator...
+					putAdmin();
+					$returnMessage = alert("success", "$fName $lName successfully updated");
+				} else if($accessLevel < 3 && $adminDeptId == $department) { //or office staff in the admin's department
+					putAdmin();
+					$returnMessage = alert("success", "$fName $lName successfully updated");
 				} else {
-					if($accessLevel == 3) { //User must be either a system administrator...
-						putAdmin();
-						$returnMessage = alert("success", "$fName $lName successfully updated");
-					} else if($accessLevel < 3 && $adminDeptId == $department) { //or office staff in the admin's department
-						putAdmin();
-						$returnMessage = alert("success", "$fName $lName successfully updated");
-					} else {
-						//RETURN ERROR MESSAGE - LOG ERRROR?
-						$returnMessage = alert("danger", "You cannot edit administrators outside of your department");
-					}
+					//RETURN ERROR MESSAGE - LOG ERRROR?
+					$returnMessage = alert("danger", "You cannot edit administrators outside of your department");
 				}
 			}
 		catch(dbException $db) {

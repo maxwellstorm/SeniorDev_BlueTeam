@@ -47,19 +47,15 @@
 			}
 		} elseif(isset($_POST['edit'])){ //If the user edits an existing employee
 			try {
-				if(isDuplicateName($fName, $lName, "Employees")) { //Verify that the submitted name is not already in use
-					$returnMessage = alert("danger", "$fName $lName already exists as an Employee");
+				if($accessLevel == 3) { //Allow editing if the user is a system administrator
+					putEmployee();
+					$returnMessage = alert("success", "$fName $lName successfully updated");
+				//Allow the user to edit if they are an office staff member or student worker of the same department as the employee
+				} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
+					putEmployee();
+					$returnMessage = alert("success", "$fName $lName successfully updated");
 				} else {
-					if($accessLevel == 3) { //Allow editing if the user is a system administrator
-						putEmployee();
-						$returnMessage = alert("success", "$fName $lName successfully updated");
-					//Allow the user to edit if they are an office staff member or student worker of the same department as the employee
-					} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
-						putEmployee();
-						$returnMessage = alert("success", "$fName $lName successfully updated");
-					} else {
-						$returnMessage = alert("danger", "You cannot edit Employees outside of your department");
-					}
+					$returnMessage = alert("danger", "You cannot edit Employees outside of your department");
 				}
 			} catch(dbException $db) {
 				echo $db->alert();
