@@ -29,6 +29,51 @@ function setAdminActive(active) {
 	$('#addAdmin').data('formValidation').resetForm();
 }
 
+function applyBullets(idName) {
+	$("#" + idName).focus(function() {
+	    if(document.getElementById(idName).value === ''){
+	        document.getElementById(idName).value +='• ';
+		}
+	});
+
+	$("#" + idName).keyup(function(event){
+		var keycode = (event.keyCode ? event.keyCode : event.which);
+	    if(keycode == '13'){
+	        document.getElementById(idName).value +='• ';
+		}
+		var txtval = document.getElementById(idName).value;
+		if(txtval.substr(txtval.length - 1) == '\n'){
+			document.getElementById(idName).value = txtval.substring(0,txtval.length - 1);
+		}
+	});
+}
+
+function removeOnlyBullets(idName) {
+	var txt = document.getElementById(idName);
+	if(txt.value == '• ') {
+		txt.value = "";
+	}
+}
+
+function disableCreate() {
+	$('#newBtn').prop("disabled", true);
+}
+
+function allowEnableCreate() {
+	//Options = keyup & change
+	$(":input").on('keyup', function() {
+		$('#newBtn').prop("disabled", false);
+	});
+}
+
+function checkAJAXError(response) {
+	if(response.indexOf("<div class='alert alert-dismissible") >= 0) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 function getInfo(selected) {
 	var facId = $(selected).children('.fId').text();
 
@@ -81,14 +126,6 @@ function getInfo(selected) {
 			}
 		}
 	})
-}
-
-function checkAJAXError(response) {
-	if(response.indexOf("<div class='alert alert-dismissible") >= 0) {
-		return true;
-	} else {
-		return false;
-	}
 }
 
 function getAdminInfo(selected) {
@@ -501,40 +538,3 @@ $(document).ready(function() {
 		}
 	})
 });
-
-function applyBullets(idName) {
-	$("#" + idName).focus(function() {
-	    if(document.getElementById(idName).value === ''){
-	        document.getElementById(idName).value +='• ';
-		}
-	});
-
-	$("#" + idName).keyup(function(event){
-		var keycode = (event.keyCode ? event.keyCode : event.which);
-	    if(keycode == '13'){
-	        document.getElementById(idName).value +='• ';
-		}
-		var txtval = document.getElementById(idName).value;
-		if(txtval.substr(txtval.length - 1) == '\n'){
-			document.getElementById(idName).value = txtval.substring(0,txtval.length - 1);
-		}
-	});
-}
-
-function removeOnlyBullets(idName) {
-	var txt = document.getElementById(idName);
-	if(txt.value == '• ') {
-		txt.value = "";
-	}
-}
-
-function disableCreate() {
-	$('#newBtn').prop("disabled", true);
-}
-
-function allowEnableCreate() {
-	//Options = keyup & change
-	$(":input").on('keyup', function() {
-		$('#newBtn').prop("disabled", false);
-	});
-}
