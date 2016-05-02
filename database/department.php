@@ -4,7 +4,7 @@ $allowed = true;
 
 require_once("util.php");
 
-if(!$allowed) { //Authentication - Users exist in the system to access this page
+if(!$allowed) { //Authentication - Users must exist in the system to access this page
 	header("Location: ../public/notAuthorized.html");
     die("Redirecting to notAuthorized.html");
 }
