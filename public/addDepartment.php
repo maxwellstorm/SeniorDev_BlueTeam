@@ -49,9 +49,13 @@
 		} elseif(isset($_POST['delete']) && isset($_POST['deptId'])) {
 			$id = $_POST['deptId'];
 
-			$dept = new department($database, $id);
-			$dept->delete();
-			$returnMessage = alert("success", "Department successfully deleted");
+			if(doesHaveMembers($id)) {
+				$returnMessage = alert("danger", "You can't delete a department that has employees or admins in it!");
+			} else {
+				$dept = new department($database, $id);
+				$dept->delete();
+				$returnMessage = alert("success", "Department successfully deleted");
+			}
 		}
 	}
 
@@ -62,6 +66,24 @@
 
 		foreach($depts as $arr) {
 			echo "<option value='" . $arr['departmentId'] . "'>" . $arr['departmentName'] ."</option>";
+		}
+	}
+
+	function doesHaveMembers($deptId) {
+		$database = new data;
+
+		$empMatch = $database->getData("SELECT facultyId FROM Employees WHERE departmentId=:departmentId;", array(
+			":departmentId"=>$deptId
+		));
+
+		$adminMatch = $database->getData("SELECT adminId FROM Admin WHERE departmentId=:departmentId;", array(
+			":departmentId"=>$deptId
+		));
+
+		if(count($empMatch) > 0 || count($adminMatch) > 0) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 ?>
