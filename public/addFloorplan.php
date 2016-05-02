@@ -19,21 +19,22 @@
 
 	$database = new data;
 
-	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		$name = filterString($_POST['fpName']);
+
 		if(isset($_POST['new'])) {
 			try{
-				$id = $_POST['fpId']; //valdate int
-				$name = filterString($_POST['fpName']);
+				$id = $_POST['fpId'];
 				$imagePath = uploadImage();
 
-				if(isDuplicateFile($imagePath)) {
-					$returnMessage = alert("danger", "ERROR: Duplicate Image Names Uploaded");
+				if(isDuplicateFileOrName($imagePath, $name)) {
+					$returnMessage = alert("danger", "Please select a different name. That one is already in use.");
 				} else if(strlen($imagePath) == 0) {
 					$returnMessage = alert("danger", "Please upload an image");
 				} else {
 					$fp = new floorPlan($database, null);
 					$fp->postParams($imagePath, $name);
-					$returnMessage = alert("success", "Floor Plan successfully uploaded");
+					$returnMessage = alert("success", "Floor Plan for $name successfully uploaded");
 				}
 			}
 			catch(dbException $db){
@@ -44,7 +45,7 @@
 
 			$fp = new floorPlan($database, $fpId);
 			$fp->delete();
-			$returnMessage = alert("success", "Floor Plan Image successfully deleted");
+			$returnMessage = alert("success", "Floor Plan for $name successfully deleted");
 		}
 	}
 
@@ -58,11 +59,12 @@
 		}
 	}
 
-	function isDuplicateFile($imagePath) {
+	function isDuplicateFileOrName($imagePath, $name) {
 		$database = new data;
 
-		$match = $database->getData("SELECT fpId FROM floorPlan WHERE imagePath=:imagePath;", array(
-			":imagePath"=>$imagePath
+		$match = $database->getData("SELECT fpId FROM floorPlan WHERE imagePath=:imagePath OR name=:name;", array(
+			":imagePath"=>$imagePath,
+			":name"=>$name
 		));
 
 		if(count($match) > 0) {

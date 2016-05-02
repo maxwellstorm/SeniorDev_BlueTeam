@@ -25,18 +25,17 @@
 		if(isset($_POST['new'])) {
 			try {
 				if(isDuplicateName($fName, $lName, "Admin")) {
-					$returnMessage = alert("danger", "You can't create duplicate Admins!");
+					$returnMessage = alert("danger", "An administrator account for $fName $lName already exists");
 					//throw new dbException("You can't create duplicate Admins", 1);
 				} else {
 					if($accessLevel == 3) {
 						postAdmin();
-						$returnMessage = alert("success", "Administrative user successfully created");
+						$returnMessage = alert("success", "$fName $lName successfully created");
 					} else if($accessLevel < 3 && $adminDeptId == $department) {
 						postAdmin();
-						$returnMessage = alert("success", "Administrative user successfully created");
+						$returnMessage = alert("success", "$fName $lName successfully created");
 					} else {
-						//RETURN ERROR MESSAGE - LOG ERROR?
-						$returnMessage = alert("danger", "You aren't authorized to do that!");
+						$returnMessage = alert("danger", "You cannot create administrators outside of your department");
 					}
 				}
 			}
@@ -47,13 +46,13 @@
 			try {
 				if($accessLevel == 3) {
 					putAdmin();
-					$returnMessage = alert("success", "Administrative user successfully updated");
+					$returnMessage = alert("success", "$fName $lName successfully updated");
 				} else if($accessLevel < 3 && $adminDeptId == $department) {
 					putAdmin();
-					$returnMessage = alert("success", "Administrative user successfully updated");
+					$returnMessage = alert("success", "$fName $lName successfully updated");
 				} else {
 					//RETURN ERROR MESSAGE - LOG ERRROR?
-					$returnMessage = alert("danger", "You aren't authorized to do that!");
+					$returnMessage = alert("danger", "You cannot edit administrators outside of your department");
 				}
 			}
 		catch(dbException $db) {
@@ -64,13 +63,13 @@
 			//add try/catch?
 			if($accessLevel == 3) {
 				deleteAdmin();
-				$returnMessage = alert("success", "Administrative user successfully deleted");
+				$returnMessage = alert("success", "$fName $lName successfully deleted");
 			} else if($accessLevel < 3 && $adminDeptId == $department) {
 				deleteAdmin();
-				$returnMessage = alert("success", "Administrative user successfully deleted");
+				$returnMessage = alert("success", "$fName $lName successfully deleted");
 			} else {
 				//RETURN ERROR MESSAGE - LOG ERROR?
-				$returnMessage = alert("danger", "You aren't authorized to do that!");
+				$returnMessage = alert("danger", "You cannot delete administrators outside of your department");
 			}
 		}
 	}
@@ -115,7 +114,7 @@
 			$admin->fetch(); //Do I need to fetch?
 			$admin->putParams($fName, $lName, $username, $accessLevel, $department);
 		} else {
-			$returnMessage = alert("danger", "INT ERROR");
+			$returnMessage = alert("danger", "Please input a numerical ID");
 		}
 	}
 

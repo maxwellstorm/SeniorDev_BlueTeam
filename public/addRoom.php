@@ -20,10 +20,11 @@
 	$database = new data;
 	
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+		$roomNum = filterString($_POST['room']);
+
 		if(isset($_POST['new'])) {
 			try{
-				if(!doesRoomExist(filterString($_POST['room']))) {
-					$roomNum = filterString($_POST['room']);
+				if(!doesRoomExist(filterString($roomNum))) {
 					$desc = filterString($_POST['description']);
 					$posX = filterString($_POST['posX']);
 					$posY = filterString($_POST['posY']);
@@ -32,9 +33,9 @@
 					$room = new room($database, null);	
 
 					$room->postParams($roomNum, $map, $desc, $posX, $posY);
-					$returnMessage = alert("success", "Room successfully created");
+					$returnMessage = alert("success", "$roomNum successfully created");
 				} else {
-					$returnMessage = alert("danger", "Duplicate Entry!");
+					$returnMessage = alert("danger", "$roomNum already exists as a room");
 				}
 			}
 		catch(dbException $db){
@@ -42,7 +43,6 @@
 			}
 		} elseif(isset($_POST['edit'])){	
 			try{
-				$roomNum = filterString($_POST['room']);
 				$desc = filterString($_POST['description']);
 				$posX = filterString($_POST['posX']);
 				$posY = filterString($_POST['posY']);
@@ -52,21 +52,21 @@
 				$room->fetch();
 
 				$room->putParams($map, $desc, $posX, $posY);
-				$returnMessage = alert("success", "Room successfully updated");
+				$returnMessage = alert("success", "$roomNum successfully updated");
 			}
 		catch(dbException $db){
 				echo $db->alert();
 			}		
 
 		} elseif(isset($_POST['delete']) && isset($_POST['room'])) {
-			$roomNum = filterString($_POST['room']);
 			
 			if(isRoomInUse($roomNum)) {
-				$returnMessage = alert("danger", "You can't delete a room that's in use!");
+				$occupants = getOccupants($roomNum);
+				$returnMessage = alert("danger", "You can't delete a room that's in use<br />The following Employees are assigned to this room: $occupants");
 			} else {
 				$room = new room($database, $roomNum);
 				$room->delete();
-				$returnMessage = alert("success", "Room successfully deleted");
+				$returnMessage = alert("success", "$roomNum successfully deleted");
 			}
 		}
 	}
@@ -83,6 +83,28 @@
 		} else {
 			return false;
 		}
+	}
+
+	function getOccupants($roomNum) {
+		$database = new data;
+
+		$occupants = $database->getData("SELECT fName, lName FROM Employees WHERE roomNumber=:roomNum;", array(
+			":roomNum"=>$roomNum
+		));
+
+		$rawString = "";
+
+		foreach($occupants as $arr) {
+			$rawString .= $arr['fName'] . " " . $arr['lName'] . ", ";
+		}
+
+		if(strlen($rawString) > 3) {
+			$returnString = substr($rawString, 0, -2);
+		} else {
+			$returnString = $rawString;
+		}
+
+		return $returnString;
 	}
 
 	function doesRoomExist($roomNum) {

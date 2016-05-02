@@ -19,14 +19,14 @@
 
 	$database = new data;
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+		$name = filterString($_POST['deptName']);
 		if(isset($_POST['new'])) {
 			try{
-				$name = filterString($_POST['deptName']);
 				$abbr = filterString($_POST['deptAbbr']);
 
 				$dept = new department($database, null);
 				$dept->postParams($name, $abbr);
-				$returnMessage = alert("success", "Department successfully created");
+				$returnMessage = alert("success", "$name Department successfully created");
 			}
 			catch(dbException $db){
 				echo $db->alert();
@@ -34,13 +34,12 @@
 		} elseif(isset($_POST['edit'])){	
 			try{
 				
-				$deptId = $_POST['deptId']; //add int validation
-				$deptName = filterString($_POST['deptName']);
+				$deptId = $_POST['deptId'];
 				$deptAbbr = filterString($_POST['deptAbbr']);
 
 				$dept = new department($database, $deptId);
-				$dept->putParams($deptName, $deptAbbr);
-				$returnMessage = alert("success", "Department successfully updated");
+				$dept->putParams($name, $deptAbbr);
+				$returnMessage = alert("success", "$name Department successfully updated");
 			}
 			catch(dbException $db){
 				echo $db->alert();
@@ -50,11 +49,11 @@
 			$id = $_POST['deptId'];
 
 			if(doesHaveMembers($id)) {
-				$returnMessage = alert("danger", "You can't delete a department that has employees or admins in it!");
+				$returnMessage = alert("danger", "You can't delete the $name Department because it has employees or administrators in it");
 			} else {
 				$dept = new department($database, $id);
 				$dept->delete();
-				$returnMessage = alert("success", "Department successfully deleted");
+				$returnMessage = alert("success", "$name Department successfully deleted");
 			}
 		}
 	}
