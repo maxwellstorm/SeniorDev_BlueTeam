@@ -99,8 +99,7 @@ header h1 {
 	width: calc(100% - 20px);
 	margin-top: 20px;
 	padding: 20px 15px 20px 0px;
-	border-top: 1px solid #BBBBBB;
-	font-size: 14px;
+	border-top: 1px solid #A4A4A4;
 	max-height: calc(100% - 200px);
 	overflow-y: auto !important;
 }
@@ -407,6 +406,10 @@ span.selectedToggle {
 
 	.professorCard:nth-child(4n+1) {
 		margin-left: 0px;
+	}
+
+	.infoPreview {
+		width: 180px;
 	}
 
 	#toggles {
