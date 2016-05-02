@@ -9,29 +9,32 @@
 	$accessLevel = 3;
 	$allowed = true;
 	$givenName = "Andy";
+	//END REMOVE Section
 	
+	//Authentication - User must have a valid login & be an Office Staff member or System Administrator to access the admin page
 	if($accessLevel < 2 || !$allowed) {
 		header("Location: notAuthorized.html");
         die("Redirecting to notAuthorized.html");
 	}
 
-
 	$database = new data;
 
+	//Handling form submission
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		//Get common forms across new/edit/delete
 		$department = getDepartmentId(filterString($_POST['department']));
 		$fName = $_POST['firstName'];
 		$lName = $_POST['lastName'];
-		if(isset($_POST['new'])) {
+
+		if(isset($_POST['new'])) { //If the user is submitting a new Admin (clicking the 'Create New' button)
 			try {
-				if(isDuplicateName($fName, $lName, "Admin")) {
+				if(isDuplicateName($fName, $lName, "Admin")) { //check for duplicate names
 					$returnMessage = alert("danger", "An administrator account for $fName $lName already exists");
-					//throw new dbException("You can't create duplicate Admins", 1);
 				} else {
-					if($accessLevel == 3) {
+					if($accessLevel == 3) { //User must be either a system administrator...
 						postAdmin();
 						$returnMessage = alert("success", "$fName $lName successfully created");
-					} else if($accessLevel < 3 && $adminDeptId == $department) {
+					} else if($accessLevel < 3 && $adminDeptId == $department) { //or office staff in the new admin's department
 						postAdmin();
 						$returnMessage = alert("success", "$fName $lName successfully created");
 					} else {
@@ -42,29 +45,33 @@
 		catch(dbException $db) {
 				echo $db->alert();
 			}
-		} elseif(isset($_POST['edit'])){	
+		} elseif(isset($_POST['edit'])){ //If the user is editing a current Admin
 			try {
-				if($accessLevel == 3) {
-					putAdmin();
-					$returnMessage = alert("success", "$fName $lName successfully updated");
-				} else if($accessLevel < 3 && $adminDeptId == $department) {
-					putAdmin();
-					$returnMessage = alert("success", "$fName $lName successfully updated");
+				if(isDuplicateName($fName, $lName, "Admin")) {
+					$returnMessage = alert("danger", "$fName $lName already exists as an Admin");
 				} else {
-					//RETURN ERROR MESSAGE - LOG ERRROR?
-					$returnMessage = alert("danger", "You cannot edit administrators outside of your department");
+					if($accessLevel == 3) { //User must be either a system administrator...
+						putAdmin();
+						$returnMessage = alert("success", "$fName $lName successfully updated");
+					} else if($accessLevel < 3 && $adminDeptId == $department) { //or office staff in the admin's department
+						putAdmin();
+						$returnMessage = alert("success", "$fName $lName successfully updated");
+					} else {
+						//RETURN ERROR MESSAGE - LOG ERRROR?
+						$returnMessage = alert("danger", "You cannot edit administrators outside of your department");
+					}
 				}
 			}
 		catch(dbException $db) {
 				echo $db->alert();
 			}		
 
-		} elseif(isset($_POST['delete']) && isset($_POST['adminId'])) {
+		} elseif(isset($_POST['delete']) && isset($_POST['adminId'])) { //If the user is deleting an administrator
 			//add try/catch?
-			if($accessLevel == 3) {
+			if($accessLevel == 3) { //User must be either a system administrator...
 				deleteAdmin();
 				$returnMessage = alert("success", "$fName $lName successfully deleted");
-			} else if($accessLevel < 3 && $adminDeptId == $department) {
+			} else if($accessLevel < 3 && $adminDeptId == $department) { //or office staff in the admin's department
 				deleteAdmin();
 				$returnMessage = alert("success", "$fName $lName successfully deleted");
 			} else {
@@ -74,6 +81,9 @@
 		}
 	}
 
+	/**
+	 * A function to insert a new Administrator into the database
+	 */
 	function postAdmin() {
 		global $database;
 
@@ -81,7 +91,7 @@
 		$lName = filterString($_POST['lastName']);
 		$username = filterString($_POST['username']);
 
-		if(is_numeric($_POST['accessLevel'])) {
+		if(is_numeric($_POST['accessLevel'])) { //Validate that the accessLevel is an integer
 			$accessLevel = $_POST['accessLevel'];
 		} else {
 			$accessLevel = 1;
@@ -93,6 +103,9 @@
 		$admin->postParams($fName, $lName, $username, $accessLevel, $department);
 	}
 
+	/**
+	 * A function to update a currently existing administrator
+	 */
 	function putAdmin() {
 		global $database;
 
@@ -102,7 +115,7 @@
 			$lName = filterString($_POST['lastName']);
 			$username = filterString($_POST['username']);
 
-			if(is_numeric($_POST['accessLevel'])) {
+			if(is_numeric($_POST['accessLevel'])) { //Validate the the access level is an integer
 				$accessLevel = $_POST['accessLevel'];
 			} else {
 				$accessLevel = 1;
@@ -111,13 +124,16 @@
 			$department = getDepartmentId(filterString($_POST['department']));
 
 			$admin = new admin($database, $adminId);
-			$admin->fetch(); //Do I need to fetch?
+			$admin->fetch();
 			$admin->putParams($fName, $lName, $username, $accessLevel, $department);
 		} else {
 			$returnMessage = alert("danger", "Please input a numerical ID");
 		}
 	}
 
+	/**
+	 * A function to remove an existing administrator from the database
+	 */
 	function deleteAdmin() {
 		global $database;
 
@@ -127,13 +143,19 @@
 		$admin->delete();
 	}
 
+	/**
+	 * A method to get all administrators in the database
+	 * @param $adminDeptId The current user's department ID (ex. IST = 1)
+	 * @param $accessLevel The current user's access Level (ex. Student Worker = 1)
+	 * @return html_content A set of <li> tags containing the names & ID's of each admin user
+	 */
 	function getAllAdmins($adminDeptId, $accessLevel) {
 		$database = new data;
 
 
-		if($accessLevel == 3) {
+		if($accessLevel == 3) { //If the current user is a System Administrator, they can see all administrators in the database
 			$admins = $database->getData("SELECT fName, lName, departmentAbbr, adminId FROM Admin JOIN department ON Admin.departmentId = department.departmentId ORDER BY lName ASC;", array());
-		} else {
+		} else { //If they are not a System Administrator, they can only see admins from their department (and not system administrators)
 			$admins = $database->getData("SELECT fName, lName, departmentAbbr, adminId FROM Admin JOIN department ON Admin.departmentId = department.departmentId WHERE Admin.departmentId=:deptId AND accessLevel < 3 ORDER BY lName ASC;", array(
 					":deptId"=>$adminDeptId
 				));
@@ -165,13 +187,12 @@
 		<header class="dropShadow">
 			<div id="headerInner">
 				<h1>FACULTY DIRECTORY</h1>
-				<!-- <h3>Admin Panel</h3> -->
 				<img src="media/rit-logo.png" id="imgRIT" alt="" />
 			</div>
 		</header>
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<?php if(isset($returnMessage)) {
+				<?php if(isset($returnMessage)) { //Placeholder for the return message, so it displays at this location on the page
 					echo($returnMessage); 
 				} ?>
 				<form class="form-horizontal" id="addAdmin" name="addAdmin" action="addAdmin.php" method="POST">

@@ -10,17 +10,21 @@
 	$accessLevel = 3;
 	$allowed = true;
 	$givenName = "Andy";
+	//END REMOVE
 
+	//Authentication - User must have a valid login & be a System Administrator to access the department page
 	if($accessLevel < 3 || !$allowed) {
 		header("Location: notAuthorized.html");
         die("Redirecting to notAuthorized.html");
 	}
 
-
 	$database = new data;
+
+	//Handling form submission
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		$name = filterString($_POST['deptName']);
-		if(isset($_POST['new'])) {
+
+		if(isset($_POST['new'])) { //If the user is creating a new department (clicking the 'Create New' button)
 			try{
 				$abbr = filterString($_POST['deptAbbr']);
 
@@ -31,7 +35,7 @@
 			catch(dbException $db){
 				echo $db->alert();
 			}
-		} elseif(isset($_POST['edit'])){	
+		} elseif(isset($_POST['edit'])){ //If the user is editing an existing deparmtent	
 			try{
 				
 				$deptId = $_POST['deptId'];
@@ -45,10 +49,10 @@
 				echo $db->alert();
 			}
 
-		} elseif(isset($_POST['delete']) && isset($_POST['deptId'])) {
+		} elseif(isset($_POST['delete']) && isset($_POST['deptId'])) { //If the user is deleting an existing department
 			$id = $_POST['deptId'];
 
-			if(doesHaveMembers($id)) {
+			if(doesHaveMembers($id)) { //Departments that contain Employees or Admins cannot be deleted
 				$returnMessage = alert("danger", "You can't delete the $name Department because it has employees or administrators in it");
 			} else {
 				$dept = new department($database, $id);
@@ -58,6 +62,10 @@
 		}
 	}
 
+	/**
+	 * A function to return a set of <li> elements containing the department ID & department Name
+	 * @return html_content A set of <li> tags to be placed inside a <select>
+	 */
 	function getAllDepartmentsId() {
 		$database = new data;
 
@@ -68,6 +76,11 @@
 		}
 	}
 
+	/**
+	 * A method to check if a given department has employees or administrators assigned to it
+	 * @param $deptId The ID number of a department
+	 * @return true/false A boolean indicating whether or not the department has members assigned to it
+	 */
 	function doesHaveMembers($deptId) {
 		$database = new data;
 
@@ -79,7 +92,7 @@
 			":departmentId"=>$deptId
 		));
 
-		if(count($empMatch) > 0 || count($adminMatch) > 0) {
+		if(count($empMatch) > 0 || count($adminMatch) > 0) { //If any ID numbers (representing department members) are returned, return true
 			return true;
 		} else {
 			return false;
@@ -105,13 +118,12 @@
 		<header class="dropShadow">
 			<div id="headerInner">
 				<h1>FACULTY DIRECTORY</h1>
-				<!-- <h3>Admin Panel</h3> -->
 				<img src="media/rit-logo.png" id="imgRIT" alt="" />
 			</div>
 		</header>
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<?php if(isset($returnMessage)) {
+				<?php if(isset($returnMessage)) { //Placeholder for the return message, so it displays at this location on the page
 					echo($returnMessage); 
 				} ?>
 				<form class="form-horizontal" id="addDepartment" name="addDepartment" action="addDepartment.php" method="POST">

@@ -11,7 +11,9 @@
 	$accessLevel = 3;
 	$allowed = true;
 	$givenName = "Andy";
+	//END REMOVE
 
+	//Authentication - The user must have a valid login to access the room page
 	if(!$allowed) {
 		header("Location: notAuthorized.html");
         die("Redirecting to notAuthorized.html");
@@ -19,12 +21,13 @@
 
 	$database = new data;
 	
+	//Handle form submission
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 		$roomNum = filterString($_POST['room']);
 
-		if(isset($_POST['new'])) {
+		if(isset($_POST['new'])) { //If the user is creating a new room
 			try{
-				if(!doesRoomExist(filterString($roomNum))) {
+				if(!doesRoomExist(filterString($roomNum))) { //If there are no rooms with the same number (prevent duplicate rooms)
 					$desc = filterString($_POST['description']);
 					$posX = filterString($_POST['posX']);
 					$posY = filterString($_POST['posY']);
@@ -41,26 +44,31 @@
 		catch(dbException $db){
 				echo $db->alert();
 			}
-		} elseif(isset($_POST['edit'])){	
+		} elseif(isset($_POST['edit'])){ //If the user is editing an existing room
 			try{
-				$desc = filterString($_POST['description']);
-				$posX = filterString($_POST['posX']);
-				$posY = filterString($_POST['posY']);
-				$map = $_POST['imgSrc'];
+				if(!doesRoomExist(filterString($roomNum))) { //If there are no rooms with the same number (prevent duplicate rooms)
+					$desc = filterString($_POST['description']);
+					$posX = filterString($_POST['posX']);
+					$posY = filterString($_POST['posY']);
+					$map = $_POST['imgSrc'];
 
-				$room = new room($database, $roomNum);
-				$room->fetch();
+					$room = new room($database, $roomNum);
+					$room->fetch();
 
-				$room->putParams($map, $desc, $posX, $posY);
-				$returnMessage = alert("success", "$roomNum successfully updated");
+					$room->putParams($map, $desc, $posX, $posY);
+					$returnMessage = alert("success", "$roomNum successfully updated");
+				} else {
+					$returnMessage = alert("danger", "$roomNum already exists as a room");
+				}
 			}
 		catch(dbException $db){
 				echo $db->alert();
 			}		
 
-		} elseif(isset($_POST['delete']) && isset($_POST['room'])) {
+		} elseif(isset($_POST['delete']) && isset($_POST['room'])) { //If the user is deleting a room
 			
-			if(isRoomInUse($roomNum)) {
+			if(isRoomInUse($roomNum)) { //A room cannot be deleted if it has occupants
+				//Get the occupants of the room to display in the error message
 				$occupants = getOccupants($roomNum);
 				$returnMessage = alert("danger", "You can't delete a room that's in use<br />The following Employees are assigned to this room: $occupants");
 			} else {
@@ -71,6 +79,11 @@
 		}
 	}
 
+	/**
+	 * A function to check if a given room has any occupants
+	 * @param $roomNum The number of the room we're checking
+	 * @return true/false Whether or not a room has occupants
+	 */
 	function isRoomInUse($roomNum) {
 		$database = new data;
 
@@ -78,13 +91,18 @@
 			":roomNum"=>$roomNum
 		));
 
-		if(count($match) > 0) {
+		if(count($match) > 0) { //If any ID's are returned from the query, then there are occupants in the room
 			return true;
 		} else {
 			return false;
 		}
 	}
 
+	/**
+	 * A function to list the occupants of a given room
+	 * @param $roomNum The number of the room who's occupants we're getting
+	 * @return $returnString The list of occupants
+	 */
 	function getOccupants($roomNum) {
 		$database = new data;
 
@@ -94,11 +112,11 @@
 
 		$rawString = "";
 
-		foreach($occupants as $arr) {
+		foreach($occupants as $arr) { //Append each name to a string in the form "[first name] [last name], "
 			$rawString .= $arr['fName'] . " " . $arr['lName'] . ", ";
 		}
 
-		if(strlen($rawString) > 3) {
+		if(strlen($rawString) > 3) { //If there are any names on the list, remove the ending comma
 			$returnString = substr($rawString, 0, -2);
 		} else {
 			$returnString = $rawString;
@@ -107,6 +125,11 @@
 		return $returnString;
 	}
 
+	/**
+	 * A function to determine whether or not a room exists in the database
+	 * @param $roomNum The number of the room we are checking for
+	 * @return true/false Whether or not the room exists
+	 */
 	function doesRoomExist($roomNum) {
 		$database = new data;
 
@@ -114,13 +137,17 @@
 			":roomNum"=>$roomNum
 		));
 
-		if(count($match) > 0) {
+		if(count($match) > 0) { //If a number is returned from the query, the room exists
 			return true;
 		} else {
 			return false;
 		}
 	}
 
+	/**
+	 * A method to return a set of <option> tags containing each floor plan
+	 * @return html_content A set of <option> tags, each containing the image path and name of a floor plan
+	 */
 	function getAllFloorplans() {
 		$database = new data;
 
@@ -150,13 +177,12 @@
 		<header class="dropShadow">
 			<div id="headerInner">
 				<h1>FACULTY DIRECTORY</h1>
-				<!-- <h3>Admin Panel</h3> -->
 				<img src="media/rit-logo.png" id="imgRIT" alt="" />
 			</div>
 		</header>
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<?php if(isset($returnMessage)) {
+				<?php if(isset($returnMessage)) { //Placeholder for user feedback, so it appears here on the page
 					echo($returnMessage); 
 				} ?>
 				<form class="form-horizontal" id="addRoom" name="addRoom" action="addRoom.php" method="POST">
@@ -220,10 +246,11 @@
 		<script>
 			$(document).ready(function(){
 				$('#roomNav').addClass('active');
+
 				var s = Snap("#floorPlan");
 				$('body').bind('touchstart', function() {}); //makes touchscreen taps behave like hover
 
-				prepMap(s, 5);
+				prepMap(s, 5); //prepare the map for SVG annotation
 			});
 		</script>
 	</body>

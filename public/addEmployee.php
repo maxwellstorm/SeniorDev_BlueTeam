@@ -1,5 +1,4 @@
 <?php
-	//Includes & Requires
 	require_once("../database/data.php");
 	require_once("../database/employees.php");
 	require_once("../database/util.php");
@@ -9,15 +8,17 @@
 	$accessLevel = 3;
 	$allowed = true;
 	$givenName = "Andy";
+	//END REMOVE
 	
-
-	if(!$allowed) { //Check if user is allowed access - redirect if not in DB at all
+	//Authentication - The user must have a valid login to access the Employee Page
+	if(!$allowed) {
 		header("Location: notAuthorized.html");
         die("Redirecting to notAuthorized.html");
 	}
 
 	$database = new data;
 
+	//Handling Form Submission
 	if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$depts = $_POST['depts'];
 		$primaryDept = getDepartmentId(filterString($depts[0]));
@@ -25,14 +26,15 @@
 		$fName = filterString($_POST['firstName']);
 		$lName = filterString($_POST['lastName']);
 
-		if(isset($_POST['new'])) {
+		if(isset($_POST['new'])) { //If the user creates a new Employee (clicks the "Create New" button)
 			try {
-				if(isDuplicateName($fName, $lName, "Employees")) {
+				if(isDuplicateName($fName, $lName, "Employees")) { //Verify that the submitted name is not already in use
 					$returnMessage = alert("danger", "$fName $lName already exists as an Employee");
 				} else {
-					if($accessLevel == 3) {
+					if($accessLevel == 3) { //Allow the user to post if they are a system administrator
 						postEmployee();
 						$returnMessage = alert("success", "$fName $lName successfully created");
+					//Allow the user to post if they are an office staff member or student worker of the same department as the new employee
 					} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
 						postEmployee();
 						$returnMessage = alert("success", "$fName $lName successfully created");
@@ -43,24 +45,30 @@
 			} catch(dbException $db) {
 				echo $db->alert();
 			}
-		} elseif(isset($_POST['edit'])){
+		} elseif(isset($_POST['edit'])){ //If the user edits an existing employee
 			try {
-				if($accessLevel == 3) {
-					putEmployee();
-					$returnMessage = alert("success", "$fName $lName successfully updated");
-				} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
-					putEmployee();
-					$returnMessage = alert("success", "$fName $lName successfully updated");
+				if(isDuplicateName($fName, $lName, "Employees")) { //Verify that the submitted name is not already in use
+					$returnMessage = alert("danger", "$fName $lName already exists as an Employee");
 				} else {
-					$returnMessage = alert("danger", "You cannot edit Employees outside of your department");
+					if($accessLevel == 3) { //Allow editing if the user is a system administrator
+						putEmployee();
+						$returnMessage = alert("success", "$fName $lName successfully updated");
+					//Allow the user to edit if they are an office staff member or student worker of the same department as the employee
+					} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
+						putEmployee();
+						$returnMessage = alert("success", "$fName $lName successfully updated");
+					} else {
+						$returnMessage = alert("danger", "You cannot edit Employees outside of your department");
+					}
 				}
 			} catch(dbException $db) {
 				echo $db->alert();
 			}
-		} elseif(isset($_POST['delete']) && isset($_POST['facultyId'])) {
-			if($accessLevel == 3) {
+		} elseif(isset($_POST['delete']) && isset($_POST['facultyId'])) { //If the user deletes an existing employee
+			if($accessLevel == 3) { //Allow deletion for system administrators
 				deleteEmployee();
 				$returnMessage = alert("success", "$fName $lName successfully deleted");
+			//Allow deletion if the user is an office staff member or student worker of the same department as the employee
 			} else if($accessLevel < 3 && ($adminDeptId == $primaryDept || $adminDeptId == $secondaryDept)) {
 				deleteEmployee();
 				$returnMessage = alert("success", "$fName $lName successfully deleted");
@@ -70,20 +78,23 @@
 		}
 	}
 	
+	/**
+	 * A method to create a new employee in the database
+	 */
 	function postEmployee() {
 		global $database;
 
 		$fName = filterString($_POST['firstName']);
 		$lName = filterString($_POST['lastName']);
-		$email = $_POST['email']; //VALIDATE EMAIL
+		$email = $_POST['email'];
 		
-		if(is_numeric($_POST['active'])) {
+		if(is_numeric($_POST['active'])) { //Validate that the active status is numeric (otherwise default to active)
 			$active = $_POST['active'];
 		} else {
 			$active = 1;
 		}
 
-		if(is_numeric($_POST['faculty'])) {
+		if(is_numeric($_POST['faculty'])) { //Validate that the active status is numeric (otherwise default to faculty)
 			$faculty = $_POST['faculty'];
 		} else {
 			$faculty = 1;
@@ -105,6 +116,9 @@
 		$employee->postParams($fName, $lName, $email, $active, $faculty, $phone, $about, $education, $highlights, $primaryDept, $roomNum, $title, $secondaryDept, $imagePath);
 	}
 
+	/** 
+	 * A method to edit an existing employee in the database
+	 */
 	function putEmployee() {
 		global $database;
 
@@ -113,13 +127,13 @@
 		$lName = filterString($_POST['lastName']);
 		$email = $_POST['email'];
 
-		if(is_numeric($_POST['active'])) {
+		if(is_numeric($_POST['active'])) { //Validate that the active status is numeric (otherwise default to active)
 			$active = $_POST['active'];
 		} else {
 			$active = 1;
 		}
 
-		if(is_numeric($_POST['faculty'])) {
+		if(is_numeric($_POST['faculty'])) { //Validate that the active status is numeric (otherwise default to faculty)
 			$faculty = $_POST['faculty'];
 		} else {
 			$faculty = 1;
@@ -141,6 +155,9 @@
 		$employee->putParams($fName,$lName,$email,$active,$faculty,$phone,$about,$education,$highlights,$primaryDept,$roomNum,$title,$secondaryDept, $imagePath);
 	}
 
+	/**
+	 * A method to delete an employee from the database
+	 */
 	function deleteEmployee() {
 		global $database;
 
@@ -151,10 +168,12 @@
 	}
 
 
-	/*
+	/**
 	 * A method to upload an image through the admin form
 	 * The method will return the filepath of the uploaded image provided the upload was successful
 	 * otherwise, it'll return null, which will trigger an error message
+	 * @param $emp An employee that the image path will be associated with
+	 * @return $newname The image path of the file
 	 */
 	function uploadImage($emp) {
 		if(!empty($_FILES['image']) && $_FILES['image']['error'] == 0) { //If there is a file and there is no error uploading it...
@@ -174,15 +193,16 @@
 
 				return $newname;
 			} else { //return null if it is the wrong file extension
-				//alert('danger', "Only image files are accpeted for upload");
-				//return null;
-				//echo("wrong file extension");
+				//LOG HERE
+				$returnMessage = alert("danger", "Only image files are accepted for upload");
+				return null;
 			}
-		} else if(empty($_FILES['image']['type']) && $emp->getImageName() != null) { 
+		} else if(empty($_FILES['image']['type']) && $emp->getImageName() != null) { //If no image was submitted but the employee already has an associated image, just keep that image path
 			return $emp->getImageName();
 		} else { //return null if the file is empty or there's an error
-		    //return null;
-		//echo("null or error");
+		    //LOG HERE
+		    $returnMessage = alert("danger", "An error occured while uploading the image");
+		    return null;
 	    }
 	}
 
@@ -237,7 +257,7 @@
 		</header>
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<?php if(isset($returnMessage)) {
+				<?php if(isset($returnMessage)) { //Placeholder for user feedback, so it appears here on the page
 					echo($returnMessage); 
 				} ?>
 				<form class="form-horizontal" id="addEmployee" name="addEmployee" enctype="multipart/form-data" action="addEmployee.php" method="POST" onsubmit="removeOnlyBullets('highlights'); removeOnlyBullets('education')">

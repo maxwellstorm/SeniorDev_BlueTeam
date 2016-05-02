@@ -10,26 +10,28 @@
 	$accessLevel = 3;
 	$allowed = true;
 	$givenName = "Andy";
+	//END REMOVE
 
+	//Authentication
 	if(!$allowed) {
 		header("Location: notAuthorized.html");
         die("Redirecting to notAuthorized.html");
 	}
 
-
 	$database = new data;
 
+	//Handle Form Submission
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$name = filterString($_POST['fpName']);
 
-		if(isset($_POST['new'])) {
+		if(isset($_POST['new'])) { //If the user submits a new floor plan
 			try{
 				$id = $_POST['fpId'];
 				$imagePath = uploadImage();
 
-				if(isDuplicateFileOrName($imagePath, $name)) {
+				if(isDuplicateFileOrName($imagePath, $name)) { //Check for duplicate file name or title associated with the image
 					$returnMessage = alert("danger", "Please select a different name. That one is already in use.");
-				} else if(strlen($imagePath) == 0) {
+				} else if(strlen($imagePath) == 0) { //require the user to upload an image
 					$returnMessage = alert("danger", "Please upload an image");
 				} else {
 					$fp = new floorPlan($database, null);
@@ -40,7 +42,7 @@
 			catch(dbException $db){
 				echo $db->alert();
 			}
-		} elseif(isset($_POST['delete']) && isset($_POST['fpId'])) {
+		} elseif(isset($_POST['delete']) && isset($_POST['fpId'])) { //If the user deletes a floor plan
 			$fpId = $_POST['fpId'];
 
 			$fp = new floorPlan($database, $fpId);
@@ -49,6 +51,10 @@
 		}
 	}
 
+	/**
+	 * A function to return a set of <option> tags for all floor plans in the database
+	 * @return html_content A set of <option> tags, each containing the floor plan's ID and name
+	 */
 	function getAllFloorPlans() {
 		$database = new data;
 
@@ -59,6 +65,12 @@
 		}
 	}
 
+	/**
+	 * A method to check if there is a submission with a duplicate image path or name
+	 * @param $imagePath The filepath of the image
+	 * @param $name The name given to the image (e.g. "Golisano - 2nd floor")
+	 * @return true/false Whether or not a duplicate name exists
+	 */
 	function isDuplicateFileOrName($imagePath, $name) {
 		$database = new data;
 
@@ -67,17 +79,18 @@
 			":name"=>$name
 		));
 
-		if(count($match) > 0) {
+		if(count($match) > 0) { //Return true if at least one ID is returned, indicating that a floor plan in the database already uses that name/image path
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	/*
+	/**
 	 * A method to upload an image through the admin form
 	 * The method will return the filepath of the uploaded image provided the upload was successful
 	 * otherwise, it'll return null, which will trigger an error message
+	 * @return $newname The image path to the file
 	 */
 	function uploadImage() {
 		if(!empty($_FILES['image']) && $_FILES['image']['error'] == 0) { //If there is a file and there is no error uploading it...
@@ -97,13 +110,14 @@
 
 				return $newname;
 			} else { //return null if it is the wrong file extension
-				//alert('danger', "Only image files are accpeted for upload");
-				//return null;
-				echo("wrong file extension");
+				//LOG HERE
+				$returnMessage = alert("danger", "Only image files are accepted for upload");
+				return null;
 			}
 		} else { //return null if the file is empty or there's an error
-		    //return null;
-			echo("null or error");
+		    //LOG HERE
+		    $returnMessage = alert("danger", "An error occured while uploading the image");
+		    return null;
 	    }
 	}
 ?>
@@ -126,13 +140,12 @@
 		<header class="dropShadow">
 			<div id="headerInner">
 				<h1>FACULTY DIRECTORY</h1>
-				<!-- <h3>Admin Panel</h3> -->
 				<img src="media/rit-logo.png" id="imgRIT" alt="" />
 			</div>
 		</header>
 		<div class="panel panel-default">
 			<div class="panel-body">
-				<?php if(isset($returnMessage)) {
+				<?php if(isset($returnMessage)) { //Placeholder for User Feedback, so it appears here on the page
 					echo($returnMessage); 
 				} ?>
 				<form class="form-horizontal" id="addFloorplan" name="addFloorPlan" enctype="multipart/form-data" action="addFloorplan.php" method="POST">
@@ -148,7 +161,6 @@
 					</div>
 
 					<div class="col-lg-10">
-						<!--<?php displayNav($accessLevel, $givenName) ?>-->
 						<a href="addRoom.php">&laquo; Go back to Room</a>
 						<fieldset>
 							<legend><h2>ADD A NEW FLOOR PLAN</h2></legend>
