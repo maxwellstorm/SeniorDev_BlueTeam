@@ -37,7 +37,7 @@ function checkEmail($email){
 function logMessage($path,$message){
 
 	try{
-		echo "  attemoting to log excpetion";
+	
 		$dataStamp = date('Y-m-d g:i a');
 		$file = fopen($path, "a+");
 		if( $file == false ) 
@@ -46,7 +46,7 @@ function logMessage($path,$message){
 		fclose( $file );
 	}
 	catch(Exception $e){
-		echo "ERROR LOGGING EXCPTION IN UTIL";
+
 	}
 	
 }
