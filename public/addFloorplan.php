@@ -51,7 +51,7 @@
 	function getAllFloorPlans() {
 		$database = new data;
 
-		$fps = $database->getData("SELECT fpId, name FROM floorPlan;", array());
+		$fps = $database->getData("SELECT fpId, name FROM floorPlan ORDER BY name ASC;", array());
 
 		foreach($fps as $arr) {
 			echo "<option value='" . $arr['fpId'] . "'>" . $arr['name'] ."</option>";

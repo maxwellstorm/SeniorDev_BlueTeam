@@ -102,7 +102,7 @@
 	function getAllFloorplans() {
 		$database = new data;
 
-		$fps = $database->getData("SELECT imagePath, name FROM floorPlan;", array());
+		$fps = $database->getData("SELECT imagePath, name FROM floorPlan ORDER BY name ASC;", array());
 
 		foreach($fps as $arr) {
 			echo"<option value='" . $arr['imagePath'] . "'>" . $arr['name'] . "</option>";
@@ -182,6 +182,7 @@
 						<div class="form-group">
 							<label for="floorPlan" class="control-label col-lg-2">Room Map</label>
 							<div class="col-lg-10">
+								<span><em>Annotate the map by clicking &amp; dragging where you want to place a location marker</em></span>
 								<div id="svgContainer">
 									<!--<div style="float: left; background-color: yellow; width: 50px; height:20px;position:absolute;" id="tip">tip</div>-->
 									<svg id="floorPlan" width="720" height="536">
@@ -202,35 +203,6 @@
 
 				prepMap(s, 5);
 			});
-			
-			/*
-			// Creation of red "You are here" dot:
-			var youAreHere = s.circle(562, 340, 5);
-			var t1 = s.text(523, 355, "You are here");
-			youAreHere.attr({
-				fill: "red"
-			});
-			//note that you can set stuff with .css
-
-			$('body').bind('touchstart', function() {}); //makes touchscreen taps behave like hover
-
-			//Hover example
-			$('#floorPlan').click(function(e) {
-				newCircle.hover( function(){
-			        //$("#tip").show();
-			        //var xpos = e.pageX - parentOffset.left;
-			   		//var ypos = e.pageY - parentOffset.top;                 
-
-			   		var thisBox = this.getBBox();
-			   		console.log(thisBox.x);
-			   		console.log(thisBox.y);
-			        //$("#tip").css("left", thisBox.x );
-			        //$("#tip").css("top" , thisBox.y - 25 );
-			        
-			    }, function(){
-			       // $("#tip").hide();
-			    });
-			}*/
 		</script>
 	</body>
 </html>
