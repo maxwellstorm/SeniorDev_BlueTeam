@@ -41,11 +41,11 @@ class dbException extends Exception
 	 * @return $alert The HTML-styled alert
 	 */
 	public function alert() {
-		$alert = "<div class='alert alert-dismissible'>";
+		/*$alert = "<div class='alert alert-dismissible'>";
 		$alert .= "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>";
 		$alert .= $this->message."</div>";
-
-		return $alert;
+*/
+		return "alert('danger','A database error has occurred');";
 	}
 }
 ?>
