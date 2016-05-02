@@ -72,7 +72,7 @@ function init() {
 	});
 
 	function refresh() {
-		if (new Date().getTime() - time >= 30000) {
+		if (new Date().getTime() - time >= 60000) {
 			window.location.reload(true);
 		} else {
 			setTimeout(refresh, 5000);
@@ -373,5 +373,19 @@ $(document).ready(function() {
 		}
 
 		filterProfessors();
+	});
+
+	$('#accessibilityTab').click(function() {
+		$(this).toggleClass('on');
+		$('#wrapper').toggleClass('accessible');
+
+		if ($(this).hasClass('on')) { // user just turned on accessibility mode
+			$('#accessIcon').attr('src', 'media/accessibility-orange-32.png');
+			$(this).removeClass('dropShadow').addClass('innerShadow');
+			$('#All').click(); // reset departments to show all, their radio buttons are hidden in accessibility mode
+		} else { // user just turned off accessibility mode
+			$('#accessIcon').attr('src', 'media/accessibility-gray-32.png');
+			$(this).removeClass('innerShadow').addClass('dropShadow');
+		}
 	});
 });
