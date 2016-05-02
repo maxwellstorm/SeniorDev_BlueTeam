@@ -144,9 +144,25 @@ header h1 {
 
 #pin {
 	position: absolute;
+	/*
 	width: 48px;
 	height: 48px;
-	background-image: url("../media/pin.png");
+	*/
+}
+
+#pinIcon {
+	position: relative;
+	margin: auto;
+}
+
+#pinToolTip {
+	background: #F8F7ED;
+	text-align: center;
+	padding: 5px;
+}
+
+#pinName {
+	font-weight: bold;
 }
 
 #professorsContainer {

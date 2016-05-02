@@ -85,7 +85,11 @@ function init() {
 function getProfessorCard(Professor) {
 	var card = '<div id="profCard' + Professor.getFacultyId() + '" data-lastinitial="' + Professor.getLastInitial() + '" data-room="';
 	card += Professor.getRoom().replace(/\s/g, '') + '" data-dept="' + Professor.getDepartment() + '" class="professorCard dropShadow roundCorners">';
-	card += '<div class="thumb" style="background-image: url(' + Professor.getThumb() + ')"></div>';
+	if (Professor.getThumb() != null) {
+		card += '<div class="thumb" style="background-image: url(' + Professor.getThumb() + ')"></div>';
+	} else {
+		card += '<div class="thumb"></div>';
+	}
 	card += '<div class="infoPreview">';
 	card += '<div class="professorName">' + Professor.getFullName() + '</div>';
 	card += '<div>' + Professor.getRoom() + '</div>';
@@ -303,6 +307,10 @@ function updateOverlay(Professor, Room) {
 
 	$('#pin').css('top', yValue - pinHeight + 'px');
 	$('#pin').css('left', xValue - (pinWidth / 2) + 'px');
+
+	// update pin tooltip
+	$('#pinName').text(Professor.getFullName());
+	$('#pinRoom').text(Professor.getRoom());
 }
 
 function showOverlay() {
