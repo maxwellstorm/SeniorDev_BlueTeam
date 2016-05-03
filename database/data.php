@@ -1,7 +1,7 @@
 <?php
 require_once("dbException.php");
-//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
-//$allowed = true;
+
+	$allowed = true;
 
 /**
  * A class that serves as the base data layer - this provides methods to access the database to get & set information

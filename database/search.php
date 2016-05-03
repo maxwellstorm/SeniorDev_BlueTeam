@@ -5,11 +5,11 @@
 	require_once("admin.php");
 	require_once("util.php");
 
-	//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
-	$adminDeptId = 1;
-	$accessLevel = 3;
-	$allowed = true;
-
+$id = $_SERVER["uid"];	
+	$givenName = $_SERVER["givenName"];
+	$adminDeptId = getAdminDepartment($id);
+	$accessLevel = getAccessLevel($id);
+	$allowed = isAllowed($id);
 	if(!$allowed) { //Authentication - only users who exist in the system are authorized to use this
 		header("Location: ../public/notAuthorized.html");
 		die("Redirecting to notAuthorized.html");

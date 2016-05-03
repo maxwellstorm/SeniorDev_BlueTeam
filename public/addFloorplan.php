@@ -5,12 +5,6 @@
 	require_once("../database/util.php");
 
 
-	//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
-	$adminDeptId = 1;
-	$accessLevel = 3;
-	$allowed = true;
-	$givenName = "Andy";
-	//END REMOVE
 
 	//Authentication
 	if(!$allowed) {

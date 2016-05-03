@@ -1,10 +1,7 @@
 <?php
 //A class that defines a custom exception to return specific error messages
 
-//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
-//$allowed = true;
 
-require_once("util.php");
 
  const THROW_ONLY_ALPHA    = 1;
  const THROW_ROOM_INNCORRECT_FORMAT    = 2;
@@ -24,7 +21,7 @@ class dbException extends Exception
      */
     public function __construct($message, $code = 0, Exception $previous = null) {
         parent::__construct($message, $code, $previous);
-		logMessage("../log/exceptionLog.txt",$message);
+		logExcepMessage("../log/exceptionLog.txt",$message);
     }
 
     /**
@@ -45,6 +42,25 @@ class dbException extends Exception
 		$alert .= "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>";
 		$alert .= $this->message."</div>";*/
 		return "alert('danger','A database error has occurred');";
+	}
+	
+	/**
+	 * A method to log messaegs to a designated file
+	 * @param $path The file to log messages to
+	 * @param $message The message to be logged
+	 */
+	function logExcepMessage($path,$message){
+		try{
+	
+			$dataStamp = date('Y-m-d g:i a');
+			$file = fopen($path, "a+");
+			if( $file == false ) 
+				die( "Error in opening file" );
+			fwrite( $file, "$dataStamp: $message\n" );
+			fclose( $file );
+		}
+		catch(Exception $e){
+		}
 	}
 }
 ?>

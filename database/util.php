@@ -2,12 +2,9 @@
 //A library-esque common function class that handles functionality used by multiple pages
 
 require_once("data.php");
-//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
-//$allowed = true;
+require_once("dbException.php");
 
-/*require_once("dbException.php");*/
-
-
+	$allowed = true;
 /**
  * A function to verify that only alphabetical characters (and a few specified exceptions) are allowed in names
  * @param $name The name to be checked for letters

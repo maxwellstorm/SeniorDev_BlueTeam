@@ -3,6 +3,14 @@
 	require_once("../database/employees.php");
 	require_once("../database/util.php");
 
+	
+	
+	$id = $_SERVER["uid"];	
+	$givenName = $_SERVER["givenName"];
+	$adminDeptId = getAdminDepartment($id);
+	$accessLevel = getAccessLevel($id);
+	$allowed = isAllowed($id);
+	
 
 	//Authentication - The user must have a valid login to access the Employee Page
 	if(!$allowed) {

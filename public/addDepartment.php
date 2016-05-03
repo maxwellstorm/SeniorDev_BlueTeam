@@ -4,13 +4,11 @@
 	require_once("../database/dbException.php");
 	require_once("../database/util.php");
 
-
-	//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
-	$adminDeptId = 1;
-	$accessLevel = 3;
-	$allowed = true;
-	$givenName = "Andy";
-	//END REMOVE
+$id = $_SERVER["uid"];	
+	$givenName = $_SERVER["givenName"];
+	$adminDeptId = getAdminDepartment($id);
+	$accessLevel = getAccessLevel($id);
+	$allowed = isAllowed($id);
 
 	//Authentication - User must have a valid login & be a System Administrator to access the department page
 	if($accessLevel < 3 || !$allowed) {

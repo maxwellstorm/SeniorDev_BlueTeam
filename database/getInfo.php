@@ -7,12 +7,7 @@
 	require_once("room.php");
 	require_once("util.php");
 
-	//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
-	$adminDeptId = 1;
-	$accessLevel = 3;
-	$allowed = true;
-	//END REMOVE
-
+$allowed = true;
 	if(!$allowed) { //Authentication - users cannot access this if they don't exist in the system
 		header("Location: ../public/notAuthorized.html");
 		die("Redirecting to notAuthorized.html");

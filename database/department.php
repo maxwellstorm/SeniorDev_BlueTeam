@@ -1,7 +1,10 @@
 <?php
-//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
-$allowed = true;
 
+$id = $_SERVER["uid"];	
+	$givenName = $_SERVER["givenName"];
+	$adminDeptId = getAdminDepartment($id);
+	$accessLevel = getAccessLevel($id);
+	$allowed = isAllowed($id);
 require_once("util.php");
 
 if(!$allowed) { //Authentication - Users must exist in the system to access this page

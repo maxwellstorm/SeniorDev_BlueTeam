@@ -4,12 +4,7 @@
 	require_once("../database/util.php");
 	require_once("../database/dbException.php");
 
-	//REMOVE THIS FOR FINAL COMMIT -THIS IS ONLY HERE FOR THE DEV ENVIRONEMNT
-	$adminDeptId = 1;
-	$accessLevel = 3;
-	$allowed = true;
-	$givenName = "Andy";
-	//END REMOVE Section
+	
 	
 	//Authentication - User must have a valid login & be an Office Staff member or System Administrator to access the admin page
 	if($accessLevel < 2 || !$allowed) {

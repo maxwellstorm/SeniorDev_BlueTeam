@@ -77,6 +77,8 @@ function getInfo(selected) {
 		url: "../database/getInfo.php",
 		data: {facultyId : facId, page : "employee"} //Send the faculty ID for the query, and the name of the page, so the correct info is returned
 	}).done(function(response) { //on successful completion of the AJAX call
+		
+		console.log(response);
 		var infoResponse = JSON.parse(response); //parse the returned JSON object
 		if(checkAJAXError(response)) { //If the returned JSON is an error message, append it above the form on the HTML page
 			$('.form-horizontal').before(infoResponse);
