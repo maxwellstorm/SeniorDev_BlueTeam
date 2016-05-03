@@ -1,5 +1,7 @@
 'use strict';
+// object used for storing professor information
 class Professor {
+	// default constructor to set professor attributes
 	constructor(facultyId, first, last, title, email, room, phone, departmentId, isActive, isFaculty, about, education, highlights, thumb) {
 		this.facultyId = facultyId;
 		this.first = first;
@@ -16,6 +18,8 @@ class Professor {
 		this.highlights = highlights;
 		this.thumb = thumb;
 	}
+
+	// BASIC ACCESSORS AND MUTATORS BELOW
 
 	getFacultyId() {
 		return this.facultyId;
@@ -98,12 +102,16 @@ class Professor {
 	}
 }
 
+// object used for storing department information
 class Department {
+	// default constructor to set department attributes
 	constructor(deptId, deptName, deptAbbr) {
 		this.deptId = deptId;
 		this.deptName = deptName;
 		this.deptAbbr = deptAbbr;
 	}
+
+	// BASIC ACCESSORS AND MUTATORS BELOW
 
 	getDeptId() {
 		return this.deptId;
@@ -118,7 +126,9 @@ class Department {
 	}
 }
 
+// object used for storing room information
 class Room {
+	// default constructor to set room attributes
 	constructor(roomNumber, roomMap, roomDesc, posX, posY) {
 		this.roomNumber = roomNumber;
 		this.roomMap = roomMap;
@@ -126,6 +136,8 @@ class Room {
 		this.posX = posX;
 		this.posY = posY;
 	}
+
+	// BASIC ACCESSORS AND MUTATORS BELOW
 
 	getRoomNumber() {
 		return this.roomNumber;
