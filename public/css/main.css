@@ -81,7 +81,7 @@ header h1 {
 #infoExpanded {
 	position: relative;
 	padding: 15px;
-	width: calc(25% - 30px);
+	width: calc(30% - 30px);
 	height: calc(100% - 30px);
 	float: left;
 	clear: right;
@@ -128,7 +128,7 @@ header h1 {
 #floorMapContainer {
 	position: relative;
 	float: right;
-	width: 75%;
+	width: 70%;
 	height: 100%;
 	background-color: white;
 }
@@ -137,28 +137,28 @@ header h1 {
 	margin: 15px;
 	width: calc(100% - 30px);
 	height: calc(100% - 30px);
-	/* background-image: url("../media/floorplans/golisano-2nd-floor-large.png"); */
-	background-size: 100% 100%;
+	background-size: auto 100%;
+	background-repeat: no-repeat;
 	position: relative;
 }
 
 #pin {
 	position: absolute;
-	/*
-	width: 48px;
-	height: 48px;
-	*/
+	opacity: 0;
 }
 
 #pinIcon {
 	position: relative;
+	bottom: 18px;
+	display: block;
 	margin: auto;
 }
 
 #pinToolTip {
-	background: #F8F7ED;
+	background: #F36E21;
+	color: #FFFFFF;
 	text-align: center;
-	padding: 5px;
+	padding: 10px;
 }
 
 #pinName {

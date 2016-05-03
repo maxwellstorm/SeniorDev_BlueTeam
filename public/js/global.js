@@ -263,7 +263,11 @@ function filterProfessors() {
 }
 
 function updateOverlay(Professor, Room) {
-	$('#overlayThumb').css('background-image', 'url(' + Professor.getThumb() + ')');
+	if (Professor.getThumb() != null) {
+		$('#overlayThumb').css('background-image', 'url(' + Professor.getThumb() + ')');
+	} else {
+		$('#overlayThumb').css('background-image', 'none');
+	}
 	$('#overlayName').text(Professor.getFullName());
 	$('#overlayRoom').text(Professor.getRoom());
 	$('#overlayEmail').text(Professor.getEmail());
@@ -295,22 +299,40 @@ function updateOverlay(Professor, Room) {
 	// update map image
 	$('#floorMap').css('background-image', 'url(' + Room.getRoomMap() + ')');
 
-	// get floormap dimensions on page
-	var stretchedWidth = $('#mapOverlay').outerWidth() * 0.75 - 30;
-	var stretchedHeight = $('#mapOverlay').height() - 30;
-
-	var xValue = Room.getPosX() * stretchedWidth;
-	var yValue = Room.getPosY() * stretchedHeight;
-
-	var pinWidth = $('#pin').width();
-	var pinHeight = $('#pin').height();
-
-	$('#pin').css('top', yValue - pinHeight + 'px');
-	$('#pin').css('left', xValue - (pinWidth / 2) + 'px');
-
-	// update pin tooltip
+	// update pin tooltip text
 	$('#pinName').text(Professor.getFullName());
 	$('#pinRoom').text(Professor.getRoom());
+
+	var bgImg = new Image();
+	bgImg.src = Room.getRoomMap();
+	$(bgImg).on('load', function() {
+		var rawBackgroundWidth = bgImg.width;
+		var rawBackgroundHeight = bgImg.height;
+		
+		var floorMapHeight = $('#mapOverlay').height() - 30;
+		var ratio = floorMapHeight / rawBackgroundHeight;
+		var floorMapWidth = rawBackgroundWidth * ratio;	
+
+		var xValue = Room.getPosX() * floorMapWidth;
+		var yValue = Room.getPosY() * floorMapHeight;
+
+		setTimeout(function() {
+			fadeInPin(xValue, yValue);
+		}, 500);
+	});
+}
+
+function fadeInPin(x, y) {
+	var pinWidth = $('#pin').outerWidth();
+	var pinHeight = $('#pin').outerHeight();
+
+	$('#pin').css('top', y - pinHeight + 9 + 'px');
+	$('#pin').css('left', x - (pinWidth / 2) + 'px');
+
+	$('#pin').animate({
+		opacity: 1,
+		marginTop: 9
+	}, 250);
 }
 
 function showOverlay() {
@@ -319,6 +341,11 @@ function showOverlay() {
 
 function hideOverlay() {
 	$('#mapOverlay').fadeOut(250);
+	$('#pin').animate({
+		opacity: 0,
+	}, 250, function() {
+		$('#pin').css('margin-top', '0');
+	});
 }
 
 $(document).ready(function() {
@@ -328,7 +355,7 @@ $(document).ready(function() {
 		var selectedId = $(this).attr("id").substring(8);
 		var professor = getProfessorFromArr(selectedId);
 		var room = getRoomFromArr(professor.getRoom());
-		updateOverlay(professor, room);
+		var update = updateOverlay(professor, room);
 
 		showOverlay();
 	});
