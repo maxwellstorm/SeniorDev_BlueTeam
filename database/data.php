@@ -8,9 +8,9 @@ require_once("dbException.php");
  */
 class data{
 	//Database connection information
-	private $server = "facultydb.cdh6zybsklle.us-east-1.rds.amazonaws.com";
-	private $username = "maxwellsweikert";
-	private $password = "M3312140m";
+	private $server = "localhost";
+	private $username = "root";
+	private $password = "D@wMD014Zd0g";
 	private $DBName = "facultyDb";
 	private $conn;
 	
