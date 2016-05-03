@@ -26,7 +26,11 @@ public class FacultyDetails extends Activity{
 
     private String[] departments;
 
-    //Called when view first loads to populate details based off faculty clicked
+    /**
+     * This creates the gui of the faculty details view. It then calls the method to set the data
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -38,7 +42,9 @@ public class FacultyDetails extends Activity{
         setData();
     }
 
-    //sets the texts accordingly
+    /**
+     * Sets the values for each label with the details of the faculty chosen
+     */
     public void setData(){
         facultyNameData = getIntent().getStringExtra("name");
         facultyName.setText(facultyNameData);
