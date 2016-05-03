@@ -5,7 +5,11 @@
 	require_once("../database/dbException.php");
 	require_once("../database/util.php");
 
-
+	$id = $_SERVER["uid"];	
+	$givenName = $_SERVER["givenName"];
+	$accessLevel = getAccessLevel($id);
+	$adminDeptId = getAdminDepartment($id);
+	$allowed = isAllowed($id);
 
 
 	//Authentication - The user must have a valid login to access the room page

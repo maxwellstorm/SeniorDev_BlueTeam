@@ -1,10 +1,8 @@
 <?php
 require_once("util.php");
 
-$id = $_SERVER["uid"];	
-	$givenName = $_SERVER["givenName"];
-	$adminDeptId = getAdminDepartment($id);
-	$accessLevel = getAccessLevel($id);
+
+	$id = $_SERVER["uid"];	
 	$allowed = isAllowed($id);
 
 if(!$allowed) { //Authentication - Users must exist in the system to access this page

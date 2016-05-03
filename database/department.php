@@ -1,11 +1,9 @@
 <?php
-
-$id = $_SERVER["uid"];	
-	$givenName = $_SERVER["givenName"];
-	$adminDeptId = getAdminDepartment($id);
-	$accessLevel = getAccessLevel($id);
-	$allowed = isAllowed($id);
 require_once("util.php");
+
+	$id = $_SERVER["uid"];
+	$allowed = isAllowed($id);
+
 
 if(!$allowed) { //Authentication - Users must exist in the system to access this page
 	header("Location: ../public/notAuthorized.html");

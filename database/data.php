@@ -1,7 +1,8 @@
 <?php
 require_once("dbException.php");
 
-	$allowed = true;
+	
+
 
 /**
  * A class that serves as the base data layer - this provides methods to access the database to get & set information

@@ -7,7 +7,9 @@
 	require_once("room.php");
 	require_once("util.php");
 
-$allowed = true;
+
+	$id = $_SERVER["uid"];	
+	$allowed = isAllowed($id);
 	if(!$allowed) { //Authentication - users cannot access this if they don't exist in the system
 		header("Location: ../public/notAuthorized.html");
 		die("Redirecting to notAuthorized.html");

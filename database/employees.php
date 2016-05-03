@@ -1,7 +1,10 @@
 <?php
 
 require_once("util.php");
-	$allowed = true;
+
+$id = $_SERVER["uid"];	
+$allowed = isAllowed($id);
+	
 if(!$allowed) { //Authentication - Users must exist in the system to access this page
 	header("Location: ../public/notAuthorized.html");
 		die("Redirecting to notAuthorized.html");

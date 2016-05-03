@@ -5,10 +5,8 @@
 	require_once("admin.php");
 	require_once("util.php");
 
-$id = $_SERVER["uid"];	
-	$givenName = $_SERVER["givenName"];
-	$adminDeptId = getAdminDepartment($id);
-	$accessLevel = getAccessLevel($id);
+
+	$id = $_SERVER["uid"];	
 	$allowed = isAllowed($id);
 	if(!$allowed) { //Authentication - only users who exist in the system are authorized to use this
 		header("Location: ../public/notAuthorized.html");

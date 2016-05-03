@@ -5,6 +5,11 @@
 	require_once("../database/dbException.php");
 
 	
+	$id = $_SERVER["uid"];	
+	$givenName = $_SERVER["givenName"];
+	$accessLevel = getAccessLevel($id);
+	$adminDeptId = getAdminDepartment($id);
+	$allowed = isAllowed($id);
 	
 	//Authentication - User must have a valid login & be an Office Staff member or System Administrator to access the admin page
 	if($accessLevel < 2 || !$allowed) {
