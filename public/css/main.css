@@ -125,6 +125,10 @@ header h1 {
 	cursor: pointer;
 }
 
+#backArrow {
+	margin-right: 5px;
+}
+
 #floorMapContainer {
 	position: relative;
 	float: right;

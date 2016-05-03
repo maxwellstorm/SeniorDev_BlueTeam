@@ -309,9 +309,12 @@ function updateOverlay(Professor, Room) {
 		var rawBackgroundWidth = bgImg.width;
 		var rawBackgroundHeight = bgImg.height;
 		
+		// get height of map (total mapOverlay height - total floorMap padding)
 		var floorMapHeight = $('#mapOverlay').height() - 30;
+		// calculate ratio (height of map on screen / raw image height)
 		var ratio = floorMapHeight / rawBackgroundHeight;
-		var floorMapWidth = rawBackgroundWidth * ratio;	
+		// use ratio to find width of map on screen (raw image width * ratio)
+		var floorMapWidth = rawBackgroundWidth * ratio;
 
 		var xValue = Room.getPosX() * floorMapWidth;
 		var yValue = Room.getPosY() * floorMapHeight;
