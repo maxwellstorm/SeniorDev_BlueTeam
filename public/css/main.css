@@ -544,6 +544,16 @@ label {
 	border-color: lightgray;
 }
 
+.btn-primary.disabled:hover, .btn-primary[disabled]:hover {
+	background-color: #A4A4A4 !important;
+	border-color: #A4A4A4 !important;
+}
+
+.btn-primary.active, .btn-primary:active {
+	background-color: #FF5E00 !important;
+	border-color: lightgray !important;
+}
+
 #userImage {
 	max-width: 160px;
 	max-height: 160px;
