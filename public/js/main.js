@@ -312,6 +312,10 @@ function prepMap(s, radius) {
 //Document.ready listeners for the administrative portal
 $(document).ready(function() {
 
+	if (navigator.appVersion.indexOf('Mac') != -1) {
+		$('.panel-body input[type="file"]').addClass('mac');
+	}
+
 	//Listener for the search box on the Employee page - enables live search of employees
 	$("#filter").keyup(function() {
 		var searchKeyword = $(this).val();

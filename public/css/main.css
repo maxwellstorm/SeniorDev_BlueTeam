@@ -517,7 +517,11 @@ span.selectedToggle {
 }
 
 .panel-body input[type='file'] {
-	width: 90px !important;
+	width: 95px !important;
+}
+
+.panel-body input[type='file'].mac {
+	width: 75px !important;
 }
 
 #fpImagePath {
