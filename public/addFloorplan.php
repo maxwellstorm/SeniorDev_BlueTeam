@@ -116,12 +116,10 @@
 
 				return $newname;
 			} else { //return null if it is the wrong file extension
-				//LOG HERE
 				$returnMessage = alert("danger", "Only image files are accepted for upload");
 				return null;
 			}
 		} else { //return null if the file is empty or there's an error
-		    //LOG HERE
 		    $returnMessage = alert("danger", "An error occured while uploading the image");
 		    return null;
 	    }

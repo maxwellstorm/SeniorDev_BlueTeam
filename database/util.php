@@ -4,7 +4,7 @@
 require_once("data.php");
 require_once("dbException.php");
 
-	$allowed = true;
+
 /**
  * A function to verify that only alphabetical characters (and a few specified exceptions) are allowed in names
  * @param $name The name to be checked for letters

@@ -1,24 +1,25 @@
 <?php
 require_once("dbException.php");
 
-	
-
-
 /**
  * A class that serves as the base data layer - this provides methods to access the database to get & set information
  */
 class data{
 	//Database connection information
+	//Due to reasons unbeknownst to us, potentially a server config issue, we are unable to use an external include to provide the database connection information
+	//Should this go to production, the Project Manager (Andrew DiStasi) will work with the IST Systems Administrators to correct this problem
 	private $server = "localhost";
 	private $username = "root";
 	private $password = "D@wMD014Zd0g";
 	private $DBName = "facultyDb";
+	
 	private $conn;
 	
 	/**
 	 * A constructor to instantiate the class
 	 */
 	function __construct(){
+		
 			$this->connect();
 		
 	}

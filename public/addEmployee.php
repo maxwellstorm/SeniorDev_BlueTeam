@@ -7,9 +7,8 @@
 	
 	$id = $_SERVER["uid"];	
 	$givenName = $_SERVER["givenName"];
-	$accessLevel = getAccessLevel($id);
 	$adminDeptId = getAdminDepartment($id);
-	
+	$accessLevel = getAccessLevel($id);
 	$allowed = isAllowed($id);
 	
 

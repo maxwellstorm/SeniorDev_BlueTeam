@@ -4,10 +4,11 @@
 	require_once("../database/dbException.php");
 	require_once("../database/util.php");
 
-	$id = $_SERVER["uid"];	
+		$id = $_SERVER["uid"];	
 	$givenName = $_SERVER["givenName"];
 	$accessLevel = getAccessLevel($id);
 	$adminDeptId = getAdminDepartment($id);
+	
 	$allowed = isAllowed($id);
 
 	//Authentication - User must have a valid login & be a System Administrator to access the department page
